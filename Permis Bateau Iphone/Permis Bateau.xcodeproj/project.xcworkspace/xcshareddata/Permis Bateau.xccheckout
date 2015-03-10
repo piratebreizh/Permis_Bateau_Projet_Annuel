@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EDF79619-8CB3-468F-B562-7801EEB529D3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Permis Bateau</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</key>
+		<string>https://github.com/piratebreizh/Permis_Bateau_Projet_Annuel</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Permis Bateau Iphone/Permis Bateau.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/piratebreizh/Permis_Bateau_Projet_Annuel</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Permis_Bateau_Projet_Annuel</string>
+		</dict>
+	</array>
+</dict>
+</plist>

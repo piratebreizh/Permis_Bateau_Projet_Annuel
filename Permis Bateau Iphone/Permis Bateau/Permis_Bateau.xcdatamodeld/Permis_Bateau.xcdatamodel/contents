@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Question" representedClassName="Question" syncable="YES">
+        <attribute name="enoncer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="reponseA" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reponseB" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reponseC" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reponseCorrectA" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="reponseCorrectB" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="reponseCorrectC" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="reponseCorrectD" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="reponseD" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="theme" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Theme" syncable="YES"/>
+    </entity>
+    <entity name="Theme" representedClassName="Theme" syncable="YES">
+        <attribute name="nom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="themeValider" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Question" positionX="-74" positionY="-196" width="128" height="208"/>
+        <element name="Theme" positionX="133" positionY="-237" width="128" height="88"/>
+    </elements>
+</model>
