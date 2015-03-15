@@ -31,5 +31,17 @@
 @property (strong, nonatomic) NSTimer *casovacCas;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageQuestion;
+@property (weak, nonatomic) IBOutlet UILabel *enoncerQuestion;
+@property (weak, nonatomic) IBOutlet UILabel *texteReponseA;
+@property (weak, nonatomic) IBOutlet UILabel *texteReponseB;
+@property (weak, nonatomic) IBOutlet UILabel *texteReponseC;
+@property (weak, nonatomic) IBOutlet UILabel *texteReponseD;
+@property (weak, nonatomic) IBOutlet UIButton *boutonReponseA;
+@property (weak, nonatomic) IBOutlet UIButton *boutonReponseB;
+@property (weak, nonatomic) IBOutlet UIButton *boutonReponseC;
+@property (weak, nonatomic) IBOutlet UIButton *boutonReponseD;
+
+
 @end
 

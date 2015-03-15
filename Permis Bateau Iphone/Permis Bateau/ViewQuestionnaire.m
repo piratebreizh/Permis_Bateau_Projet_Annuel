@@ -15,6 +15,7 @@
 @end
 
 int numeroQuestionEnCour;
+Question *questionEnCour;
 NSTimer *timer;
 
 @implementation ViewQuestionnaire
@@ -22,7 +23,7 @@ NSTimer *timer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     
     self.barTimerQuestion.progress = 0.0;
     numeroQuestionEnCour = 0;
@@ -74,9 +75,66 @@ NSTimer *timer;
         if(tempQues.enoncer != nil)
             NSLog([NSString stringWithFormat:tempQues.enoncer]);
     }
-    
+
     [self questionSuivante];
+    [self initialisationScreenForQuestion];
+}
+
+
+-(void) initialisationScreenForQuestion{
     
+    questionEnCour = self.questionnaire.listeQuestion[numeroQuestionEnCour-1];
+    
+    if(questionEnCour.image != nil){
+        self.imageQuestion.image =[UIImage imageNamed:questionEnCour.image];
+    }
+
+    
+
+    
+    
+    
+    if(questionEnCour.enoncer != nil){
+       [self.enoncerQuestion setText:questionEnCour.enoncer];
+        
+        // Une solution pas trop mal mais c'est pas exactement ça
+//       [self.enoncerQuestion setAdjustsFontSizeToFitWidth:YES];
+      
+    }else{
+        [self.enoncerQuestion setHidden:NO];
+    }
+    
+    if(questionEnCour.reponseA != nil && questionEnCour.reponseCorrectA != nil){
+        [self.texteReponseA setText:questionEnCour.reponseA];
+    }else{
+        [self.texteReponseA setHidden:YES];
+        [self.boutonReponseA setHidden:YES];
+    }
+
+    if(questionEnCour.reponseB != nil && questionEnCour.reponseCorrectB != nil){
+        [self.texteReponseB setText:questionEnCour.reponseB];
+    }else{
+        [self.texteReponseB setHidden:YES];
+        [self.boutonReponseB setHidden:YES];
+    }
+
+    if(questionEnCour.reponseC != nil && questionEnCour.reponseCorrectC != nil){
+        [self.texteReponseC setText:questionEnCour.reponseC];
+    }else{
+        [self.texteReponseC setHidden:YES];
+        [self.boutonReponseC setHidden:YES];
+    }
+
+    if(questionEnCour.reponseD != nil && questionEnCour.reponseCorrectD != nil){
+        [self.texteReponseD setText:questionEnCour.reponseD];
+    }else{
+        [self.texteReponseD setHidden:YES];
+        [self.boutonReponseD setHidden:YES];
+    }
+
+}
+
+- (IBAction)boutonValiderQuestion:(id)sender {
 }
 
 

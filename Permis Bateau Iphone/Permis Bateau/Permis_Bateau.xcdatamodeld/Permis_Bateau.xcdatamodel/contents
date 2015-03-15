@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Question" representedClassName="Question" syncable="YES">
         <attribute name="enoncer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="numero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="reponseA" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reponseB" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,7 +20,7 @@
         <attribute name="themeValider" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Question" positionX="-74" positionY="-196" width="128" height="208"/>
+        <element name="Question" positionX="-74" positionY="-196" width="128" height="225"/>
         <element name="Theme" positionX="133" positionY="-237" width="128" height="88"/>
     </elements>
 </model>

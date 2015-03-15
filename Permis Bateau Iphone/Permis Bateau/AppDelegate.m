@@ -17,7 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSManagedObjectContext *context = [self managedObjectContext];
+    /*NSManagedObjectContext *context = [self managedObjectContext];
     Theme *theme = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Theme"
                                       inManagedObjectContext:context];
@@ -46,8 +46,18 @@
                     inManagedObjectContext:context];
     
     question.numero= [NSNumber numberWithInt:1];
-    question.enoncer = @"enoncer 1 ";
+    question.enoncer = @"enoncer 1 de la première quenAAAAAAAAAAAAAAAAAAAAaaaaaaaeazeazdaezncozrnvozrnpnabzpfbnazofnaeronfôarbfoazbrnfoaebro^baezro^fnzrofnazof,azoe,foaze faz ofnaz";
     question.theme = theme;
+    question.image = @"balise_test.jpg";
+    question.reponseA = @"Reponse A aze";
+    question.reponseB = @"Reponse B zeazeeeee";
+    question.reponseC = @"Reponse C ppppp";
+    question.reponseD = @"Reponse D poipupu";
+    question.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question.reponseCorrectD = [NSNumber numberWithBool:YES];
+
     
     Question *question2 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
@@ -78,9 +88,8 @@
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-    
-    
-    
+    */
+
     return YES;
 }
 

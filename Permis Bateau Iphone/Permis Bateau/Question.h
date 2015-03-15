@@ -2,18 +2,28 @@
 //  Question.h
 //  Permis Bateau
 //
-//  Created by Alexandre Dubois on 15/11/2014.
-//  Copyright (c) 2014 Alexandre Dubois. All rights reserved.
+//  Created by Alexandre Dubois on 15/03/2015.
+//  Copyright (c) 2015 Alexandre Dubois. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Theme;
 
 @interface Question : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * numero;
 @property (nonatomic, retain) NSString * enoncer;
-@property (nonatomic, retain) NSManagedObject *theme;
+@property (nonatomic, retain) NSString * image;
+@property (nonatomic, retain) NSNumber * numero;
+@property (nonatomic, retain) NSString * reponseA;
+@property (nonatomic, retain) NSString * reponseB;
+@property (nonatomic, retain) NSString * reponseC;
+@property (nonatomic, retain) NSNumber * reponseCorrectA;
+@property (nonatomic, retain) NSNumber * reponseCorrectB;
+@property (nonatomic, retain) NSNumber * reponseCorrectC;
+@property (nonatomic, retain) NSNumber * reponseCorrectD;
+@property (nonatomic, retain) NSString * reponseD;
+@property (nonatomic, retain) Theme *theme;
 
 @end
