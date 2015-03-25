@@ -1,3 +1,4 @@
+<<<<<<< Original
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projet.esgi.myapplication" >
@@ -17,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.projet.esgi.permisbateau.SelectionThematique"
+            android:name="com.projet.esgi.permisbateau.Selection"
             android:label="@string/title_activity_selection_thematique" >
         </activity>
         <activity
@@ -35,3 +36,16 @@
     </application>
 
 </manifest>
+
+=======
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <application>
+        <activity android:name="com.projet.esgi.permisbateau.Selection"
+            android:label="@string/title_activity_selection"
+            >
+        </activity>
+    </application>
+
+</manifest>
+>>>>>>> Added

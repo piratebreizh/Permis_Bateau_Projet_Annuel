@@ -6,19 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class SelectionThematique extends ActionBarActivity {
+public class Selection extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selection_thematique);
+        setContentView(R.layout.activity_selection);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_selection_thematique, menu);
+        getMenuInflater().inflate(R.menu.menu_selection, menu);
         return true;
     }
 
