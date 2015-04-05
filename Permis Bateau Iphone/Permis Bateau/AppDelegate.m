@@ -62,10 +62,18 @@
     Question *question2 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
                           inManagedObjectContext:context];
-    
     question2.numero= [NSNumber numberWithInt:2];
-    question2.enoncer = @"enoncer 2 ";
+    question2.enoncer = @"enoncer 2 d";
+    question2.image = @"valider.png";
     question2.theme = theme;
+    question2.reponseA = @"Reponse A 2";
+    question2.reponseB = @"Reponse B 2zeazeeeee";
+    question2.reponseC = @"Reponse C 2ppppp";
+    question2.reponseD = @"Reponse D 2poipupu";
+    question2.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question2.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectD = [NSNumber numberWithBool:YES];
     
     Question *question3 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"

@@ -11,7 +11,7 @@
 @interface Questionnaire : NSObject
 
 @property (nonatomic,strong) NSArray *listeQuestion;
-@property (nonatomic,strong) NSArray *listeReponse;
+@property (nonatomic,strong) NSMutableArray *listeReponse;
 
 -(id) init;
 

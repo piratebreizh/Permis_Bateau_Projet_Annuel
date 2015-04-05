@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		683822DC1AD1A7A800C6B6B2 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 683822DB1AD1A7A800C6B6B2 /* Question.m */; };
 		685D13381A582DE200230FFA /* Questionnaire.m in Sources */ = {isa = PBXBuildFile; fileRef = 685D13371A582DE200230FFA /* Questionnaire.m */; };
 		685D133A1A598A4B00230FFA /* valider.png in Resources */ = {isa = PBXBuildFile; fileRef = 685D13391A598A4B00230FFA /* valider.png */; };
 		689DF0441A18C6920076133D /* ViewListeDeroulanteExamenThematique.m in Sources */ = {isa = PBXBuildFile; fileRef = 689DF0431A18C6920076133D /* ViewListeDeroulanteExamenThematique.m */; };
@@ -22,7 +23,6 @@
 		68B58BB11A176F940026C3B0 /* Permis_BateauTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B58BB01A176F940026C3B0 /* Permis_BateauTests.m */; };
 		68B58BBF1A1774540026C3B0 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B58BBE1A1774540026C3B0 /* Theme.m */; };
 		68C8E6F31AB312A6007A624F /* balise_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68C8E6F21AB312A6007A624F /* balise_test.jpg */; };
-		68C8E6F91AB5E8C2007A624F /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C8E6F81AB5E8C2007A624F /* Question.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		683822DA1AD1A7A800C6B6B2 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
+		683822DB1AD1A7A800C6B6B2 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		685D13361A582DE200230FFA /* Questionnaire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Questionnaire.h; sourceTree = "<group>"; };
 		685D13371A582DE200230FFA /* Questionnaire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Questionnaire.m; sourceTree = "<group>"; };
 		685D13391A598A4B00230FFA /* valider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = valider.png; path = "Permis Bateau/Images.xcassets/valider.png"; sourceTree = "<group>"; };
@@ -62,8 +64,6 @@
 		68B58BBD1A1774540026C3B0 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		68B58BBE1A1774540026C3B0 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		68C8E6F21AB312A6007A624F /* balise_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = balise_test.jpg; sourceTree = "<group>"; };
-		68C8E6F71AB5E8C2007A624F /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
-		68C8E6F81AB5E8C2007A624F /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +97,8 @@
 		689DF04B1A191FF60076133D /* Metier */ = {
 			isa = PBXGroup;
 			children = (
-				68C8E6F71AB5E8C2007A624F /* Question.h */,
-				68C8E6F81AB5E8C2007A624F /* Question.m */,
+				683822DA1AD1A7A800C6B6B2 /* Question.h */,
+				683822DB1AD1A7A800C6B6B2 /* Question.m */,
 				685D13361A582DE200230FFA /* Questionnaire.h */,
 				685D13371A582DE200230FFA /* Questionnaire.m */,
 				68B58BBD1A1774540026C3B0 /* Theme.h */,
@@ -292,7 +292,7 @@
 				68B58BBF1A1774540026C3B0 /* Theme.m in Sources */,
 				68B58B9D1A176F940026C3B0 /* ViewController.m in Sources */,
 				689DF0541A1A7FCC0076133D /* Reponse.m in Sources */,
-				68C8E6F91AB5E8C2007A624F /* Question.m in Sources */,
+				683822DC1AD1A7A800C6B6B2 /* Question.m in Sources */,
 				68B58B941A176F930026C3B0 /* main.m in Sources */,
 				685D13381A582DE200230FFA /* Questionnaire.m in Sources */,
 			);

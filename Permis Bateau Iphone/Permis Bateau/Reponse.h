@@ -10,10 +10,11 @@
 
 @interface Reponse : NSObject
 
-@property BOOL *reponseA;
-@property BOOL *reponseB;
-@property BOOL *reponseC;
-@property BOOL *reponseD;
+@property (nonatomic, retain) NSNumber *idQuestion;
+@property BOOL reponseA;
+@property BOOL reponseB;
+@property BOOL reponseC;
+@property BOOL reponseD;
 -(id) init;
 
 @end

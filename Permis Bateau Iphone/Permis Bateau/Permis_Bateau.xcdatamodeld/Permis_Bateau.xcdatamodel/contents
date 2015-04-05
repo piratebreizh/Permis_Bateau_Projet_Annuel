@@ -20,7 +20,7 @@
         <attribute name="themeValider" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Question" positionX="-74" positionY="-196" width="128" height="225"/>
+        <element name="Question" positionX="-74" positionY="-196" width="128" height="223"/>
         <element name="Theme" positionX="133" positionY="-237" width="128" height="88"/>
     </elements>
 </model>
