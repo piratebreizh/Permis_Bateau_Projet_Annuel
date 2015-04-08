@@ -1,10 +1,11 @@
 package com.projet.esgi.permisbateau;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.projet.esgi.myapplication.R;
 
 public class Selection extends ActionBarActivity {
 
