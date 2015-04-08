@@ -1,4 +1,3 @@
-<<<<<<< Original
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projet.esgi.myapplication" >
@@ -37,15 +36,3 @@
 
 </manifest>
 
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <application>
-        <activity android:name="com.projet.esgi.permisbateau.Selection"
-            android:label="@string/title_activity_selection"
-            >
-        </activity>
-    </application>
-
-</manifest>
->>>>>>> Added

@@ -4,11 +4,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.projet.esgi.myapplication.R;
 
+import database.DatabaseHelper;
+
 
 public class Accueil extends ActionBarActivity {
+
+    private DatabaseHelper dbHelper;
+
+    private Button createDbButton;
+    private Button launchQuestionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +24,14 @@ public class Accueil extends ActionBarActivity {
         setContentView(R.layout.activity_accueil);
     }
 
+/**temporaire*/////
+    public void createDb(){
+        dbHelper = new DatabaseHelper(getApplicationContext());
+    }
+
+    public void initListeners(){
+        createDbButton = (Button) findViewById(R.id.createdb);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
