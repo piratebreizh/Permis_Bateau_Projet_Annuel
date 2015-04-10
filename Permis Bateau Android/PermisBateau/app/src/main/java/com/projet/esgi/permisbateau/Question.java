@@ -10,11 +10,15 @@ import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
 
+import java.sql.SQLException;
+
+import database.DataBase;
 import database.DatabaseHelper;
 
 public class Question extends ActionBarActivity {
 
     private DatabaseHelper dbHelper;
+    private DataBase db;
     private TextView enonce;
     private TextView repA;
     private TextView repB;
@@ -32,28 +36,24 @@ public class Question extends ActionBarActivity {
         repC = (TextView) findViewById(R.id.q3);
         repD = (TextView) findViewById(R.id.q4);
 
-        chargeAQuestion();
+        try {
+            chargeAQuestion();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void chargeAQuestion(){
-        Bundle extras = getIntent().getExtras();
-        dbHelper = (DatabaseHelper)extras.getSerializable("DB");
-
-        // Open database for reading
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // Construct and execute query
-        Cursor cursor = db.query("Question",  // TABLE
-                new String[] { "enoncer","reponse_A","reponse_B","reponse_C","reponse_D" }, // SELECT
-                "id" + "= ?", new String[] { "1" },  // WHERE, ARGS
-                null, null, "id ASC", "100"); // GROUP BY, HAVING, ORDER BY, LIMIT
-        if (cursor != null)
-            cursor.moveToFirst();
-        // Load result into model object
-        enonce.setText(cursor.getString(1));
-        repA.setText(cursor.getString(2));
-        repB.setText(cursor.getString(3));
-        repC.setText(cursor.getString(4));
-        repD.setText(cursor.getString(5));
+    public void chargeAQuestion() throws SQLException {
+        db = new DataBase(getApplicationContext());
+        db.open();
+        Cursor cursor = db.getAQuestion();
+        if(cursor!=null){
+            enonce.setText(cursor.getString(0));
+            repA.setText(cursor.getString(1));
+            repB.setText(cursor.getString(2));
+            repC.setText(cursor.getString(3));
+            repD.setText(cursor.getString(4));
+        }
     }
 
     @Override

@@ -4,21 +4,35 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.Serializable;
+import java.io.File;
+import java.sql.SQLException;
+
 
 /**
  * Created by Ludwig on 02/04/2015.
  */
-public class DatabaseHelper extends SQLiteOpenHelper implements Serializable{
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Nom de notre base de données
     public static final String DB_NAME = "permisbateau.db";
+    // Chemin de la base de données
+    private static String DB_PATH = "";
     // Version de notre base de données
     public static final int DB_VERSION = 1;
+    // La base
+    private SQLiteDatabase mDataBase;
 
 
     public DatabaseHelper(Context context){
+
         super(context,DB_NAME,null,DB_VERSION);
+        if(android.os.Build.VERSION.SDK_INT >= 17){
+            DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+        }
+        else
+        {
+            DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
+        }
     }
 
     @Override
@@ -26,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable{
     Création de la base de donnée
      */
     public void onCreate(SQLiteDatabase db) {
+    if(!checkDataBase()){
         //table question
         db.execSQL("CREATE TABLE Question (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -41,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable{
                 "correct_C TEXT," +
                 "correct_D TEXT" +
                 ");");
-
+    }
     }
 
     /*
@@ -52,5 +67,28 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable{
         //table question
         db.execSQL("DROP TABLE IF EXISTS Question");
         onCreate(db);
+    }
+
+    //Vérifie que la base de données existe ici: /data/data/your package/databases/Da Name
+    private boolean checkDataBase()
+    {
+        File dbFile = new File(DB_PATH + DB_NAME);
+        return dbFile.exists();
+    }
+
+    //Ouverture de la base de données
+    public boolean openDataBase() throws SQLException
+    {
+        String mPath = DB_PATH + DB_NAME;
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        return mDataBase != null;
+    }
+
+    //Fermeture de la base de données
+    public synchronized void close()
+    {
+        if(mDataBase != null)
+            mDataBase.close();
+        super.close();
     }
 }

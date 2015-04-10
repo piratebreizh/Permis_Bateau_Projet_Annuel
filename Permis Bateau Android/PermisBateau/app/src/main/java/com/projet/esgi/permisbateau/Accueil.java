@@ -67,10 +67,10 @@ public class Accueil extends ActionBarActivity {
         launchQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("DB",dbHelper);
+                //Bundle bundle = new Bundle();
+                //bundle.putSerializable("DB",dbHelper);
                 Intent intent = new Intent(Accueil.this,Question.class);
-                intent.putExtras(bundle);
+                //intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
