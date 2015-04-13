@@ -17,7 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSManagedObjectContext *context = [self managedObjectContext];
+   /* NSManagedObjectContext *context = [self managedObjectContext];
     Theme *theme = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Theme"
                                       inManagedObjectContext:context];
@@ -41,21 +41,72 @@
     theme3.nom = @"Theme 3 - Feux ";
     
     
+    Serie *serie1 =  [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Serie"
+                      inManagedObjectContext:context];
+    serie1.nom = @"Serie numéro 1";
+    serie1.theme = theme;
+    serie1.numero = [NSNumber numberWithInt:1];
+    
+    Serie *serie2 =  [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Serie"
+                      inManagedObjectContext:context];
+    serie2.nom = @"Serie numéro 2";
+    serie2.theme = theme;
+    serie2.numero = [NSNumber numberWithInt:2];
+    
+    
+    Serie *serie3 =  [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Serie"
+                      inManagedObjectContext:context];
+    serie3.nom = @"Serie numéro 1";
+    serie3.theme = theme2;
+    serie3.numero = [NSNumber numberWithInt:3];
+
+    
+    
+    serie2.nom = @"Serie numéro 2";
+    
+    serie3.nom = @"Serie numéro 3";
+    
+    
+    
+    
     Question *question = [NSEntityDescription
                     insertNewObjectForEntityForName:@"Question"
                     inManagedObjectContext:context];
     
+    question.serie = serie1;
     question.numero= [NSNumber numberWithInt:1];
-    question.enoncer = @"enoncer 1 ";
+    question.enoncer = @"enoncer 1 de la première quenAAAAAAAAAAAAAAAAAAAAaaaaaaaeazeazdaezncozrnvozrnpnabzpfbnazofnaeronfôarbfoazbrnfoaebro^baezro^fnzrofnazof,azoe,foaze faz ofnaz";
     question.theme = theme;
+    question.image = @"balise_test.jpg";
+    question.reponseA = @"Reponse A aze";
+    question.reponseB = @"Reponse B zeazeeeee";
+    question.reponseC = @"Reponse C ppppp";
+    question.reponseD = @"Reponse D poipupu";
+    question.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question.reponseCorrectD = [NSNumber numberWithBool:YES];
+
     
     Question *question2 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
                           inManagedObjectContext:context];
-    
     question2.numero= [NSNumber numberWithInt:2];
-    question2.enoncer = @"enoncer 2 ";
+    question2.serie = serie1;
+    question2.enoncer = @"enoncer 2 d";
+    question2.image = @"valider.png";
     question2.theme = theme;
+    question2.reponseA = @"Reponse A 2";
+    question2.reponseB = @"Reponse B 2zeazeeeee";
+    question2.reponseC = @"Reponse C 2ppppp";
+    question2.reponseD = @"Reponse D 2poipupu";
+    question2.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question2.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectD = [NSNumber numberWithBool:YES];
     
     Question *question3 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
@@ -64,6 +115,7 @@
     question3.numero= [NSNumber numberWithInt:3];
     question3.enoncer = @"enoncer 3 ";
     question3.theme = theme2;
+    question3.serie = serie2;
     
     Question *question4 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
@@ -72,15 +124,14 @@
     question4.numero= [NSNumber numberWithInt:4];
     question4.enoncer = @"enoncer 4 ";
     question4.theme = theme3;
-    
+    question4.serie = serie3;
     
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-    
-    
-    
+    */
+
     return YES;
 }
 

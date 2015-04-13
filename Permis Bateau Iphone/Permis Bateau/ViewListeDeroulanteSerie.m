@@ -1,18 +1,18 @@
 //
-//  ViewListeDeroulanteExamenThematique.m
+//  ViewListeDeroulanteSerie.m
 //  Permis Bateau
 //
 //  Created by Alexandre Dubois on 16/11/2014.
 //  Copyright (c) 2014 Alexandre Dubois. All rights reserved.
 //
 
-#import "ViewListeDeroulanteExamenThematique.h"
+#import "ViewListeDeroulanteSerie.h"
 
-@interface ViewListeDeroulanteExamenThematique()
+@interface ViewListeDeroulanteSerie()
 
 @end
 
-@implementation ViewListeDeroulanteExamenThematique
+@implementation ViewListeDeroulanteSerie
 @synthesize managedObjectContext;
 
 
@@ -31,24 +31,23 @@
     [super viewDidLoad];
     
     id delegate = [[UIApplication sharedApplication] delegate];
-     self.managedObjectContext = [delegate managedObjectContext];
-     
-     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-     
-     NSEntityDescription *entity = [NSEntityDescription
-     entityForName:@"Theme" inManagedObjectContext:self.managedObjectContext];
-
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"numero" ascending:YES];
-
+    self.managedObjectContext = [delegate managedObjectContext];
     
-     [fetchRequest setEntity:entity];
-     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-     NSError *error;
-     self.listeThemes = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-     
-     for(Theme *tempTheme in self.listeThemes){
-         NSLog([NSString stringWithFormat:tempTheme.nom]);
-     }
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Serie" inManagedObjectContext:self.managedObjectContext];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"numero" ascending:YES];
+    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY theme.numero = %@",self.theme.numero];
+
+    [fetchRequest setPredicate:predicate];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    NSError *error;
+    self.listeSeries = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
 }
 
 - (void)viewDidUnload
@@ -74,12 +73,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.listeThemes count];
+    return [self.listeSeries count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   static NSString *CellIdentifier = @"CellTheme";
+    static NSString *CellIdentifier = @"CellTheme";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
@@ -87,9 +86,9 @@
     }
     
     // Configure the cell...
-    Theme *info = [self.listeThemes objectAtIndex:indexPath.row];
+    Serie *info = [self.listeSeries objectAtIndex:indexPath.row];
     cell.textLabel.text = info.nom;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.numero];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.numero];
     
     return cell;
 }
@@ -148,12 +147,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ViewListeDeroulanteSerie *viewListeDeroulanteSerie = segue.destinationViewController;
+    ViewQuestionnaire *viewQuestionnaire = segue.destinationViewController;
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    viewListeDeroulanteSerie.theme = [self.listeThemes objectAtIndex:indexPath.item];
+//    viewQuestionnaire.theme = [self.listeSeries objectAtIndex:indexPath.item];
+    viewQuestionnaire.serie = [self.listeSeries objectAtIndex:indexPath.item];
+    viewQuestionnaire.examenThematique = true;
     
-    NSLog(@"Le thème : ' %@ ' a été sélectionné " ,viewListeDeroulanteSerie.theme);
-
 }
 
 @end

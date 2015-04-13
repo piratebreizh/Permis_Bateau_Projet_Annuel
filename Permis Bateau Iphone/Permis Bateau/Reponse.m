@@ -12,10 +12,11 @@
 
 -(id) init{
     self = [super init];
-    self.reponseA = FALSE;
-    self.reponseB = FALSE;
-    self.reponseC = FALSE;
-    self.reponseD = FALSE;
+    self.idQuestion = 0;
+    self.reponseA = NO;
+    self.reponseB = NO;
+    self.reponseC = NO;
+    self.reponseD = NO;
     return self;
 }
 

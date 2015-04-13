@@ -8,20 +8,20 @@
 
 
 #import <UIKit/UIKit.h>
-#import "Theme.h"
-#import "ViewListeDeroulanteSerie.h"
+#import "ViewQuestionnaire.h"
+#import "Serie.h"
 
 
 
 
-@interface ViewListeDeroulanteExamenThematique : UITableViewController
+@interface ViewListeDeroulanteSerie : UITableViewController
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
-@property (nonatomic,strong) NSArray* listeThemes;
+@property (nonatomic,strong) NSArray* listeSeries;
 @property (strong, nonatomic) Theme *themeSelectionne;
 
-
+@property (strong, nonatomic) Theme *theme;
 
 
 @end

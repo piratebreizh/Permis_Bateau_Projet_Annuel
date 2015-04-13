@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "Theme.h"
 #import "Question.h"
+#import "Serie.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

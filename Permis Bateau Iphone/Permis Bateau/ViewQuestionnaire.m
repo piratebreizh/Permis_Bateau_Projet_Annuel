@@ -8,6 +8,7 @@
 
 #import "ViewQuestionnaire.h"
 #import "Question.h"
+#import "Reponse.h"
 
 
 @interface ViewQuestionnaire ()
@@ -15,6 +16,7 @@
 @end
 
 int numeroQuestionEnCour;
+Question *questionEnCour;
 NSTimer *timer;
 
 @implementation ViewQuestionnaire
@@ -22,11 +24,11 @@ NSTimer *timer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     
     self.barTimerQuestion.progress = 0.0;
     numeroQuestionEnCour = 0;
-    if(self.theme != nil){
+    if(self.serie != nil){
         if(self.examenThematique){
             [self executionExamenThematique];
         }else{
@@ -47,6 +49,7 @@ NSTimer *timer;
 -(void) executionExamenThematique{
     self.questionnaire = [[Questionnaire alloc]init];;
     
+    [self.barTimerQuestion setHidden:YES];
     
     id delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
@@ -61,7 +64,7 @@ NSTimer *timer;
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"numero" ascending:YES];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY theme.numero = %@",self.theme.numero];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY serie.numero = %@",self.serie.numero];
     
     [fetchRequest setEntity:entity];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
@@ -69,23 +72,126 @@ NSTimer *timer;
     
     NSError *error;
     self.questionnaire.listeQuestion = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.questionnaire.listeReponse = [NSMutableArray array];
     
-    for(Question *tempQues in self.questionnaire.listeQuestion){
+    /*for(Question *tempQues in self.questionnaire.listeQuestion){
         if(tempQues.enoncer != nil)
             NSLog([NSString stringWithFormat:tempQues.enoncer]);
+    }*/
+
+    [self questionSuivante];
+    [self initialisationScreenForQuestion];
+}
+
+
+-(void) initialisationScreenForQuestion{
+    
+    questionEnCour = self.questionnaire.listeQuestion[numeroQuestionEnCour-1];
+    
+    
+    if(questionEnCour.image != nil){
+        self.imageQuestion.image =[UIImage imageNamed:questionEnCour.image];
     }
     
-    [self questionSuivante];
+    if(questionEnCour.enoncer != nil){
+       [self.enoncerQuestion setText:questionEnCour.enoncer];
+        
+        // Une solution pas trop mal mais c'est pas exactement ça
+//       [self.enoncerQuestion setAdjustsFontSizeToFitWidth:YES];
+      
+        
     
+//        self.enoncerQuestion.text = [addresslist valueForKey:@"public"];
+        NSString *message = questionEnCour.enoncer;
+        CGSize maximumLabelSize = CGSizeMake(280,1000);
+        
+        // use font information from the UILabel to calculate the size
+        CGSize expectedLabelSize = [message sizeWithFont:self.enoncerQuestion.font constrainedToSize:maximumLabelSize lineBreakMode:NSLineBreakByWordWrapping];
+        
+        // create a frame that is filled with the UILabel frame data
+        CGRect newFrame = self.enoncerQuestion.frame;
+        
+        // resizing the frame to calculated size
+        newFrame.size.height = expectedLabelSize.height;
+        
+        // put calculated frame into UILabel frame
+        self.enoncerQuestion.frame = newFrame;
+    }else{
+        [self.enoncerQuestion setHidden:NO];
+    }
+
+    
+    
+    if(questionEnCour.reponseA != nil && questionEnCour.reponseCorrectA != nil){
+        [self.texteReponseA setText:questionEnCour.reponseA];
+        self.boutonASelect = false;
+        [self.boutonReponseA setTitle:@"F" forState:UIControlStateNormal];
+    }else{
+        [self.texteReponseA setHidden:YES];
+        [self.boutonReponseA setHidden:YES];
+    }
+
+    if(questionEnCour.reponseB != nil && questionEnCour.reponseCorrectB != nil){
+        [self.texteReponseB setText:questionEnCour.reponseB];
+         self.boutonBSelect = false;
+        [self.boutonReponseB setTitle:@"F" forState:UIControlStateNormal];
+
+    }else{
+        [self.texteReponseB setHidden:YES];
+        [self.boutonReponseB setHidden:YES];
+    }
+
+    if(questionEnCour.reponseC != nil && questionEnCour.reponseCorrectC != nil){
+        [self.texteReponseC setText:questionEnCour.reponseC];
+        self.boutonCSelect = false;
+        [self.boutonReponseC setTitle:@"F" forState:UIControlStateNormal];
+
+    }else{
+        [self.texteReponseC setHidden:YES];
+        [self.boutonReponseC setHidden:YES];
+    }
+
+    if(questionEnCour.reponseD != nil && questionEnCour.reponseCorrectD != nil){
+        [self.texteReponseD setText:questionEnCour.reponseD];
+         self.boutonDSelect = false;
+        [self.boutonReponseD setTitle:@"F" forState:UIControlStateNormal];
+
+    }else{
+        [self.texteReponseD setHidden:YES];
+        [self.boutonReponseD setHidden:YES];
+    }
+
 }
+
+- (IBAction)boutonValiderQuestion:(id)sender {
+    [self enregistrerReponseQuestion];
+    [self questionSuivante];
+    [self initialisationScreenForQuestion];
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+       [self.casovacCas invalidate];
+        self.casovacCas = nil;
+    }
+    [super viewWillDisappear:animated];
+}
+
+
 
 
 - (void) questionSuivante{
     [self incrementationNombreQuestion];
-    self.barTimerQuestion.progress = 0.0;
-    //[self startProgressTapped];
-    //[self performSelectorOnMainThread:@selector(makeMyProgressBarMoving) withObject:nil waitUntilDone:NO];
-    [self casovacTimer];
+    if(self.examenThematique){
+        if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
+            
+        }
+    }else{
+        self.barTimerQuestion.progress = 0.0;
+        //[self startProgressTapped];
+        //[self performSelectorOnMainThread:@selector(makeMyProgressBarMoving) withObject:nil waitUntilDone:NO];
+        [self casovacTimer];
+    }
 }
 
 
@@ -97,8 +203,6 @@ NSTimer *timer;
                                                      selector: @selector(casovacAction)
                                                      userInfo: nil
                                                       repeats: YES];
-    
-    
 }
 
 /*-(void)enregistreReponse{
@@ -117,12 +221,45 @@ NSTimer *timer;
         [self.barTimerQuestion setProgress:self.barTimerQuestion.progress + 0.033];
         NSLog(@"%f",self.barTimerQuestion.progress);
     } else {
-        NSLog(@"Temps limite depassé question suivante !");
         [self.casovacCas invalidate];
+        if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
+            self.casovacCas = nil;
+            [self enregistrerReponseQuestion];
+        }else{
+            NSLog(@"Temps limite depassé question suivante !");
+            [self questionSuivante];
+            [self initialisationScreenForQuestion];
+            [self enregistrerReponseQuestion];
+        }
     }
     self.cas = self.cas +1;
 }
 
+
+-(void)enregistrerReponseQuestion{
+    Reponse *reponse = [[Reponse alloc] init];
+    
+    if(self.boutonASelect){
+        reponse.reponseA = true;
+    }
+    if(self.boutonBSelect){
+        reponse.reponseB = true;
+    }
+    if(self.boutonCSelect){
+        reponse.reponseC = true;
+    }
+    if(self.boutonDSelect){
+        reponse.reponseD = true;
+    }
+    
+    if(questionEnCour.numero != nil){
+        reponse.idQuestion = questionEnCour.numero;
+    }
+    
+    
+    [self.questionnaire.listeReponse addObject:reponse];
+    
+}
 
 - (void) incrementationNombreQuestion {
     numeroQuestionEnCour++;
@@ -136,4 +273,43 @@ NSTimer *timer;
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)pushBoutonReponseA:(id)sender {
+    if(self.boutonASelect){
+        self.boutonASelect = false;
+        [self.boutonReponseA setTitle:@"F" forState:UIControlStateNormal];
+    }else{
+        self.boutonASelect = true;
+        [self.boutonReponseA setTitle:@"V" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)pushBoutonReponseB:(id)sender {
+    if(self.boutonBSelect){
+        self.boutonBSelect = false;
+        [self.boutonReponseB setTitle:@"F" forState:UIControlStateNormal];
+    }else{
+        self.boutonBSelect = true;
+        [self.boutonReponseB setTitle:@"V" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)pushBoutonReponseC:(id)sender {
+    if(self.boutonCSelect){
+        self.boutonCSelect = false;
+        [self.boutonReponseC setTitle:@"F" forState:UIControlStateNormal];
+    }else{
+        self.boutonCSelect = true;
+        [self.boutonReponseC setTitle:@"V" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)pushBoutonReponseD:(id)sender {
+    if(self.boutonDSelect){
+        self.boutonDSelect = false;
+        [self.boutonReponseD setTitle:@"F" forState:UIControlStateNormal];
+    }else{
+        self.boutonDSelect = true;
+        [self.boutonReponseD setTitle:@"V" forState:UIControlStateNormal];
+    }
+}
 @end
