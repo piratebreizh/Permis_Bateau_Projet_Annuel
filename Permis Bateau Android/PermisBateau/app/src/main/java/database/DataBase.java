@@ -42,6 +42,7 @@ public class DataBase {
         mDbHelper.close();
     }
 
+    //fonction temporaire
     public Cursor getAQuestion()
     {
         try
@@ -60,24 +61,17 @@ public class DataBase {
             throw mSQLException;
         }
     }
+
+    public Cursor getQuestionById(int id){
+        return null;
+    }
+
+    public int getNbTotalQuestions(){
+        return 0;
+    }
+
+    public Cursor getQuestionByIdAndThem(int id,int theme){
+        return null;
+    }
 }
 
-
-/*        Bundle extras = getIntent().getExtras();
-        dbHelper = (DatabaseHelper)extras.getSerializable("DB");
-
-        // Open database for reading
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // Construct and execute query
-        Cursor cursor = db.query("Question",  // TABLE
-                new String[] { "enoncer","reponse_A","reponse_B","reponse_C","reponse_D" }, // SELECT
-                "id" + "= ?", new String[] { "1" },  // WHERE, ARGS
-                null, null, "id ASC", "100"); // GROUP BY, HAVING, ORDER BY, LIMIT
-        if (cursor != null)
-            cursor.moveToFirst();
-        // Load result into model object
-        enonce.setText(cursor.getString(1));
-        repA.setText(cursor.getString(2));
-        repB.setText(cursor.getString(3));
-        repC.setText(cursor.getString(4));
-        repD.setText(cursor.getString(5));*/
