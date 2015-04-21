@@ -6,5 +6,7 @@ require_once(ROOT . '/config/config.php');
 require_once('autoload.php');
 
 // Rooting
-$router = new \FSF\Routing\Router();
-$router->dispatch(new \FSF\Routing\Request());
+$framework = new \FSF\Framework();
+$framework
+    ->setRouter(new FSF\Routing\Router())
+    ->initialize();

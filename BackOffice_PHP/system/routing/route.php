@@ -1,8 +1,7 @@
 <?php
-
 namespace FSF\Routing;
 
 
-class Response {
+class Route {
 
 }
