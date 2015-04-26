@@ -21,10 +21,10 @@
         android:text="Lance 1 question" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Examen"
+        android:id="@+id/launchexam"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

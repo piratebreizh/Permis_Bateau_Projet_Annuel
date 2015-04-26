@@ -1,29 +1,34 @@
 package com.projet.esgi.permisbateau;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import database.DataBase;
-import database.DatabaseHelper;
+import module.Question;
 
-public class Question extends ActionBarActivity {
+public class QuestionActivity extends ActionBarActivity {
 
-    private DatabaseHelper dbHelper;
     private DataBase db;
+    private ArrayList<Question> listQuestions;
+    private int indexCurrentQuestion;
     private TextView enonce;
     private TextView repA;
     private TextView repB;
     private TextView repC;
     private TextView repD;
+    private Button nextQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +40,61 @@ public class Question extends ActionBarActivity {
         repB = (TextView) findViewById(R.id.q2);
         repC = (TextView) findViewById(R.id.q3);
         repD = (TextView) findViewById(R.id.q4);
+        nextQuestion = (Button) findViewById(R.id.nextQuestion);
+        listQuestions = new ArrayList<Question>();
+        indexCurrentQuestion =0;
 
-        try {
+        chargeQuestions();
+
+        initListeners();
+
+        chargeNextQuestion();
+
+        /*try {
             chargeAQuestion();
         } catch (SQLException e) {
             e.printStackTrace();
+        }*/
+    }
+
+    public void initListeners(){
+        nextQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chargeNextQuestion();
+            }
+        });
+    }
+
+    /**
+     * Récupère la liste des questions
+     */
+    public void chargeQuestions(){
+        Bundle bundle = getIntent().getExtras();
+        listQuestions = bundle.getParcelableArrayList("listQuestions");
+    }
+
+
+    /**
+     * Récupère les réponses
+     * Charge la prochaine question ou lance l'activity correction
+     */
+    public void chargeNextQuestion(){
+        //
+        if(listQuestions.size()>=indexCurrentQuestion){
+            Question q = listQuestions.get(indexCurrentQuestion);
+            if(q!=null) {
+                enonce.setText(q.getEnoncer());
+                repA.setText(q.getReponse_A());
+                repB.setText(q.getReponse_B());
+                repC.setText(q.getReponse_C());
+                repD.setText(q.getReponse_D());
+                indexCurrentQuestion++;
+            }
+        }
+        else{
+            //ouvre l'activity Correction
+            //TODO
         }
     }
 
@@ -55,6 +110,7 @@ public class Question extends ActionBarActivity {
             repD.setText(cursor.getString(4));
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

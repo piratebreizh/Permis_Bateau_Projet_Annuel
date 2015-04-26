@@ -35,14 +35,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
     @Override
     /*
     Création de la base de donnée
      */
     public void onCreate(SQLiteDatabase db) {
-    if(!checkDataBase()){
+    //if(!checkDataBase()){
         //table question
-        db.execSQL("CREATE TABLE Question (" +
+        /*db.execSQL("CREATE TABLE Question (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "numero INTEGER," +
                 "pathimage TEXT," +
@@ -55,8 +56,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "correct_B TEXT," +
                 "correct_C TEXT," +
                 "correct_D TEXT" +
-                ");");
-    }
+                ");");*/
+    //}
     }
 
     /*
@@ -90,5 +91,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(mDataBase != null)
             mDataBase.close();
         super.close();
+    }
+
+    /**
+     * Supprime les tables
+     * @param db
+     */
+    public void dropDataBase(SQLiteDatabase db){
+        db.execSQL("DROP TABLE IF EXISTS Question");
     }
 }

@@ -7,19 +7,19 @@ import android.view.MenuItem;
 
 import com.projet.esgi.myapplication.R;
 
-public class Statistiques extends ActionBarActivity {
+public class SelectionActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistiques);
+        setContentView(R.layout.activity_selection);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_statistiques, menu);
+        getMenuInflater().inflate(R.menu.menu_selection, menu);
         return true;
     }
 
