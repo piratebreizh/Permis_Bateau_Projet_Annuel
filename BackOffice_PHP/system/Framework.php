@@ -94,10 +94,22 @@ class Framework
     {
         //TODO Instanciate a Logger
         $this->setRequest($this->getRequest());
-        var_dump($this->request);
 
-        //TODO Dispatch
-//        $this->preDispatch();
-//        $this->dispatch();
+        $this->dispatch();
+    }
+
+    public function dispatch()
+    {
+        $route = $this->router->getRoute($this->request);
+
+        if ($route == null)
+            $this->getRouteError();
+
+        $route->run();
+    }
+
+    public function getRouteError()
+    {
+        throw new \FSF\Error\NotFoundError();
     }
 }

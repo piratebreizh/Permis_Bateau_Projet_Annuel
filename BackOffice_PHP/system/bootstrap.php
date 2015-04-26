@@ -8,5 +8,5 @@ require_once('autoload.php');
 // Rooting
 $framework = new \FSF\Framework();
 $framework
-    ->setRouter(new FSF\Routing\Router())
+    ->setRouter(new \APP\Routing\Router\Back())
     ->initialize();

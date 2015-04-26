@@ -4,10 +4,14 @@ namespace FSF\Routing;
 use FSF\Routing\Request;
 use FSF\Exception;
 
-abstract class Route {
+abstract class Route
+{
 
     /** @var  Request */
     private $request;
+
+    protected $action;
+    protected $controller;
 
 
     /**
@@ -39,16 +43,25 @@ abstract class Route {
     abstract public function canHandle();
 
     /**
-     * Must return Controller class name
      * @return string
      */
-    abstract public function getControllerName();
+    abstract public function getController();
 
     /**
-     * Must return action to call
      * @return string
      */
-    abstract public function getAction();
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param string $action
+     */
+    public function setAction($action)
+    {
+        $this->action = (string)$action;
+    }
 
     /**
      * Can be used to apply something on request object
@@ -56,6 +69,13 @@ abstract class Route {
     public function handle()
     {
 
+    }
+
+    public function run()
+    {
+        $actionCalled = $this->getAction();
+
+        $this->getController()->$actionCalled();
     }
 
     /**

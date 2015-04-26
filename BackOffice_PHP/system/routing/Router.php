@@ -13,6 +13,13 @@ class Router
     private $originalRequest;
 
     /**
+     * Construct - may define routes to instantiate
+     */
+    public function __construct()
+    {
+    }
+
+    /**
      * @param Request $request
      *
      * @return $this
@@ -66,7 +73,7 @@ class Router
      *
      * @return Route|null
      */
-    public function dispatch(Request $request)
+    public function getRoute(Request $request)
     {
         $this->setOriginalRequest($request);
         $redispatch = false;
@@ -84,4 +91,5 @@ class Router
 
         return $routeSelected;
     }
+
 }
