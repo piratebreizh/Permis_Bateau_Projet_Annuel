@@ -1,5 +1,5 @@
 <?php
-require_once 'string.php';
+require_once 'String.php';
 use FSF\String as String;
 
 // Autoload Registering for PHPUnit
@@ -62,7 +62,6 @@ spl_autoload_register(function ($class) {
 
     // get the relative class name
     $relative_class = substr($class, $len);
-    $relative_class = strtolower(String::to_Case($relative_class));
 
     // replace the namespace prefix with the base directory, replace namespace
     // separators with directory separators in the relative class name, append
