@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
@@ -17,17 +18,23 @@ import java.util.ArrayList;
 
 import database.DataBase;
 import module.Question;
+import module.Reponse;
 
 public class QuestionActivity extends ActionBarActivity {
 
     private DataBase db;
     private ArrayList<Question> listQuestions;
+    private ArrayList<Reponse> listReponses;
     private int indexCurrentQuestion;
     private TextView enonce;
-    private TextView repA;
-    private TextView repB;
-    private TextView repC;
-    private TextView repD;
+    private TextView txtRepA;
+    private TextView txtRepB;
+    private TextView txtRepC;
+    private TextView txtRepD;
+    private CheckBox repA;
+    private CheckBox repB;
+    private CheckBox repC;
+    private CheckBox repD;
     private Button nextQuestion;
 
     @Override
@@ -36,12 +43,17 @@ public class QuestionActivity extends ActionBarActivity {
         setContentView(R.layout.activity_question);
 
         enonce = (TextView) findViewById(R.id.enonce);
-        repA = (TextView) findViewById(R.id.q1);
-        repB = (TextView) findViewById(R.id.q2);
-        repC = (TextView) findViewById(R.id.q3);
-        repD = (TextView) findViewById(R.id.q4);
+        txtRepA = (TextView) findViewById(R.id.q1);
+        txtRepB = (TextView) findViewById(R.id.q2);
+        txtRepC = (TextView) findViewById(R.id.q3);
+        txtRepD = (TextView) findViewById(R.id.q4);
+        repA = (CheckBox) findViewById(R.id.rep1);
+        repB = (CheckBox) findViewById(R.id.rep2);
+        repC = (CheckBox) findViewById(R.id.rep3);
+        repD = (CheckBox) findViewById(R.id.rep4);
         nextQuestion = (Button) findViewById(R.id.nextQuestion);
         listQuestions = new ArrayList<Question>();
+        listReponses = new ArrayList<Reponse>();
         indexCurrentQuestion =0;
 
         chargeQuestions();
@@ -80,21 +92,33 @@ public class QuestionActivity extends ActionBarActivity {
      * Charge la prochaine question ou lance l'activity correction
      */
     public void chargeNextQuestion(){
-        //
-        if(listQuestions.size()>=indexCurrentQuestion){
+        //récupère les réponses si ce n'est pas la première question
+        if(indexCurrentQuestion>0){
+            Reponse rep = new Reponse(repA.isChecked(),repB.isChecked(),repC.isChecked(),repD.isChecked());
+            listReponses.add(rep);
+        }
+        //charge la prochaine question
+        if(listQuestions.size()>indexCurrentQuestion){
             Question q = listQuestions.get(indexCurrentQuestion);
             if(q!=null) {
                 enonce.setText(q.getEnoncer());
-                repA.setText(q.getReponse_A());
-                repB.setText(q.getReponse_B());
-                repC.setText(q.getReponse_C());
-                repD.setText(q.getReponse_D());
+                txtRepA.setText(q.getReponse_A());
+                txtRepB.setText(q.getReponse_B());
+                txtRepC.setText(q.getReponse_C());
+                txtRepD.setText(q.getReponse_D());
                 indexCurrentQuestion++;
             }
         }
         else{
             //ouvre l'activity Correction
             //TODO
+            for(Reponse r : listReponses){
+                Log.i("txtRepA",String.valueOf(r.getRepA()));
+                Log.i("txtRepB", String.valueOf(r.getRepB()));
+                Log.i("txtRepC", String.valueOf(r.getRepC()));
+                Log.i("txtRepD", String.valueOf(r.getRepD()));
+            }
+
         }
     }
 
@@ -104,10 +128,10 @@ public class QuestionActivity extends ActionBarActivity {
         Cursor cursor = db.getAQuestion();
         if(cursor!=null){
             enonce.setText(cursor.getString(0));
-            repA.setText(cursor.getString(1));
-            repB.setText(cursor.getString(2));
-            repC.setText(cursor.getString(3));
-            repD.setText(cursor.getString(4));
+            txtRepA.setText(cursor.getString(1));
+            txtRepB.setText(cursor.getString(2));
+            txtRepC.setText(cursor.getString(3));
+            txtRepD.setText(cursor.getString(4));
         }
     }
 
