@@ -8,5 +8,10 @@ class Controller extends \FSF\Controller
     {
         $id = $this->getRequest()->get('id',0);
         echo 'afficher Question : '.$id;
+
+        $model = new \APP\Model\Question();
+        $question = $model->get($id);
+
+        var_dump($question->cols);
     }
 }
