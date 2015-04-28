@@ -17,7 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-   /* NSManagedObjectContext *context = [self managedObjectContext];
+    
+    
+  /*  NSManagedObjectContext *context = [self managedObjectContext];
     Theme *theme = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Theme"
                                       inManagedObjectContext:context];
@@ -79,7 +81,7 @@
     question.serie = serie1;
     question.numero= [NSNumber numberWithInt:1];
     question.enoncer = @"enoncer 1 de la première quenAAAAAAAAAAAAAAAAAAAAaaaaaaaeazeazdaezncozrnvozrnpnabzpfbnazofnaeronfôarbfoazbrnfoaebro^baezro^fnzrofnazof,azoe,foaze faz ofnaz";
-    question.theme = theme;
+    //question.theme = theme;
     question.image = @"balise_test.jpg";
     question.reponseA = @"Reponse A aze";
     question.reponseB = @"Reponse B zeazeeeee";
@@ -98,15 +100,15 @@
     question2.serie = serie1;
     question2.enoncer = @"enoncer 2 d";
     question2.image = @"valider.png";
-    question2.theme = theme;
+    //question2.theme = theme;
     question2.reponseA = @"Reponse A 2";
     question2.reponseB = @"Reponse B 2zeazeeeee";
     question2.reponseC = @"Reponse C 2ppppp";
     question2.reponseD = @"Reponse D 2poipupu";
-    question2.reponseCorrectA = [NSNumber numberWithBool:NO];
-    question2.reponseCorrectB = [NSNumber numberWithBool:YES];
-    question2.reponseCorrectC = [NSNumber numberWithBool:YES];
-    question2.reponseCorrectD = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectA = [NSNumber numberWithBool:YES];
+    question2.reponseCorrectB = [NSNumber numberWithBool:NO];
+    question2.reponseCorrectC = [NSNumber numberWithBool:NO];
+    question2.reponseCorrectD = [NSNumber numberWithBool:NO];
     
     Question *question3 = [NSEntityDescription
                           insertNewObjectForEntityForName:@"Question"
@@ -114,7 +116,7 @@
     
     question3.numero= [NSNumber numberWithInt:3];
     question3.enoncer = @"enoncer 3 ";
-    question3.theme = theme2;
+  //  question3.theme = theme2;
     question3.serie = serie2;
     
     Question *question4 = [NSEntityDescription
@@ -123,14 +125,81 @@
     
     question4.numero= [NSNumber numberWithInt:4];
     question4.enoncer = @"enoncer 4 ";
-    question4.theme = theme3;
+//    question4.theme = theme3;
     question4.serie = serie3;
+    
+    
+    Serie *serie4 =  [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Serie"
+                      inManagedObjectContext:context];
+    serie4.nom = @"Serie BLANC numéro 1";
+    serie4.theme = nil;
+    serie4.numero = [NSNumber numberWithInt:4];
+    
+    
+    Question *question5 = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Question"
+                          inManagedObjectContext:context];
+    
+    question5.serie = serie4;
+    question5.numero= [NSNumber numberWithInt:4];
+    question5.enoncer = @"enoncer 1 de la première quenAAAAAAAAAAAAAAAAAAAAaaaaaaaeazeazdaezncozrnvozrnpnabzpfbnazofnaeronfôarbfoazbrnfoaebro^baezro^fnzrofnazof,azoe,foaze faz ofnaz";
+    //question.theme = theme;
+    question5.image = @"balise_test.jpg";
+    question5.reponseA = @"Reponse A aze";
+    question5.reponseB = @"Reponse B zeazeeeee";
+    question5.reponseC = @"Reponse C ppppp";
+    question5.reponseD = @"Reponse D poipupu";
+    question5.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question5.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question5.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question5.reponseCorrectD = [NSNumber numberWithBool:YES];
+
+    
+    Question *question6 = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Question"
+                          inManagedObjectContext:context];
+    
+    question6.serie = serie4;
+    question6.numero= [NSNumber numberWithInt:1];
+    question6.enoncer = @"enoncer 2 de la première quenAAAAAAAAAAAAAAAAAAAAaaaaaaaeazeazdaezncozrnvozrnpnabzpfbnazofnaeronfôarbfoazbrnfoaebro^baezro^fnzrofnazof,azoe,foaze faz ofnaz";
+    //question.theme = theme;
+    question6.image = @"balise_test.jpg";
+    question6.reponseA = @"Reponse A aze";
+    question6.reponseB = @"Reponse B zeazeeeee";
+    question6.reponseC = @"Reponse C ppppp";
+    question6.reponseD = @"Reponse D poipupu";
+    question6.reponseCorrectA = [NSNumber numberWithBool:NO];
+    question6.reponseCorrectB = [NSNumber numberWithBool:YES];
+    question6.reponseCorrectC = [NSNumber numberWithBool:YES];
+    question6.reponseCorrectD = [NSNumber numberWithBool:YES];
+
+    
+    Cours *cours1 = [NSEntityDescription
+                     insertNewObjectForEntityForName:@"Cours"
+                     inManagedObjectContext:context];
+    cours1.id = [NSNumber numberWithInt:1];
+    cours1.nomPDF = @"pdf-test";
+    cours1.nomCours = @"Cours balsie";
+    cours1.theme = theme;
+    
+    Cours *cours2 = [NSEntityDescription
+                     insertNewObjectForEntityForName:@"Cours"
+                     inManagedObjectContext:context];
+    cours2.id = [NSNumber numberWithInt:2];
+    cours2.nomPDF = @"pdf-test2";
+    cours2.nomCours = @"Cours signalisation";
+    cours2.theme = theme2;
+    
     
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-    */
+        */
+    
+
+    
 
     return YES;
 }

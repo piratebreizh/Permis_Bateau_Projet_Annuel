@@ -9,7 +9,7 @@
 #import "ViewQuestionnaire.h"
 #import "Question.h"
 #import "Reponse.h"
-
+#import "ViewCorrection.h"
 
 @interface ViewQuestionnaire ()
 
@@ -29,11 +29,11 @@ NSTimer *timer;
     self.barTimerQuestion.progress = 0.0;
     numeroQuestionEnCour = 0;
     if(self.serie != nil){
-        if(self.examenThematique){
+       // if(self.examenThematique){
             [self executionExamenThematique];
-        }else{
+        //}else{
             
-        }
+       // }
         
         /*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
          NSEntityDescription *entity = [NSEntityDescription entityForName:@"Question" inManagedObjectContext:context];
@@ -47,9 +47,16 @@ NSTimer *timer;
  * Si on est dans un examen thematique, execute la simulation.
  */
 -(void) executionExamenThematique{
+    
+    self.boutonCorrection.hidden = YES;
+    
     self.questionnaire = [[Questionnaire alloc]init];;
     
-    [self.barTimerQuestion setHidden:YES];
+    if(self.examenThematique){
+        [self.barTimerQuestion setHidden:YES];
+    }else{
+        
+    }
     
     id delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
@@ -164,9 +171,16 @@ NSTimer *timer;
 }
 
 - (IBAction)boutonValiderQuestion:(id)sender {
+    if(!self.examenThematique){
+        if ([self.casovacCas isValid]) {
+            [self.casovacCas invalidate];
+            
+        }
+        //self.casovacCas = nil;
+    }
     [self enregistrerReponseQuestion];
     [self questionSuivante];
-    [self initialisationScreenForQuestion];
+    
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -184,13 +198,20 @@ NSTimer *timer;
     [self incrementationNombreQuestion];
     if(self.examenThematique){
         if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
-            
+            self.boutonValiderQuestion.hidden = YES;
+            self.boutonCorrection.hidden = NO;
         }
+        [self initialisationScreenForQuestion];
     }else{
+        if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
+            self.boutonValiderQuestion.hidden = YES;
+            self.boutonCorrection.hidden = NO;
+        }
         self.barTimerQuestion.progress = 0.0;
         //[self startProgressTapped];
         //[self performSelectorOnMainThread:@selector(makeMyProgressBarMoving) withObject:nil waitUntilDone:NO];
         [self casovacTimer];
+        [self initialisationScreenForQuestion];
     }
 }
 
@@ -198,7 +219,7 @@ NSTimer *timer;
 -(void)casovacTimer{
     self.barTimerQuestion.progress = 0;
     self.cas = 0;
-    self.casovacCas = [NSTimer scheduledTimerWithTimeInterval: 1
+    self.casovacCas = [NSTimer scheduledTimerWithTimeInterval: 1.0f
                                                        target: self
                                                      selector: @selector(casovacAction)
                                                      userInfo: nil
@@ -221,20 +242,43 @@ NSTimer *timer;
         [self.barTimerQuestion setProgress:self.barTimerQuestion.progress + 0.033];
         NSLog(@"%f",self.barTimerQuestion.progress);
     } else {
-        [self.casovacCas invalidate];
+        //[self.casovacCas invalidate];
         if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
+                 NSLog(@"Temps limite depassé Fin questionnaire !");
+//            [self.casovacCas invalidate];
+            //self.casovacCas = nil;
+            /*if ([self.casovacCas isValid]) {
+                [self.casovacCas invalidate];
+
+            }
             self.casovacCas = nil;
+            */
             [self enregistrerReponseQuestion];
+
         }else{
             NSLog(@"Temps limite depassé question suivante !");
+            [self enregistrerReponseQuestionTempsDepasse];
             [self questionSuivante];
             [self initialisationScreenForQuestion];
-            [self enregistrerReponseQuestion];
         }
     }
     self.cas = self.cas +1;
 }
 
+-(void)enregistrerReponseQuestionTempsDepasse{
+    Reponse *reponse = [[Reponse alloc] init];
+    
+
+        reponse.reponseA = false;
+        reponse.reponseB = false;
+        reponse.reponseC = false;
+        reponse.reponseD = false;
+
+        reponse.idQuestion = questionEnCour.numero;
+    
+    
+    [self.questionnaire.listeReponse addObject:reponse];
+}
 
 -(void)enregistrerReponseQuestion{
     Reponse *reponse = [[Reponse alloc] init];
@@ -310,6 +354,25 @@ NSTimer *timer;
     }else{
         self.boutonDSelect = true;
         [self.boutonReponseD setTitle:@"V" forState:UIControlStateNormal];
+    }
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+        [self enregistrerReponseQuestion];
+        ViewCorrection *viewCorrection = (ViewCorrection *)[segue destinationViewController];
+        viewCorrection.questionnaire = self.questionnaire;
+}
+
+
+- (IBAction)pushBoutonCorrection:(id)sender {
+    
+    if(!self.examenThematique){
+        if ([self.casovacCas isValid]) {
+            [self.casovacCas invalidate];
+            
+        }
+        self.casovacCas = nil;
     }
 }
 @end

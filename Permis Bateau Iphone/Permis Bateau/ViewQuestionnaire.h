@@ -26,6 +26,7 @@
 @property Questionnaire *questionnaire;
 @property (nonatomic, assign) BOOL examenThematique;
 
+@property (weak, nonatomic) IBOutlet UIButton *boutonValiderQuestion;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
@@ -58,6 +59,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *texteReponseD;
 
 
+@property (weak, nonatomic) IBOutlet UIButton *boutonCorrection;
+- (IBAction)pushBoutonCorrection:(id)sender;
 
 @end
 

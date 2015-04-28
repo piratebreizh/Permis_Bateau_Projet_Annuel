@@ -8,23 +8,20 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ViewQuestionnaire.h"
-#import "Serie.h"
+#import "ViewListeDeroulanteCours.h"
+#include "Cours.h"
 
 
 
 
-@interface ViewListeDeroulanteSerie : UITableViewController
+@interface ViewListeDeroulanteCours : UITableViewController
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (nonatomic,strong) NSArray* listeCours;
+@property (strong, nonatomic) Cours *themeCours;
 
-@property (nonatomic,strong) NSArray* listeSeries;
 
-@property (strong, nonatomic) Theme *themeSelectionne;
-@property (strong, nonatomic) Theme *theme;
-
-@property (nonatomic, assign) BOOL examenThematique;
 
 
 @end

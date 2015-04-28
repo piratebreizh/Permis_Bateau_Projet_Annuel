@@ -30,6 +30,7 @@
 {
     [super viewDidLoad];
     
+    
     id delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
     
@@ -40,9 +41,13 @@
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"numero" ascending:YES];
     
+    NSPredicate *predicate;
+    if(self.examenThematique){
+         predicate = [NSPredicate predicateWithFormat: @"ANY theme.numero = %@",self.theme.numero];
+    }else{
+        predicate = [NSPredicate predicateWithFormat: @"ANY theme = nil"];
+    }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY theme.numero = %@",self.theme.numero];
-
     [fetchRequest setPredicate:predicate];
     [fetchRequest setEntity:entity];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
@@ -151,7 +156,11 @@
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 //    viewQuestionnaire.theme = [self.listeSeries objectAtIndex:indexPath.item];
     viewQuestionnaire.serie = [self.listeSeries objectAtIndex:indexPath.item];
-    viewQuestionnaire.examenThematique = true;
+    if(self.examenThematique){
+        viewQuestionnaire.examenThematique = true;
+    }else{
+        viewQuestionnaire.examenThematique = false;
+    }
     
 }
 

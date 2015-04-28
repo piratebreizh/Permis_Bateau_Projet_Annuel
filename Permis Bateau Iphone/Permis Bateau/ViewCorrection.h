@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Questionnaire.h"
+#import "Historique.h"
 
 
 @interface ViewCorrection : UIViewController
+
+@property (strong, nonatomic) Questionnaire *questionnaire;
+@property (nonatomic,strong) NSMutableArray *listeBouton;
+
+
 
 @end
 

@@ -2,14 +2,14 @@
 //  Question.h
 //  Permis Bateau
 //
-//  Created by Alexandre Dubois on 06/04/2015.
+//  Created by Alexandre Dubois on 26/04/2015.
 //  Copyright (c) 2015 Alexandre Dubois. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Serie, Theme;
+@class Serie;
 
 @interface Question : NSManagedObject
 
@@ -24,7 +24,6 @@
 @property (nonatomic, retain) NSNumber * reponseCorrectC;
 @property (nonatomic, retain) NSNumber * reponseCorrectD;
 @property (nonatomic, retain) NSString * reponseD;
-@property (nonatomic, retain) Theme *theme;
 @property (nonatomic, retain) Serie *serie;
 
 @end

@@ -11,6 +11,7 @@
 #import "Theme.h"
 #import "Question.h"
 #import "Serie.h"
+#import "Cours.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
