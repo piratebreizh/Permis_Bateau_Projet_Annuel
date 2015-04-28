@@ -28,4 +28,14 @@ class Question extends \FSF\Model
     {
         return 'id_question';
     }
+
+    /**
+     * @return \FSF\EntityIterator
+     */
+    public function getAllQuestions()
+    {
+        $builder = $this->select();
+
+        return $this->findAll($builder);
+    }
 }

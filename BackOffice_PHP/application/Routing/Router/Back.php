@@ -9,6 +9,8 @@ class Back extends Router
 {
     public function __construct()
     {
+        $this->addRoute(new Route\Index());
+        $this->addRoute(new Route\WebService());
         $this->addRoute(new Route\Question());
         parent::__construct();
     }

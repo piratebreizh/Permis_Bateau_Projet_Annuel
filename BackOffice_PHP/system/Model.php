@@ -143,6 +143,7 @@ abstract class Model
         $cols = $entity->toArray();
         $queryBuilder = $this->getDb()->createQueryBuilder();
         $isUpdate = true;
+        //if primary key is null, it is an Update
         foreach ((array)$this->getPrimaryKey() as $key) {
             $isUpdate = $isUpdate && !is_null($cols[$key]);
         }
@@ -150,19 +151,25 @@ abstract class Model
             $query = $queryBuilder->update($this->getTableName());
             foreach ((array)$this->getPrimaryKey() as $key) {
                 $query->where($key . ' = :' . $key);
+                $query->setParameter($key, $cols[$key]);
             }
             foreach ($cols as $key => $value) {
                 if (
-                    !in_array($key, (array)$this->getPrimaryKey()) &&
-                    (
-                        ($fullUpdate == true && $value == null) ||
-                        false == is_null($value)
-                    )
+                    !in_array($key, (array)$this->getPrimaryKey())
+                    && ( ($fullUpdate == true && $value == null) || is_null($value) == false )
                 ) {
+                    $value = "'".mysql_real_escape_string($value)."'";
                     $query->set($key, $value);
                 }
             }
         } else {
+            foreach($cols as $key => $value){
+                if(is_null($value)) {
+                    unset($cols[$key]);
+                }else{
+                    $cols[$key] = "'".mysql_real_escape_string($value)."'";
+                }
+            }
             $query = $queryBuilder->insert($this->getTableName())->values($cols);
         }
 
