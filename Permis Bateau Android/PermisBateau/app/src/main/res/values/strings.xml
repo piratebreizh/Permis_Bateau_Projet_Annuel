@@ -9,5 +9,6 @@
     <string name="title_activity_contact">Contact</string>
     <string name="title_activity_statistiques">Statistiques</string>
     <string name="title_activity_selection">Selection</string>
+    <string name="title_activity_correction">CorrectionActivity</string>
 
 </resources>

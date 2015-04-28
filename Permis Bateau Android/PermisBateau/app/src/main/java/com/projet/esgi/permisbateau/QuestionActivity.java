@@ -1,5 +1,6 @@
 package com.projet.esgi.permisbateau;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -112,6 +113,12 @@ public class QuestionActivity extends ActionBarActivity {
         else{
             //ouvre l'activity Correction
             //TODO
+            Intent intent = new Intent(QuestionActivity.this,CorrectionActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("listRep",listReponses);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
             for(Reponse r : listReponses){
                 Log.i("txtRepA",String.valueOf(r.getRepA()));
                 Log.i("txtRepB", String.valueOf(r.getRepB()));

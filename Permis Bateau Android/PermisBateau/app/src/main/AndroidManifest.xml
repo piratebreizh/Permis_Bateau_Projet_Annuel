@@ -32,7 +32,10 @@
             android:name="com.projet.esgi.permisbateau.StatistiquesActivity"
             android:label="@string/title_activity_statistiques" >
         </activity>
+        <activity
+            android:name="com.projet.esgi.permisbateau.CorrectionActivity"
+            android:label="@string/title_activity_correction" >
+        </activity>
     </application>
 
 </manifest>
-
