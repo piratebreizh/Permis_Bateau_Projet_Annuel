@@ -13,16 +13,18 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="50"
+    android:weightSum="100"
     android:orientation="vertical">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="80"
             android:id="@+id/imageQuestion" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="New Text"
+            android:layout_height="0dp"
+            android:layout_weight="20"
             android:id="@+id/enonce"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
@@ -36,7 +38,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:layout_weight="100"
             android:id="@+id/q1" />
         <CheckBox
@@ -57,7 +58,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="100"
-            android:text="New Text"
             android:id="@+id/q2" />
         <CheckBox
             android:layout_width="wrap_content"
@@ -76,7 +76,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="100"
-            android:text="New Text"
             android:id="@+id/q3" />
         <CheckBox
             android:layout_width="wrap_content"
@@ -95,7 +94,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="100"
-            android:text="New Text"
             android:id="@+id/q4" />
         <CheckBox
             android:layout_width="wrap_content"
@@ -112,13 +110,14 @@
         android:orientation="horizontal">
 
         <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
+            android:id="@+id/timeBar"
             android:layout_weight="1"
-            android:layout_toLeftOf="@+id/nextQuestion"
-            android:layout_toStartOf="@+id/nextQuestion" />
+            android:max="30"
+            android:progress="0"
+            />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"

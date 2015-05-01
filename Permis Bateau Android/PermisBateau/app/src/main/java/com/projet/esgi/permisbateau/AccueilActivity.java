@@ -26,8 +26,8 @@ public class AccueilActivity extends ActionBarActivity {
     private DatabaseHelper dbHelper;
 
     private Button createDbButton;
-    private Button launchQuestionButton;
     private Button launchExamButton;
+    private Button launchThemeExam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,8 @@ public class AccueilActivity extends ActionBarActivity {
     public void initListeners(){
 
         createDbButton = (Button) findViewById(R.id.createdb);
-        launchQuestionButton = (Button) findViewById(R.id.launchquestion);
         launchExamButton = (Button) findViewById(R.id.launchexam);
+        launchThemeExam = (Button) findViewById(R.id.launchthemexam);
 
         createDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,17 +50,6 @@ public class AccueilActivity extends ActionBarActivity {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-
-        launchQuestionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Bundle bundle = new Bundle();
-                //bundle.putSerializable("DB",dbHelper);
-                Intent intent = new Intent(AccueilActivity.this,QuestionActivity.class);
-                //intent.putExtras(bundle);
-                startActivity(intent);
             }
         });
 
@@ -79,6 +68,14 @@ public class AccueilActivity extends ActionBarActivity {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        launchThemeExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccueilActivity.this,ThematiqueActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -113,7 +110,7 @@ public class AccueilActivity extends ActionBarActivity {
         DataBase db = new DataBase(getApplicationContext());
 
         db.open();
-        //db.dropDataBase();
+        db.dropDataBase();
         db.createDataBase();
         //dbHelper = new DatabaseHelper(getApplicationContext());
         //SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -269,6 +266,73 @@ public class AccueilActivity extends ActionBarActivity {
         values.put("correct_D","false");
 
         db.insert("Question", null, values);
+
+        values.clear();
+        values.put("idThematique",1);
+        values.put("nomThematique","Signalisation");
+        values.put("themeValide",0);
+
+        db.insert("Thematique", null, values);
+
+        values.clear();
+        values.put("idThematique",2);
+        values.put("nomThematique","Direction");
+        values.put("themeValide",0);
+
+        db.insert("Thematique", null, values);
+
+        values.clear();
+        values.put("idSerie",1);
+        values.put("nomSerie","Serie 1 Feux");
+        values.put("theme",1);
+
+        db.insert("Serie", null, values);
+
+        values.clear();
+        values.put("idSerie",2);
+        values.put("nomSerie","Serie 2 Feux");
+        values.put("theme",1);
+
+        db.insert("Serie", null, values);
+
+        values.clear();
+        values.put("idSerie",2);
+        values.put("nomSerie","Serie 1 Dir");
+        values.put("theme",1);
+
+        db.insert("Serie", null, values);
+
+        values.clear();
+
+        values.put("idQuestion",1);
+        values.put("idSerie",1);
+
+        db.insert("SerieQuestion", null, values);
+
+        values.put("idQuestion",2);
+        values.put("idSerie",1);
+
+        db.insert("SerieQuestion", null, values);
+
+        values.put("idQuestion",3);
+        values.put("idSerie",1);
+
+        db.insert("SerieQuestion", null, values);
+
+        values.put("idQuestion",1);
+        values.put("idSerie",2);
+
+        db.insert("SerieQuestion", null, values);
+
+        values.put("idQuestion",4);
+        values.put("idSerie",2);
+
+        db.insert("SerieQuestion", null, values);
+
+        values.put("idQuestion",5);
+        values.put("idSerie",2);
+
+        db.insert("SerieQuestion", null, values);
 
         db.close();
     }

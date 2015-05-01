@@ -17,14 +17,15 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/launchquestion"
-        android:text="Lance 1 question" />
+        android:text="@string/button_Blanc_Exam"
+        android:id="@+id/launchexam"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Examen"
-        android:id="@+id/launchexam"
+        android:text="@string/button_Theme_Exam"
+        android:id="@+id/launchthemexam"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

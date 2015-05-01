@@ -17,10 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.projet.esgi.permisbateau.SelectionActivity"
-            android:label="@string/title_activity_selection_thematique" >
-        </activity>
-        <activity
             android:name="com.projet.esgi.permisbateau.QuestionActivity"
             android:label="@string/title_activity_question" >
         </activity>
@@ -35,6 +31,10 @@
         <activity
             android:name="com.projet.esgi.permisbateau.CorrectionActivity"
             android:label="@string/title_activity_correction" >
+        </activity>
+        <activity
+            android:name="com.projet.esgi.permisbateau.ThematiqueActivity"
+            android:label="@string/title_activity_thematique" >
         </activity>
     </application>
 

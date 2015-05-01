@@ -37,36 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     @Override
-    /*
-    Création de la base de donnée
-     */
     public void onCreate(SQLiteDatabase db) {
-    //if(!checkDataBase()){
-        //table question
-        /*db.execSQL("CREATE TABLE Question (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "numero INTEGER," +
-                "pathimage TEXT," +
-                "enoncer TEXT," +
-                "reponse_A TEXT," +
-                "reponse_B TEXT," +
-                "reponse_C TEXT," +
-                "reponse_D TEXT," +
-                "correct_A TEXT," +
-                "correct_B TEXT," +
-                "correct_C TEXT," +
-                "correct_D TEXT" +
-                ");");*/
-    //}
+
     }
 
-    /*
-    Suppression et re-création des tables
-     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //table question
-        db.execSQL("DROP TABLE IF EXISTS Question");
         onCreate(db);
     }
 
@@ -91,13 +67,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(mDataBase != null)
             mDataBase.close();
         super.close();
-    }
-
-    /**
-     * Supprime les tables
-     * @param db
-     */
-    public void dropDataBase(SQLiteDatabase db){
-        db.execSQL("DROP TABLE IF EXISTS Question");
     }
 }

@@ -23,9 +23,13 @@ public class DataBase {
     }
 
     public void createDataBase(){
-        //mDbHelper.onCreate(mDb);
+        mDb.execSQL("CREATE TABLE Thematique (" +
+                "idThematique INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "nomThematique TEXT," +
+                "themeValide INTEGER" +
+                ");");
         mDb.execSQL("CREATE TABLE Question (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "idQuestion INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "numero INTEGER," +
                 "pathimage TEXT," +
                 "enoncer TEXT," +
@@ -38,10 +42,24 @@ public class DataBase {
                 "correct_C TEXT," +
                 "correct_D TEXT" +
                 ");");
+        mDb.execSQL("CREATE TABLE Serie (" +
+                "idSerie INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "nomSerie TEXT," +
+                "theme INTEGER," +
+                "FOREIGN KEY(theme) REFERENCES Thematique(idThematique)" +
+                ");");
+        mDb.execSQL("CREATE TABLE SerieQuestion (" +
+                "idQuestion INTEGER ," +
+                "idSerie INTEGER" +
+                ");");
+
     }
+
     public void dropDataBase(){
-        //mDbHelper.dropDataBase(mDb);
         mDb.execSQL("DROP TABLE IF EXISTS Question");
+        mDb.execSQL("DROP TABLE IF EXISTS Thematique");
+        mDb.execSQL("DROP TABLE IF EXISTS Serie");
+        mDb.execSQL("DROP TABLE IF EXISTS SerieQuestion");
     }
 
     public DataBase open() throws SQLException
@@ -67,6 +85,29 @@ public class DataBase {
 
     public void insert(String table,String column,ContentValues cv){
         mDb.insert(table,column,cv);
+    }
+
+    /**
+     * retourne tous les thèmes
+     * @return cursor
+     */
+    public Cursor getThemes(){
+        try
+        {
+            Cursor cursor = mDb.query("Thematique",  // TABLE
+                    new String[] { "nomThematique" }, // SELECT
+                    null, null,  // WHERE, ARGS
+                    null, null, "nomThematique ASC", "100"); // GROUP BY, HAVING, ORDER BY, LIMIT
+            if (cursor != null)
+                cursor.moveToFirst();
+            return cursor;
+        }
+        catch (Exception mSQLException)
+        {
+            Log.e("Error", "getThemes >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+
     }
 
     //fonction temporaire

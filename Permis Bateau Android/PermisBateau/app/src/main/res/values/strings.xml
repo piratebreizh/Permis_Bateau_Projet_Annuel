@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">My Application</string>
+    <string name="app_name">Permis Bateau</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_selection_thematique">SelectionThematique</string>
-    <string name="title_activity_question">Question</string>
+
+    <!--accueil-->
+    <string name="button_Theme_Exam">Examen Thematique</string>
+    <string name="button_Blanc_Exam">Examen Blanc</string>
+
+    <!--contact-->
     <string name="title_activity_contact">Contact</string>
+
+    <!--correction-->
+    <string name="title_activity_correction">Correction</string>
+
+    <!--question-->
+    <string name="title_activity_question">Question</string>
+
+    <!--statistiques-->
     <string name="title_activity_statistiques">Statistiques</string>
-    <string name="title_activity_selection">Selection</string>
-    <string name="title_activity_correction">CorrectionActivity</string>
+
+    <!--thematique-->
+    <string name="title_activity_thematique">Thematique</string>
 
 </resources>

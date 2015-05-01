@@ -9,10 +9,6 @@ import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
 
-import java.util.ArrayList;
-
-import module.Reponse;
-
 public class CorrectionActivity extends ActionBarActivity {
 
     //temporaire
@@ -23,7 +19,7 @@ public class CorrectionActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_correction);
 
-        txtCorrection = (TextView) findViewById(R.id.pageCorrect);
+        /*txtCorrection = (TextView) findViewById(R.id.pageCorrect);
 
         Bundle bundle = getIntent().getExtras();
         ArrayList<Reponse> list = bundle.getParcelableArrayList("listRep");
@@ -33,7 +29,7 @@ public class CorrectionActivity extends ActionBarActivity {
             txtCorrection.append(String.valueOf(r.getRepC()) + "\n");
             txtCorrection.append(String.valueOf(r.getRepD()) + "\n");
             txtCorrection.append("\n");
-        }
+        }*/
     }
 
 
