@@ -12,7 +12,7 @@ abstract class Model
     private $database;
 
     /** @var string */
-    private $entityIteratorClass = 'FSF\EntityIterator';
+    protected $entityIteratorClass = 'FSF\EntityIterator';
 
     /** @var  Session */
     private $session;
@@ -141,6 +141,7 @@ abstract class Model
     public function save(Entity $entity, $fullUpdate = false)
     {
         $cols = $entity->toArray();
+        $types = $entity->getTypes();
         $queryBuilder = $this->getDb()->createQueryBuilder();
         $isUpdate = true;
         //if primary key is null, it is an Update
@@ -150,27 +151,30 @@ abstract class Model
         if ($isUpdate) {
             $query = $queryBuilder->update($this->getTableName());
             foreach ((array)$this->getPrimaryKey() as $key) {
-                $query->where($key . ' = :' . $key);
-                $query->setParameter($key, $cols[$key]);
+                $type = (isset($types[$key])) ? $types[$key] : null;
+                $value = (isset($cols[$key])) ? $cols[$key] : null;
+                $query->andWhere($key . ' = :' . $key)
+                    ->setParameter($key, $value, $type);
             }
             foreach ($cols as $key => $value) {
                 if (
                     !in_array($key, (array)$this->getPrimaryKey())
                     && ( ($fullUpdate == true && $value == null) || is_null($value) == false )
                 ) {
-                    $value = "'".mysql_real_escape_string($value)."'";
-                    $query->set($key, $value);
+                    $type = (isset($types[$key])) ? $types[$key] : null;
+                    $query->set($key, ':' . $key)
+                        ->setParameter($key, $value, $type);
                 }
             }
         } else {
-            foreach($cols as $key => $value){
-                if(is_null($value)) {
-                    unset($cols[$key]);
-                }else{
-                    $cols[$key] = "'".mysql_real_escape_string($value)."'";
+            $query = $queryBuilder->insert($this->getTableName());
+            foreach ($cols as $key => $value) {
+                if (!in_array($key, (array)$this->getPrimaryKey()) || !$this->isAutoincrement()) {
+                    $type = (isset($types[$key])) ? $types[$key] : null;
+                    $query->setValue($key, ':' . $key)
+                        ->setParameter($key, $value, $type);
                 }
             }
-            $query = $queryBuilder->insert($this->getTableName())->values($cols);
         }
 
         $return = $query->execute();

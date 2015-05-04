@@ -18,7 +18,22 @@ class Question extends \FSF\Entity
         'enonce_D' => '',
     );
 
-    public function __construct(){
+    protected $type = array(
+        'id_question' => \PDO::PARAM_INT,
+        'numero_question' => \PDO::PARAM_INT,
+        'enonce_question' => \PDO::PARAM_STR,
+        'is_correct_A' => \PDO::PARAM_BOOL,
+        'is_correct_B' => \PDO::PARAM_BOOL,
+        'is_correct_C' => \PDO::PARAM_BOOL,
+        'is_correct_D' => \PDO::PARAM_BOOL,
+        'enonce_A' => \PDO::PARAM_STR,
+        'enonce_B' => \PDO::PARAM_STR,
+        'enonce_C' => \PDO::PARAM_STR,
+        'enonce_D' => \PDO::PARAM_STR,
+    );
+
+    public function __construct()
+    {
         $this->setModel(new \APP\Model\Question());
     }
 

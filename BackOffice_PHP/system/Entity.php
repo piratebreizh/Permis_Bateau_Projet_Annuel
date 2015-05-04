@@ -8,10 +8,16 @@ abstract class Entity
     /** @var  Model */
     protected $model;
     /**
-     * Structure of the identity indexed with key as field and values as values
-     * @var string[]
+     * Structure of the identity indexed with field as key and default values as values
+     * @var array
      */
     protected $cols = array();
+
+    /**
+     * Structure of the type of the identity indexed with field as key and type as values
+     * @var array
+     */
+    protected $types = array();
 
     /**
      * Get dependent model
@@ -59,6 +65,14 @@ abstract class Entity
     public function toArray()
     {
         return $this->cols;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypes()
+    {
+        return $this->types;
     }
 
     /**
