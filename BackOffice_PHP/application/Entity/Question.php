@@ -5,31 +5,31 @@ namespace APP\Entity;
 class Question extends \FSF\Entity
 {
     protected $cols = array(
-        'id_question' => null,
+        'id_question'     => null,
         'numero_question' => 0,
         'enonce_question' => '',
-        'is_correct_A' => 0,
-        'is_correct_B' => 0,
-        'is_correct_C' => 0,
-        'is_correct_D' => 0,
-        'enonce_A' => '',
-        'enonce_B' => '',
-        'enonce_C' => '',
-        'enonce_D' => '',
+        'is_correct_A'    => 0,
+        'is_correct_B'    => 0,
+        'is_correct_C'    => 0,
+        'is_correct_D'    => 0,
+        'enonce_A'        => '',
+        'enonce_B'        => '',
+        'enonce_C'        => '',
+        'enonce_D'        => '',
     );
 
     protected $type = array(
-        'id_question' => \PDO::PARAM_INT,
+        'id_question'     => \PDO::PARAM_INT,
         'numero_question' => \PDO::PARAM_INT,
         'enonce_question' => \PDO::PARAM_STR,
-        'is_correct_A' => \PDO::PARAM_BOOL,
-        'is_correct_B' => \PDO::PARAM_BOOL,
-        'is_correct_C' => \PDO::PARAM_BOOL,
-        'is_correct_D' => \PDO::PARAM_BOOL,
-        'enonce_A' => \PDO::PARAM_STR,
-        'enonce_B' => \PDO::PARAM_STR,
-        'enonce_C' => \PDO::PARAM_STR,
-        'enonce_D' => \PDO::PARAM_STR,
+        'is_correct_A'    => \PDO::PARAM_BOOL,
+        'is_correct_B'    => \PDO::PARAM_BOOL,
+        'is_correct_C'    => \PDO::PARAM_BOOL,
+        'is_correct_D'    => \PDO::PARAM_BOOL,
+        'enonce_A'        => \PDO::PARAM_STR,
+        'enonce_B'        => \PDO::PARAM_STR,
+        'enonce_C'        => \PDO::PARAM_STR,
+        'enonce_D'        => \PDO::PARAM_STR,
     );
 
     public function __construct()
@@ -140,6 +140,7 @@ class Question extends \FSF\Entity
     public function setId($id)
     {
         $this->cols['id_question'] = (int)$id;
+
         return $this;
     }
 
@@ -150,6 +151,7 @@ class Question extends \FSF\Entity
     public function setNumeroQuestion($numero_question)
     {
         $this->cols['numero_question'] = (int)$numero_question;
+
         return $this;
     }
 
@@ -160,6 +162,7 @@ class Question extends \FSF\Entity
     public function setEnonceQuestion($enonce_question)
     {
         $this->cols['enonce_question'] = (string)$enonce_question;
+
         return $this;
     }
 
@@ -170,6 +173,7 @@ class Question extends \FSF\Entity
     public function setIsCorrectA($is_correct_A)
     {
         $this->cols['is_correct_A'] = $is_correct_A ? 1 : 0;
+
         return $this;
     }
 
@@ -180,6 +184,7 @@ class Question extends \FSF\Entity
     public function setIsCorrectB($is_correct_B)
     {
         $this->cols['is_correct_B'] = $is_correct_B ? 1 : 0;
+
         return $this;
     }
 
@@ -190,6 +195,7 @@ class Question extends \FSF\Entity
     public function setIsCorrectC($is_correct_C)
     {
         $this->cols['is_correct_C'] = $is_correct_C ? 1 : 0;
+
         return $this;
     }
 
@@ -200,6 +206,7 @@ class Question extends \FSF\Entity
     public function setIsCorrectD($is_correct_D)
     {
         $this->cols['is_correct_D'] = $is_correct_D ? 1 : 0;
+
         return $this;
     }
 
@@ -210,6 +217,7 @@ class Question extends \FSF\Entity
     public function setEnonceA($enonce_A)
     {
         $this->cols['enonce_A'] = (string)$enonce_A;
+
         return $this;
     }
 
@@ -220,6 +228,7 @@ class Question extends \FSF\Entity
     public function setEnonceB($enonce_B)
     {
         $this->cols['enonce_B'] = (string)$enonce_B;
+
         return $this;
     }
 
@@ -230,6 +239,7 @@ class Question extends \FSF\Entity
     public function setEnonceC($enonce_C)
     {
         $this->cols['enonce_C'] = (string)$enonce_C;
+
         return $this;
     }
 
@@ -240,6 +250,7 @@ class Question extends \FSF\Entity
     public function setEnonceD($enonce_D)
     {
         $this->cols['enonce_D'] = (string)$enonce_D;
+
         return $this;
     }
 }

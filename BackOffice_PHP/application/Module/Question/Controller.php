@@ -2,6 +2,8 @@
 
 namespace APP\Module\Question;
 
+use APP\Entity\Examen;
+use APP\Entity\Theme;
 use APP\Model\Question as QuestionModel;
 use APP\Entity\Question as Question;
 

@@ -10,7 +10,7 @@ class Question extends \FSF\Model
      */
     public function getTableName()
     {
-        return 'questions';
+        return 'QUESTIONS';
     }
 
     /**
@@ -26,7 +26,7 @@ class Question extends \FSF\Model
      */
     public function getPrimaryKey()
     {
-        return 'id_question';
+        return array('id_question');
     }
 
     /**
