@@ -7,24 +7,24 @@ use APP\Entity\Theme;
 use APP\Model\Question as QuestionModel;
 use APP\Entity\Question as Question;
 
+use APP\Module\Question\View as ViewPath;
+
 class Controller extends \FSF\Controller
 {
     public function afficher()
     {
         $id = $this->getRequest()->get('id', 0);
-        echo 'afficher Question : ' . $id . '<br/>';
 
         $model = new QuestionModel();
         /** @var \APP\Entity\Question $question */
         $question = $model->get($id);
 
-        echo $question->getEnonceQuestion();
-        echo "<li>" . $question->getEnonceA();
-        echo "<li>" . $question->getEnonceB();
-        echo "<li>" . $question->getEnonceC();
-        echo "<li>" . $question->getEnonceD();
-
-        $question->setEnonceC("CCC")->save();
+        $currentView = new View();
+        $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
+        $currentView->setParam("question", $question);
+        echo $this->getView()
+            ->setParam('currentView', $currentView)
+            ->render();
     }
 
     public function creer()

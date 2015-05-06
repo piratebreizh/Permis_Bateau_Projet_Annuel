@@ -1,0 +1,9 @@
+<?php
+/** @var \APP\Entity\Question $question */
+$question = $this->question;
+if(!is_null($question)) {
+    echo "<h3>".$question->getEnonceQuestion()."</h3>";
+    echo $question->getEnonceA();
+}else{
+    echo "Pas de question correspondant à cet ID";
+}
