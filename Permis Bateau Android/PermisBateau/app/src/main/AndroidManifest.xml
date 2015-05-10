@@ -36,6 +36,10 @@
             android:name="com.projet.esgi.permisbateau.ThematiqueActivity"
             android:label="@string/title_activity_thematique" >
         </activity>
+        <activity
+            android:name="com.projet.esgi.permisbateau.SerieActivity"
+            android:label="@string/title_activity_serie" >
+        </activity>
     </application>
 
 </manifest>

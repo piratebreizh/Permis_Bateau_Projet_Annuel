@@ -296,9 +296,9 @@ public class AccueilActivity extends ActionBarActivity {
         db.insert("Serie", null, values);
 
         values.clear();
-        values.put("idSerie",2);
+        values.put("idSerie",3);
         values.put("nomSerie","Serie 1 Dir");
-        values.put("theme",1);
+        values.put("theme",2);
 
         db.insert("Serie", null, values);
 

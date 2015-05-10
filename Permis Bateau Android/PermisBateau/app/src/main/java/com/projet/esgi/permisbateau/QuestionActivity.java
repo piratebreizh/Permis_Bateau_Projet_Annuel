@@ -110,7 +110,7 @@ public class QuestionActivity extends ActionBarActivity {
             }
             @Override
             public void onFinish() {
-                Toast.makeText(getApplicationContext(),"Fin du timer",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Délai dépassé",Toast.LENGTH_LONG).show();
                 chargeNextQuestion();
             }
         }.start();
@@ -128,6 +128,10 @@ public class QuestionActivity extends ActionBarActivity {
         }
         //charge la prochaine question
         if(listQuestions.size()>indexCurrentQuestion){
+            if(countDownTimer != null) {
+                countDownTimer.cancel();
+                timer.setProgress(0);
+            }
             launchTimer();
             Question q = listQuestions.get(indexCurrentQuestion);
             if(q!=null) {
@@ -145,7 +149,7 @@ public class QuestionActivity extends ActionBarActivity {
         }
         else{
             //ouvre l'activity Correction
-            //TODO
+            countDownTimer.cancel();
             Intent intent = new Intent(QuestionActivity.this,CorrectionActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("listRep",listReponses);

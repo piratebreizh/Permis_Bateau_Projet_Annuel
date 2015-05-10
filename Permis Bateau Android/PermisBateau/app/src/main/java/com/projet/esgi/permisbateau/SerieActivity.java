@@ -14,71 +14,81 @@ import android.widget.ListView;
 import com.projet.esgi.myapplication.R;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import database.DataBase;
+import module.Examen;
 import module.Question;
 
-public class ThematiqueActivity extends ActionBarActivity {
+
+public class SerieActivity extends ActionBarActivity {
 
     private DataBase db;
-    private ListView listThemes;
-    private int[] listIdThemes;
+    private ListView listSeries;
+    private int[] listIdSeries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thematique);
+        setContentView(R.layout.activity_serie);
 
-        listThemes = (ListView) findViewById(R.id.listTheme);
+        listSeries = (ListView) findViewById(R.id.listSerie);
 
         try {
-            chargeThemes();
+            chargeSeries();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         initListener();
+
     }
 
-    public void chargeThemes() throws SQLException{
+    public void chargeSeries() throws SQLException {
         db = new DataBase(getApplicationContext());
+        Bundle bundle = getIntent().getExtras();
         db.open();
-        Cursor themesDB = db.getThemes();
-        String[] themes = new String[themesDB.getCount()];
-        listIdThemes = new int[themesDB.getCount()];
+        Cursor seriesDB = db.getSeries(bundle.getInt("idThematique"));
+        String[] series = new String[seriesDB.getCount()];
+        listIdSeries = new int[seriesDB.getCount()];
 
-        if (themesDB != null ) {
-            if  (themesDB.moveToFirst()) {
+        if (seriesDB != null ) {
+            if  (seriesDB.moveToFirst()) {
                 do {
-                    listIdThemes[themesDB.getPosition()] = themesDB.getInt(themesDB.getColumnIndex("idThematique"));
-                    themes[themesDB.getPosition()] = themesDB.getString(themesDB.getColumnIndex("nomThematique"));
-                }while (themesDB.moveToNext());
+                    listIdSeries[seriesDB.getPosition()] = seriesDB.getInt(seriesDB.getColumnIndex("idSerie"));
+                    series[seriesDB.getPosition()] = seriesDB.getString(seriesDB.getColumnIndex("nomSerie"));
+                }while (seriesDB.moveToNext());
             }
         }
         ArrayAdapter<String> themeAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, themes);
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, series);
 
-        listThemes.setAdapter(themeAdapter);
+        listSeries.setAdapter(themeAdapter);
         db.close();
     }
 
     public void initListener(){
-        listThemes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ThematiqueActivity.this, SerieActivity.class);
+                Intent intent = new Intent(SerieActivity.this, QuestionActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("idThematique",listIdThemes[position]);
+                Examen exam = new Examen(getApplicationContext());
+                try {
+                    exam.getQuestionsFromSerie(listIdSeries[position]);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                bundle.putParcelableArrayList("listQuestions",exam.getlistQuestions());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_thematique, menu);
+        getMenuInflater().inflate(R.menu.menu_serie, menu);
         return true;
     }
 

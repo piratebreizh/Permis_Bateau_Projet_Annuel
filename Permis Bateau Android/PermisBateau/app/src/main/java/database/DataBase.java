@@ -95,7 +95,7 @@ public class DataBase {
         try
         {
             Cursor cursor = mDb.query("Thematique",  // TABLE
-                    new String[] { "nomThematique" }, // SELECT
+                    new String[] { "idThematique","nomThematique" }, // SELECT
                     null, null,  // WHERE, ARGS
                     null, null, "nomThematique ASC", "100"); // GROUP BY, HAVING, ORDER BY, LIMIT
             if (cursor != null)
@@ -108,6 +108,48 @@ public class DataBase {
             throw mSQLException;
         }
 
+    }
+
+    /**
+     * Retourne les séries d'un thèmes
+     * @param idThematique
+     * @return
+     */
+    public Cursor getSeries(int idThematique){
+        try
+        {
+            Cursor cursor = mDb.query("Serie",  // TABLE
+                    new String[] { "idSerie","nomSerie" }, // SELECT
+                    "theme" + "= ?", new String[] { String.valueOf(idThematique) },  // WHERE, ARGS
+                    null, null, "nomSerie ASC", "100"); // GROUP BY, HAVING, ORDER BY, LIMIT
+            if (cursor != null)
+                cursor.moveToFirst();
+            return cursor;
+        }
+        catch (Exception mSQLException)
+        {
+            Log.e("Error", "getSeries >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+
+
+    public Cursor getQuestionsFromSeries(int idSerie){
+        try
+        {
+            String MY_QUERY = "SELECT Question.idQuestion,numero, pathimage,enoncer,reponse_A,reponse_B,reponse_C,reponse_D," +
+                    "                    correct_A,correct_B,correct_C,correct_D FROM SerieQuestion " +
+                    "INNER JOIN Question ON SerieQuestion.idQuestion=Question.idQuestion WHERE idSerie=?";
+            Cursor cursor = mDb.rawQuery(MY_QUERY, new String[]{ Integer.toString(idSerie)});
+            if (cursor != null)
+                cursor.moveToFirst();
+            return cursor;
+        }
+        catch (Exception mSQLException)
+        {
+            Log.e("Error", "getQuestionsSeries >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
     }
 
     //fonction temporaire

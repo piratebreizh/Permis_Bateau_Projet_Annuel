@@ -5,23 +5,24 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <!--accueil-->
+    <!-- accueil -->
     <string name="button_Theme_Exam">Examen Thematique</string>
     <string name="button_Blanc_Exam">Examen Blanc</string>
 
-    <!--contact-->
+    <!-- contact -->
     <string name="title_activity_contact">Contact</string>
 
-    <!--correction-->
+    <!-- correction -->
     <string name="title_activity_correction">Correction</string>
 
-    <!--question-->
+    <!-- question -->
     <string name="title_activity_question">Question</string>
 
-    <!--statistiques-->
+    <!-- statistiques -->
     <string name="title_activity_statistiques">Statistiques</string>
 
-    <!--thematique-->
+    <!-- thematique -->
     <string name="title_activity_thematique">Thematique</string>
+    <string name="title_activity_serie">SerieActivity</string>
 
 </resources>
