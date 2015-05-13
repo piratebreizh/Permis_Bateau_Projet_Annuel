@@ -2,6 +2,8 @@
 // Configuration
 require_once(ROOT . '/config/config.php');
 
+date_default_timezone_set("Europe/Paris");
+
 // Autoload
 require_once('autoload.php');
 

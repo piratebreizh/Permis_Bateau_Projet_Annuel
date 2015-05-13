@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS QUESTIONS (
   enonce_D text NOT NULL,
   id_image int(11) NOT NULL,
   id_examen int(11) NOT NULL,
+  date_modification datetime NOT NULL,
   PRIMARY KEY (id_question)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

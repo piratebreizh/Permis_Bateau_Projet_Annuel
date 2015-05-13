@@ -5,31 +5,37 @@ namespace APP\Entity;
 class Question extends \FSF\Entity
 {
     protected $cols = array(
-        'id_question'     => null,
-        'numero_question' => 0,
-        'enonce_question' => '',
-        'is_correct_A'    => 0,
-        'is_correct_B'    => 0,
-        'is_correct_C'    => 0,
-        'is_correct_D'    => 0,
-        'enonce_A'        => '',
-        'enonce_B'        => '',
-        'enonce_C'        => '',
-        'enonce_D'        => '',
+        'id_question'       => null,
+        'numero_question'   => 0,
+        'enonce_question'   => '',
+        'is_correct_A'      => 0,
+        'is_correct_B'      => 0,
+        'is_correct_C'      => 0,
+        'is_correct_D'      => 0,
+        'enonce_A'          => '',
+        'enonce_B'          => '',
+        'enonce_C'          => '',
+        'enonce_D'          => '',
+        'id_image'          => '',
+        'id_examen'         => '',
+        'date_modification' => '',
     );
 
     protected $type = array(
-        'id_question'     => \PDO::PARAM_INT,
-        'numero_question' => \PDO::PARAM_INT,
-        'enonce_question' => \PDO::PARAM_STR,
-        'is_correct_A'    => \PDO::PARAM_BOOL,
-        'is_correct_B'    => \PDO::PARAM_BOOL,
-        'is_correct_C'    => \PDO::PARAM_BOOL,
-        'is_correct_D'    => \PDO::PARAM_BOOL,
-        'enonce_A'        => \PDO::PARAM_STR,
-        'enonce_B'        => \PDO::PARAM_STR,
-        'enonce_C'        => \PDO::PARAM_STR,
-        'enonce_D'        => \PDO::PARAM_STR,
+        'id_question'       => \PDO::PARAM_INT,
+        'numero_question'   => \PDO::PARAM_INT,
+        'enonce_question'   => \PDO::PARAM_STR,
+        'is_correct_A'      => \PDO::PARAM_BOOL,
+        'is_correct_B'      => \PDO::PARAM_BOOL,
+        'is_correct_C'      => \PDO::PARAM_BOOL,
+        'is_correct_D'      => \PDO::PARAM_BOOL,
+        'enonce_A'          => \PDO::PARAM_STR,
+        'enonce_B'          => \PDO::PARAM_STR,
+        'enonce_C'          => \PDO::PARAM_STR,
+        'enonce_D'          => \PDO::PARAM_STR,
+        'id_image'          => \PDO::PARAM_INT,
+        'id_examen'         => \PDO::PARAM_INT,
+        'date_modification' => \PDO::PARAM_STR,
     );
 
     public function __construct()
@@ -127,6 +133,30 @@ class Question extends \FSF\Entity
     public function getEnonceD()
     {
         return (string)$this->cols['enonce_D'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdImage()
+    {
+        return (int)$this->cols['id_image'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdExamen()
+    {
+        return (int)$this->cols['id_examen'];
+    }
+
+    /**
+     * @return string Date in FR format (dd/mm/yyyy)
+     */
+    public function getDateModification()
+    {
+        return \FSF\Helper\Date::ukToFr($this->cols['date_modification']);
     }
 
     /************
@@ -252,5 +282,37 @@ class Question extends \FSF\Entity
         $this->cols['enonce_D'] = (string)$enonce_D;
 
         return $this;
+    }
+
+    /**
+     * @param int $id_image
+     * @return \APP\Entity\Question
+     */
+    public function setIdImage($id_image)
+    {
+        $this->cols['id_image'] = (int)$id_image;
+
+        return $this;
+    }
+
+    /**
+     * @param int $id_examen
+     * @return \APP\Entity\Question
+     */
+    public function setIdExamen($id_examen)
+    {
+        $this->cols['id_examen'] = (int)$id_examen;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function save()
+    {
+        $this->cols['date_modification'] = date('Y-m-d H:i:s');
+
+        return parent::save();
     }
 }
