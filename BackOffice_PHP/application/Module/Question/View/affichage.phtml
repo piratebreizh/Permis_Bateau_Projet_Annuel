@@ -4,6 +4,13 @@ $question = $this->question;
 if(!is_null($question)) {
     echo "<h3>".$question->getEnonceQuestion()."</h3>";
     echo $question->getEnonceA();
+    echo "<br/>";
+    echo $question->getEnonceB();
+    echo "<br/>";
+    echo $question->getEnonceC();
+    echo "<br/>";
+    echo $question->getEnonceD();
+    echo "<br/>";
 }else{
     echo "Pas de question correspondant à cet ID";
 }

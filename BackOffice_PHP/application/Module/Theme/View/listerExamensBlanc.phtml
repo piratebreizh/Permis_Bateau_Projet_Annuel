@@ -1,0 +1,14 @@
+<?php
+/** @var \APP\Entity\Examen[] $examens_blancs */
+$examens_blancs = $this->examens_blancs;
+?>
+
+<h2>Liste des examens blancs</h2>
+
+<?php foreach($examens_blancs as $examen){ ?>
+    <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>">
+        <?php echo $examen->getNom(); ?>
+    </a><br/>
+<?php }?>
+<br/>
+<a href="/examen/creer?id_theme=0">Créer un nouvel examen blanc</a>

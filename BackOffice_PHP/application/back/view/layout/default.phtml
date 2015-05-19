@@ -1,12 +1,22 @@
-<h1>
-    Header
-</h1>
-<div>
-    <?php
-    /** @var \FSF\View $this*/
-    echo $this->currentView->render();
-    ?>
-</div>
-<h1>
-    footer
-</h1>
+<style>
+    h1{
+        text-align: center;
+    }
+</style>
+<html>
+    <body>
+        <h1>
+            <a href="/">Permis Bateau</a>
+        </h1>
+
+        <div>
+            <?php
+            /** @var \FSF\View $this */
+            echo $this->currentView->render();
+            ?>
+        </div>
+        <h1>
+
+        </h1>
+    </body>
+</html>

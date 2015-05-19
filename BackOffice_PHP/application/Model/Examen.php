@@ -2,6 +2,8 @@
 
 namespace APP\Model;
 
+use FSF\Filter;
+
 class Examen extends \FSF\Model
 {
 
@@ -27,5 +29,26 @@ class Examen extends \FSF\Model
     public function getPrimaryKey()
     {
         return array('id_examen');
+    }
+
+    /**
+     * @param int $id_theme
+     * @return \FSF\EntityIterator
+     */
+    public function getExamensByIdTheme($id_theme)
+    {
+        $filters[] = new Filter('id_theme', $id_theme);
+
+        return $this->findAllWithFilters($filters);
+    }
+
+    /**
+     * @return \FSF\EntityIterator
+     */
+    public function getExamensBlancs()
+    {
+        $filters[] = new Filter('id_theme', 0);
+
+        return $this->findAllWithFilters($filters);
     }
 }

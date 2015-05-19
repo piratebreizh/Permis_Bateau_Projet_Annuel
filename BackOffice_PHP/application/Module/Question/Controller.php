@@ -29,16 +29,46 @@ class Controller extends \FSF\Controller
 
     public function creer()
     {
+        $id_examen = $this->getRequest()->get("id_examen", "");
+
+        $currentView = new View();
+        $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
+        $currentView->setParam("id_examen", $id_examen);
+        echo $this->getView()
+            ->setParam('currentView', $currentView)
+            ->render();
+    }
+
+    public function saveQuestion()
+    {
+        $id_examen = $this->getRequest()->get("id_examen", "");
+        $numero_question = $this->getRequest()->get("numero_question","");
+        $enonce_question = $this->getRequest()->get("question_enonce","");
+        $enonce_A = $this->getRequest()->get("enonce_A","");
+        $enonce_B = $this->getRequest()->get("enonce_B","");
+        $enonce_C = $this->getRequest()->get("enonce_C","");
+        $enonce_D = $this->getRequest()->get("enonce_D","");
+        $is_correct_A = $this->getRequest()->get("is_correct_A", false);
+        $is_correct_B = $this->getRequest()->get("is_correct_B", false);
+        $is_correct_C = $this->getRequest()->get("is_correct_C", false);
+        $is_correct_D = $this->getRequest()->get("is_correct_D", false);
+
         $question = new Question();
         $question
-            ->setNumeroQuestion(4)
-            ->setEnonceQuestion("test = 'sef' ?")
-            ->setEnonceA("A")
-            ->setEnonceB("B")
-            ->setEnonceC("C")
-            ->setEnonceD("D")
-            ->setIsCorrectA(true)
+            ->setIdExamen($id_examen)
+            ->setNumeroQuestion($numero_question)
+            ->setEnonceQuestion($enonce_question)
+            ->setEnonceA($enonce_A)
+            ->setEnonceB($enonce_B)
+            ->setEnonceC($enonce_C)
+            ->setEnonceD($enonce_D)
+            ->setIsCorrectA($is_correct_A)
+            ->setIsCorrectB($is_correct_B)
+            ->setIsCorrectC($is_correct_C)
+            ->setIsCorrectD($is_correct_D)
             ->save();
+
+        echo ('<a href="/examen/afficher?id='.$id_examen.'" >Retour à l\'examen</a>');
     }
 
     public function lister()

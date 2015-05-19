@@ -1,3 +1,16 @@
 <?php
-
-var_dump($this->theme);
+/** @var \APP\Entity\Theme $theme */
+$theme = $this->theme;
+/** @var \APP\Entity\Examen[] $examens */
+$examens = $this->examens;
+?>
+<div>
+    <h2><?php echo $theme->getNom(); ?></h2>
+    <?php foreach($examens as $examen){ ?>
+        <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>">
+            <?php echo $examen->getNom(); ?>
+        </a><br/>
+    <?php }?>
+</div>
+<br/>
+<a href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">Créer un nouvel examen</a>

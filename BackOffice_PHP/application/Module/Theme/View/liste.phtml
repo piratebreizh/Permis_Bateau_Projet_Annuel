@@ -1,0 +1,14 @@
+<?php
+/** @var \APP\Entity\Theme[] $themes */
+$themes = $this->themes;
+?>
+<h2>Liste des thèmes</h2>
+<a href="/theme/listerExamensBlanc">Examens blancs</a><br/>
+<br/>
+<?php foreach($themes as $theme){ ?>
+    <a href="/theme/afficher?id=<?php echo $theme->getIdTheme(); ?>">
+        <?php echo $theme->getNom(); ?>
+    </a><br/>
+<?php }?>
+<br/>
+<a href="/theme/creer" >Créer un thème</a>

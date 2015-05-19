@@ -1,0 +1,14 @@
+<h2>Création d'un examen</h2>
+
+<form method="post"  action="/examen/saveExamen">
+    <input type="hidden" name="id_theme" id="id_theme" value="<?php echo $this->id_theme; ?>"/>
+    <div>
+        <label for="numero_examen">Numéro : </label>
+        <input name="numero_examen" id="numero_examen" type="number"/>
+    </div>
+    <div>
+        <label for="nom">Nom : </label>
+        <input name="nom" id="nom" type="text"/>
+    </div>
+    <button type="submit">Valider</button>
+</form>

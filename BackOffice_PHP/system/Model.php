@@ -227,4 +227,19 @@ abstract class Model
         $iterator->rewind();
         return $iterator->current();
     }
+
+    /**
+     * @param Filter[] $filters
+     * @return EntityIterator
+     */
+    protected function findAllWithFilters($filters)
+    {
+        $builder = $this->select();
+
+        foreach($filters as $filter){
+            $filter->applyOnQueryBuilder($builder);
+        }
+
+        return $this->findAll($builder);
+    }
 }

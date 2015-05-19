@@ -28,4 +28,11 @@ class Theme extends \FSF\Model
     {
         return array('id_theme');
     }
+
+    public function getThemes()
+    {
+        $builder = $this->select();
+
+        return $this->findAll($builder);
+    }
 }

@@ -1,0 +1,46 @@
+<h2>Création d'une question</h2>
+
+<form method="post"  action="/question/saveQuestion">
+    <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
+    <div>
+        <label for="numero_question">Numéro : </label>
+        <input name="numero_question" id="numero_question" type="number"/>
+    </div>
+    <div>
+        <label for="question_enonce">Enoncé de la question : </label>
+        <textarea name="question_enonce" id="question_enonce"></textarea>
+    </div>
+    <div>
+        <label for="enonce_A">Réponse A : </label>
+        <textarea name="enonce_A" id="enonce_A"></textarea>
+    </div>
+    <div>
+        <label for="is_correct_A">Est correcte : </label>
+        <input name="is_correct_A" id="is_correct_A" type="checkbox"/>
+    </div>
+    <div>
+        <label for="enonce_B">Réponse B : </label>
+        <textarea name="enonce_B" id="enonce_B"></textarea>
+    </div>
+    <div>
+        <label for="is_correct_B">Est correcte : </label>
+        <input name="is_correct_B" id="is_correct_B" type="checkbox"/>
+    </div>
+    <div>
+        <label for="enonce_C">Réponse C : </label>
+        <textarea name="enonce_C" id="enonce_C"></textarea>
+    </div>
+    <div>
+        <label for="is_correct_C">Est correcte : </label>
+        <input name="is_correct_C" id="is_correct_C" type="checkbox"/>
+    </div>
+    <div>
+        <label for="enonce_D">Réponse D : </label>
+        <textarea name="enonce_D" id="enonce_D"></textarea>
+    </div>
+    <div>
+        <label for="is_correct_D">Est correcte : </label>
+        <input name="is_correct_D" id="is_correct_D" type="checkbox"/>
+    </div>
+    <button type="submit">Valider</button>
+</form>

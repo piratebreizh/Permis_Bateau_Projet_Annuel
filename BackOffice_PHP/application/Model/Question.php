@@ -2,6 +2,8 @@
 
 namespace APP\Model;
 
+use FSF\Filter;
+
 class Question extends \FSF\Model
 {
 
@@ -37,5 +39,16 @@ class Question extends \FSF\Model
         $builder = $this->select();
 
         return $this->findAll($builder);
+    }
+
+    /**
+     * @param int $id_examen
+     * @return \FSF\EntityIterator
+     */
+    public function getQuestionsByIdExamen($id_examen)
+    {
+        $filters[]= new Filter('id_examen', $id_examen);
+
+        return $this->findAllWithFilters($filters);
     }
 }

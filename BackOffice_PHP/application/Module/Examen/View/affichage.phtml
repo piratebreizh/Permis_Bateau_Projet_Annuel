@@ -1,3 +1,26 @@
 <?php
+/** @var \APP\Entity\Examen $examen */
+$examen = $this->examen;
+/** @var \APP\Entity\Question[] $questions */
+$questions = $this->questions;
+?>
+<h2><?php echo $examen->getNom(); ?></h2>
+<table>
+    <thead>
+        <tr>
+            <th>Numéro</th>
+            <th>Enoncé</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach($this->questions as $question){
+    /** @var \APP\Entity\Question $question */ ?>
+    <tr onclick="window.location='/question/afficher?id=<?php echo $question->getId(); ?>'">
+        <td><?php echo $question->getNumeroQuestion(); ?></td>
+        <td><?php echo $question->getEnonceQuestion(); ?></td>
+    </tr>
+<?php } ?>
+    </tbody>
+</table>
 
-var_dump($this->examen);
+<a href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">Créer une nouvelle question</a>
