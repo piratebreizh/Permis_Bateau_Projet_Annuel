@@ -8,18 +8,27 @@
     <script src="/lib/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-    <h1>
-        <a href="/">Permis Bateau</a>
-    </h1>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Permis Bateau</a>
+            </div>
+        </div>
+    </nav>
 
-    <div>
+    <div class="container">
+        <div class="starter-template">
         <?php
         /** @var \FSF\View $this */
         echo $this->currentView->render();
         ?>
+        </div>
     </div>
-    <h1>
-
-    </h1>
 </body>
 </html>
