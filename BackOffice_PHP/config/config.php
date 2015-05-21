@@ -7,7 +7,7 @@ class Config
         return array(
             'dbname' => 'permis_bateau',
             'user' => 'root',
-            'password' => '',
+            'password' => 'root',
             'host' => 'localhost',
             'port' => 3306,
             'charset' => 'utf8',
