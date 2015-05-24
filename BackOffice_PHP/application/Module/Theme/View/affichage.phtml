@@ -9,13 +9,28 @@ $examens = $this->examens;
     <?php foreach ($examens as $examen) { ?>
         <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="list-group-item">
             <?php echo $examen->getNom(); ?>
+
+            <!-- Publication -->
+            <span style="float: right;">
+                <?php if ($examen->isPublished()) { ?>
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+                          data-toggle="tooltip" data-placement="right" title="Est publié"></span>
+                <?php } else { ?>
+                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                          data-toggle="tooltip" data-placement="right" title="N'est pas publié"></span>
+                <?php } ?>
+            </span>
         </a>
     <?php } ?>
 </div>
 
-<a href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
-    <button class="btn btn-primary" type="button">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        Créer un nouvel examen
-    </button>
+<a class="btn btn-primary" href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Créer un nouvel examen
 </a>
+
+<script type="application/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

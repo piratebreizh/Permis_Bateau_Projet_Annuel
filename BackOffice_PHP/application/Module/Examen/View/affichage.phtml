@@ -27,4 +27,7 @@ $questions = $this->questions;
     </tbody>
 </table>
 
-<a href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">Créer une nouvelle question</a>
+<a class="btn btn-primary" href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Créer une nouvelle question
+</a>
