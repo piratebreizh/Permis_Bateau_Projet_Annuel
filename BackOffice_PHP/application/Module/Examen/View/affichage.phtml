@@ -5,21 +5,25 @@ $examen = $this->examen;
 $questions = $this->questions;
 ?>
 <h2><?php echo $examen->getNom(); ?></h2>
-<table>
+
+<table class="table table-striped table-hover" style="width: 80%">
+    <col width="5%">
+    <col width="95%">
+
     <thead>
-        <tr>
-            <th>Numéro</th>
-            <th>Enoncé</th>
-        </tr>
+    <tr>
+        <th>Numéro</th>
+        <th>Enoncé</th>
+    </tr>
     </thead>
     <tbody>
-<?php foreach($this->questions as $question){
-    /** @var \APP\Entity\Question $question */ ?>
-    <tr onclick="window.location='/question/afficher?id=<?php echo $question->getId(); ?>'">
-        <td><?php echo $question->getNumeroQuestion(); ?></td>
-        <td><?php echo $question->getEnonceQuestion(); ?></td>
-    </tr>
-<?php } ?>
+    <?php foreach ($this->questions as $question) {
+        /** @var \APP\Entity\Question $question */ ?>
+        <tr onclick="window.location='/question/afficher?id=<?php echo $question->getId(); ?>'" style="cursor: pointer">
+            <td><?php echo $question->getNumeroQuestion(); ?></td>
+            <td><?php echo $question->getEnonceQuestion(); ?></td>
+        </tr>
+    <?php } ?>
     </tbody>
 </table>
 

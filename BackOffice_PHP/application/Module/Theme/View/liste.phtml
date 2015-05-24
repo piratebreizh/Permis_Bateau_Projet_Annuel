@@ -3,12 +3,28 @@
 $themes = $this->themes;
 ?>
 <h2>Liste des thèmes</h2>
-<a href="/theme/listerExamensBlanc">Examens blancs</a><br/>
-<br/>
-<?php foreach($themes as $theme){ ?>
-    <a href="/theme/afficher?id=<?php echo $theme->getIdTheme(); ?>">
-        <?php echo $theme->getNom(); ?>
-    </a><br/>
-<?php }?>
-<br/>
-<a href="/theme/creer" >Créer un thème</a>
+
+<div class="list-group" style="width: 200px">
+    <a href="/theme/listerExamensBlanc" class="list-group-item list-group-item-info">Examens blancs</a>
+    <?php foreach ($themes as $theme) { ?>
+        <a href="/theme/afficher?id=<?php echo $theme->getIdTheme(); ?>" class="list-group-item">
+            <?php echo $theme->getNom(); ?>
+
+            <!-- Publication -->
+            <span style="float: right;">
+                <?php if ($theme->isPublished()) { ?>
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                <?php } else { ?>
+                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                <?php } ?>
+            </span>
+        </a>
+    <?php } ?>
+</div>
+
+<a href="/theme/creer">
+    <button class="btn btn-primary" type="button">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Créer un thème
+    </button>
+</a>

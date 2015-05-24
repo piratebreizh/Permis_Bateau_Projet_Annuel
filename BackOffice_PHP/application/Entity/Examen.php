@@ -117,7 +117,7 @@ class Examen extends \FSF\Entity
      */
     public function isPublished()
     {
-        return (bool) $this->$this->cols['is_published'];
+        return (bool) $this->cols['is_published'];
     }
 
     /**

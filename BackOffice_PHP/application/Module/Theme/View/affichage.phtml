@@ -4,13 +4,18 @@ $theme = $this->theme;
 /** @var \APP\Entity\Examen[] $examens */
 $examens = $this->examens;
 ?>
-<div>
-    <h2><?php echo $theme->getNom(); ?></h2>
-    <?php foreach($examens as $examen){ ?>
-        <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>">
+<h2><?php echo $theme->getNom(); ?></h2>
+<div class="list-group" style="width: 200px">
+    <?php foreach ($examens as $examen) { ?>
+        <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="list-group-item">
             <?php echo $examen->getNom(); ?>
-        </a><br/>
-    <?php }?>
+        </a>
+    <?php } ?>
 </div>
-<br/>
-<a href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">Créer un nouvel examen</a>
+
+<a href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
+    <button class="btn btn-primary" type="button">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Créer un nouvel examen
+    </button>
+</a>
