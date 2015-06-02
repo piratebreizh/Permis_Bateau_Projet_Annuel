@@ -9,7 +9,7 @@ class Theme extends \FSF\Entity
         'nom'               => null,
         'numero'            => null,
         'date_modification' => null,
-        'is_published'      => null,
+        'is_published'      => false,
     );
 
     protected $types = array(

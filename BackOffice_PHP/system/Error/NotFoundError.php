@@ -14,5 +14,7 @@ class NotFoundError extends Exception
         parent::__construct($this->message, E_WARNING);
 
         header('HTTP/1.0 404 Not Found');
+
+        echo $this->getMessage();
     }
 }

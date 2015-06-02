@@ -52,7 +52,7 @@ abstract class Route
      */
     public function getAction()
     {
-        return $this->action;
+        return (string) $this->action;
     }
 
     /**

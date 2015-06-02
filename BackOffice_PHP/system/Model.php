@@ -67,7 +67,7 @@ abstract class Model
      */
     public function getDb()
     {
-        if (!$this->database) {
+        if (is_null($this->database)) {
             $this->database = Helper\Db::getInstance();
         }
         return $this->database;

@@ -81,9 +81,11 @@ class View
     {
         if (is_null($this->getViewPath())) {
             throw new \InvalidArgumentException('View must be defined');
+            echo 'View must be defined';
         }
         if (!file_exists($this->getViewPath())) {
             throw new \OutOfBoundsException("File does not exist : ".$this->getViewPath());
+            echo "File does not exist : ".$this->getViewPath();
         }
         //Output Buffering
         ob_start();

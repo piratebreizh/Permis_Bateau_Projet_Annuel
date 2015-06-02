@@ -11,7 +11,7 @@ class Examen extends \FSF\Entity
         'numero'            => null,
         'id_theme'          => null,
         'date_modification' => null,
-        'is_published'      => null,
+        'is_published'      => false,
     );
 
     protected $types = array(
