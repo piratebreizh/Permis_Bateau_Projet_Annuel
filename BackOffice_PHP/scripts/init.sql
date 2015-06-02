@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS QUESTIONS (
   enonce_D text NOT NULL,
   id_image int(11) NOT NULL,
   id_examen int(11) NOT NULL,
+  date_creation datetime NOT NULL,
   date_modification datetime NOT NULL,
+  is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_question)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -21,8 +23,10 @@ CREATE TABLE IF NOT EXISTS EXAMENS (
   nom varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   numero int(11) NOT NULL,
   id_theme int(11) NOT NULL,
+  date_creation datetime NOT NULL,
   date_modification datetime NOT NULL,
   is_published tinyint(1) NOT NULL DEFAULT '0',
+  is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_examen)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -30,7 +34,9 @@ CREATE TABLE IF NOT EXISTS THEMES (
   id_theme int(11) NOT NULL AUTO_INCREMENT,
   nom varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   numero int(11) NOT NULL,
+  date_creation datetime NOT NULL,
   date_modification datetime NOT NULL,
   is_published tinyint(1) NOT NULL DEFAULT '0',
+  is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_theme)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

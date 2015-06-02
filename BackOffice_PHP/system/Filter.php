@@ -11,6 +11,8 @@ class Filter
     protected $operator;
     protected $value;
 
+    protected $isAndClause;
+
     const OPERATOR_EQUAL = 1;
     const OPERATOR_NOT_EQUAL = 2;
     const OPERATOR_CONTAIN = 3;
@@ -23,6 +25,10 @@ class Filter
         self::OPERATOR_EQUAL     => "@ = :#",
         self::OPERATOR_NOT_EQUAL => "@ <> :#",
         self::OPERATOR_CONTAIN   => "@ LIKE %:#%",
+        self::OPERATOR_SMALLER => "@ < :#",
+        self::OPERATOR_GREATER => "@ > :#",
+        self::OPERATOR_SMALLER_OR_EQUAL => "@ <= :#",
+        self::OPERATOR_GREATER_OR_EQUAL => "@ >= :#",
     );
 
     /**
@@ -37,6 +43,19 @@ class Filter
         $this->value = $value;
         $this->parameter_name = $parameter_name != '' ? $parameter_name : $field_name;
         $this->operator = $operator;
+
+        $this->isAndClause = true;
+    }
+
+    /**
+     * @param bool $value
+     * @return Filter
+     */
+    public function setIsAndClause($value)
+    {
+        $this->isAndClause = $value;
+
+        return $this;
     }
 
     /**
@@ -44,11 +63,27 @@ class Filter
      */
     private function setAndWhere(QueryBuilder &$builder)
     {
+        $builder->andWhere($this->getWhereClause());
+    }
+
+    /**
+     * @param QueryBuilder $builder
+     */
+    private function setOrWhere(QueryBuilder &$builder)
+    {
+        $builder->orWhere($this->getWhereClause());
+    }
+
+    /**
+     * @return string
+     */
+    private function getWhereClause()
+    {
         $where = self::$OPERATOR_EQUIVALENCE[$this->operator];
         $where = str_replace('@', $this->field_name, $where);
         $where = str_replace('#', $this->parameter_name, $where);
 
-        $builder->andWhere($where);
+        return $where;
     }
 
     /**
@@ -64,7 +99,11 @@ class Filter
      */
     public function applyOnQueryBuilder(QueryBuilder &$builder)
     {
-        $this->setAndWhere($builder);
+        if($this->isAndClause){
+            $this->setAndWhere($builder);
+        }else{
+            $this->setOrWhere($builder);
+        }
         $this->setParameter($builder);
     }
 }

@@ -8,21 +8,26 @@ class Theme extends \FSF\Entity
         'id_theme'          => null,
         'nom'               => null,
         'numero'            => null,
+        'date_creation'     => null,
         'date_modification' => null,
         'is_published'      => false,
+        'is_deleted'        => false,
     );
 
     protected $types = array(
         'id_theme'          => \PDO::PARAM_INT,
         'nom'               => \PDO::PARAM_STR,
         'numero'            => \PDO::PARAM_INT,
+        'date_creation'     => \PDO::PARAM_STR,
         'date_modification' => \PDO::PARAM_STR,
         'is_published'      => \PDO::PARAM_INT,
+        'is_deleted'        => \PDO::PARAM_INT,
     );
 
     public function __construct()
     {
         $this->setModel(new \APP\Model\Theme());
+        $this->cols['date_creation'] = date('Y-m-d H:i:s');
     }
 
     /**
@@ -85,6 +90,14 @@ class Theme extends \FSF\Entity
     /**
      * @return string Date in FR format (dd/mm/yyyy)
      */
+    public function getDateCreation()
+    {
+        return \FSF\Helper\Date::ukToFr($this->cols['date_creation']);
+    }
+
+    /**
+     * @return string Date in FR format (dd/mm/yyyy)
+     */
     public function getDateModification()
     {
         return \FSF\Helper\Date::ukToFr($this->cols['date_modification']);
@@ -105,6 +118,25 @@ class Theme extends \FSF\Entity
     public function setIsPublished($is_published)
     {
         $this->cols['is_published'] = $is_published ? 1 : 0;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return (bool) $this->cols['is_deleted'];
+    }
+
+    /**
+     * @param bool $is_deleted
+     * @return \APP\Entity\Theme
+     */
+    public function setisDeleted($is_deleted)
+    {
+        $this->cols['is_deleted'] = $is_deleted ? 1 : 0;
 
         return $this;
     }

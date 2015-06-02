@@ -18,7 +18,9 @@ class Question extends \FSF\Entity
         'enonce_D'          => '',
         'id_image'          => '',
         'id_examen'         => '',
+        'date_creation'     => null,
         'date_modification' => '',
+        'is_deleted'        => false,
     );
 
     protected $type = array(
@@ -35,12 +37,15 @@ class Question extends \FSF\Entity
         'enonce_D'          => \PDO::PARAM_STR,
         'id_image'          => \PDO::PARAM_INT,
         'id_examen'         => \PDO::PARAM_INT,
+        'date_creation'     => \PDO::PARAM_STR,
         'date_modification' => \PDO::PARAM_STR,
+        'is_deleted'        => \PDO::PARAM_INT,
     );
 
     public function __construct()
     {
         $this->setModel(new \APP\Model\Question());
+        $this->cols['date_creation'] = date('Y-m-d H:i:s');
     }
 
     /************
@@ -149,6 +154,14 @@ class Question extends \FSF\Entity
     public function getIdExamen()
     {
         return (int)$this->cols['id_examen'];
+    }
+
+    /**
+     * @return string Date in FR format (dd/mm/yyyy)
+     */
+    public function getDateCreation()
+    {
+        return \FSF\Helper\Date::ukToFr($this->cols['date_creation']);
     }
 
     /**
@@ -302,6 +315,25 @@ class Question extends \FSF\Entity
     public function setIdExamen($id_examen)
     {
         $this->cols['id_examen'] = (int)$id_examen;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return (bool) $this->cols['is_deleted'];
+    }
+
+    /**
+     * @param bool $is_deleted
+     * @return \APP\Entity\Theme
+     */
+    public function setisDeleted($is_deleted)
+    {
+        $this->cols['is_deleted'] = $is_deleted ? 1 : 0;
 
         return $this;
     }

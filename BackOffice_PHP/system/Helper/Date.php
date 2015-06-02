@@ -15,7 +15,7 @@ class Date
     public static function frToUk($date_fr)
     {
         // If it is a correct formated date
-        if (self::dateTime($date_fr)) {
+        if (self::isDateTime($date_fr)) {
             if (stripos($date_fr, ' ') === false) {
                 $hours = '';
                 list($day, $month, $year) = preg_split('|[/.-]|', $date_fr);
@@ -31,7 +31,7 @@ class Date
             $date_uk = $year . '-' . $month . '-' . $day . $hours;
 
             // If already converted
-        } elseif (self::dateTimeUk($date_fr)) {
+        } elseif (self::isDateTimeUk($date_fr)) {
             $date_uk = $date_fr;
         } else {
             $date_uk = '';
@@ -50,7 +50,7 @@ class Date
     public static function ukToFr($date_uk)
     {
         // If it is a correct formated date
-        if (self::dateTimeUk($date_uk)) {
+        if (self::isDateTimeUk($date_uk)) {
             if (stripos($date_uk, ' ') === false) {
                 $hours = '';
                 list($year, $month, $day) = preg_split('|[/.-]|', $date_uk);
@@ -66,7 +66,7 @@ class Date
             $date_fr = $day . '/' . $month . '/' . $year . $hours;
 
             // If already converted
-        } elseif (self::dateTime($date_uk)) {
+        } elseif (self::isDateTime($date_uk)) {
             $date_fr = $date_uk;
         } else {
             $date_fr = false;
@@ -89,10 +89,10 @@ class Date
         $test = false;
         if (is_string($value)) {
             $result = preg_split('|\ |', $value);
-            $test = self::date($result[0]);
+            $test = self::isDate($result[0]);
             // If datetime
             if (count($result) == 2) {
-                $test = $test && self::heure($result[1]);
+                $test = $test && self::isHours($result[1]);
             }
         }
 
@@ -190,4 +190,42 @@ class Date
 
         return false;
     }
+
+    /**
+     * Validate that the given value is hours
+     * @param $value
+     * @return bool
+     */
+    public static function isHours($value)
+    {
+        if (is_string($value)) {
+            return (bool)preg_match('#^(([01][0-9])|(2[0-3]))(:[0-5][0-9])(:[0-5][0-9])?$#', $value);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public static function blockToFr($value)
+    {
+        $date_fr = "";
+        if(strlen($value) == 14){
+            $day = substr($value, 0, 2);
+            $month = substr($value, 2, 2);
+            $year = substr($value, 4, 4);
+            $hours = substr($value, 8, 2);
+            $minutes = substr($value, 10, 2);
+            $secunds = substr($value, 12, 2);
+
+            $date_fr = "{$day}/{$month}/{$year} {$hours}:{$minutes}:{$secunds}";
+            if(!self::isDateTime($date_fr))
+                $date_fr = "";
+        }
+        
+        return $date_fr;
+    }
+    
 }
