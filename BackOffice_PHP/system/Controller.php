@@ -37,7 +37,6 @@ class Controller
     {
         if (!$this->view) {
             $this->view = new View();
-            //TODO Load Default CSS and JS
         }
 
         $this->view->setViewPath(

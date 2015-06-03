@@ -23,7 +23,8 @@ class Controller extends \FSF\Controller
         $currentView->setParam("examens", $examens);
 
         return $this->getView()
-            ->setParam('currentView', $currentView);
+            ->setParam('currentView', $currentView)
+            ->setParam("js", array("theme/common"));
     }
 
     function lister()
@@ -36,7 +37,8 @@ class Controller extends \FSF\Controller
         $currentView->setParam("themes", $themes);
 
         return $this->getView()
-            ->setParam('currentView', $currentView);
+            ->setParam('currentView', $currentView)
+            ->setParam("js", array("theme/common"));
     }
 
     function listerExamensBlanc()

@@ -12,7 +12,10 @@ class View
      */
     public function __construct($params = array())
     {
-        $this->addParams($params);
+        $this
+            ->addParams($params)
+            ->setParam("css", array())
+            ->setParam("js", array());
     }
 
     /**
