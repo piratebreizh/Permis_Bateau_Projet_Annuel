@@ -3,8 +3,6 @@
 namespace FSF;
 
 use FSF\Routing\Router;
-use FSF\Routing\Request;
-use FSF\Routing\Response;
 
 class Framework
 {

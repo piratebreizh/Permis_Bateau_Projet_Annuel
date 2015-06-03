@@ -1,11 +1,12 @@
 <?php
 
 namespace APP\Module\Examen;
+
 use APP\Entity\Examen;
 use APP\Model\Question;
 use APP\Module\Examen\View as ViewPath;
 
-class Controller  extends \FSF\Controller
+class Controller extends \FSF\Controller
 {
     function afficher()
     {
@@ -21,9 +22,9 @@ class Controller  extends \FSF\Controller
         $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
         $currentView->setParam("examen", $examen);
         $currentView->setParam("questions", $questions);
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 
     function saveExamen()
@@ -39,10 +40,10 @@ class Controller  extends \FSF\Controller
             ->setNom($nom)
             ->save();
 
-        if($id_theme > 0) {
-            echo('<a href="/theme/afficher?id=' . $id_theme . '" >Retour au thème</a>');
-        }else{
-            echo('<a href="/theme/listerExamensBlanc" >Retour à la liste des examens blancs</a>');
+        if ($id_theme > 0) {
+            return '<a href="/theme/afficher?id=' . $id_theme . '" >Retour au thème</a>';
+        } else {
+            return '<a href="/theme/listerExamensBlanc" >Retour à la liste des examens blancs</a>';
         }
     }
 
@@ -53,8 +54,8 @@ class Controller  extends \FSF\Controller
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
         $currentView->setParam("id_theme", $id_theme);
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 }

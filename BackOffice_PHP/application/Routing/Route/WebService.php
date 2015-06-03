@@ -26,7 +26,7 @@ class WebService extends Route
     }
 
     /**
-     * @return string
+     * @return Controller
      */
     public function getController()
     {

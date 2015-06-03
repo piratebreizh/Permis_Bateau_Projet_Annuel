@@ -1,8 +1,9 @@
 <?php
 namespace FSF\Routing;
 
-use FSF\Routing\Request;
+use FSF\Request;
 use FSF\Exception;
+use FSF\View;
 
 abstract class Route
 {
@@ -43,7 +44,7 @@ abstract class Route
     abstract public function canHandle();
 
     /**
-     * @return string
+     * @return Controller
      */
     abstract public function getController();
 
@@ -75,7 +76,15 @@ abstract class Route
     {
         $actionCalled = $this->getAction();
 
-        $this->getController()->$actionCalled();
+        $actionReturn = $this->getController()->$actionCalled();
+
+        $this->getController()->getResponse()
+            ->setBody(
+                $actionReturn instanceof View ? $actionReturn->render() : $actionReturn
+            )
+            ->send();
+
+
     }
 
     /**

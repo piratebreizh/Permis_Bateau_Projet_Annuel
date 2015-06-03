@@ -83,6 +83,6 @@ class Controller extends \FSF\Controller
 
         }
 
-        echo json_encode($json_array);
+        return json_encode($json_array);
     }
 }

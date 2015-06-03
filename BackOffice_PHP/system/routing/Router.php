@@ -1,7 +1,7 @@
 <?php
 namespace FSF\Routing;
 
-use FSF\Routing\Route;
+use FSF\Request;
 
 class Router
 {

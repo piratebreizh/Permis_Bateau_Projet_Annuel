@@ -10,8 +10,8 @@ class Controller extends \FSF\Controller
     {
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'home.phtml');
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 }

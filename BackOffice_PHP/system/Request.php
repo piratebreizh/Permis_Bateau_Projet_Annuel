@@ -1,6 +1,6 @@
 <?php
 
-namespace FSF\Routing;
+namespace FSF;
 
 /**
  * Class Request

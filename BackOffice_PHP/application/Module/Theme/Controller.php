@@ -21,9 +21,9 @@ class Controller extends \FSF\Controller
         $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
         $currentView->setParam("theme", $theme);
         $currentView->setParam("examens", $examens);
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 
     function lister()
@@ -34,9 +34,9 @@ class Controller extends \FSF\Controller
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'liste.phtml');
         $currentView->setParam("themes", $themes);
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 
     function listerExamensBlanc()
@@ -47,18 +47,18 @@ class Controller extends \FSF\Controller
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'listerExamensBlanc.phtml');
         $currentView->setParam("examens_blancs", $examens_blancs);
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 
     function creer()
     {
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
-        echo $this->getView()
-            ->setParam('currentView', $currentView)
-            ->render();
+
+        return $this->getView()
+            ->setParam('currentView', $currentView);
     }
 
     function saveTheme()
@@ -72,6 +72,6 @@ class Controller extends \FSF\Controller
             ->setNom($nom)
             ->save();
 
-        echo ('<a href="/theme/lister" >Retour à la liste des thèmes</a>');
+        return ('<a href="/theme/lister" >Retour à la liste des thèmes</a>');
     }
 }

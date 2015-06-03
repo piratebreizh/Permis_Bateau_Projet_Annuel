@@ -25,7 +25,7 @@ class Examen extends Route
     }
 
     /**
-     * @return string
+     * @return Controller
      */
     public function getController()
     {
