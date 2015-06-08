@@ -24,6 +24,8 @@ class Controller extends \FSF\Controller
             "themes_supprimes" => array(),
             "examens_supprimes" => array(),
             "questions_supprimees" => array(),
+            "cours_nouveaux" => array(),
+            "cours_supprimes" => array(),
         );
 
         if($date != "") {
@@ -68,18 +70,20 @@ class Controller extends \FSF\Controller
             $questions_modifies = $question_model->getUpdatedQuestions($date);
             foreach ($questions_modifies as $question_modif) {
                 /** @var \APP\Entity\Question $question_modif */
-                $json_array['questions_modifies'][] = $question_modif->toArray();
+                $json_array['questions_modifiees'][] = $question_modif->toArray();
             }
             $questions_nouveaux = $question_model->getNewQuestions($date);
             foreach ($questions_nouveaux as $question_nouveau) {
                 /** @var \APP\Entity\Question $question_nouveau */
-                $json_array['questions_nouveaux'][] = $question_nouveau->toArray();
+                $json_array['questions_nouvelles'][] = $question_nouveau->toArray();
             }
             $questions_supprimes = $question_model->getDeletedQuestions($date);
             foreach ($questions_supprimes as $question_suppr) {
                 /** @var \APP\Entity\Question $question_suppr */
-                $json_array['questions_supprimes'][] = $question_suppr->getIdQuestion();
+                $json_array['questions_supprimees'][] = $question_suppr->getIdQuestion();
             }
+
+            // Cours
 
         }
 

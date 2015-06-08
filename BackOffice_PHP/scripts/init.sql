@@ -40,3 +40,13 @@ CREATE TABLE IF NOT EXISTS THEMES (
   is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_theme)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS COURS (
+  id_cours int(11) NOT NULL AUTO_INCREMENT,
+  nom varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  nom_pdf varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  id_theme int(11) NOT NULL,
+  date_creation datetime NOT NULL,
+  is_deleted tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id_cours)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

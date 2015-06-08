@@ -17,10 +17,14 @@ class Controller extends \FSF\Controller
         $examenModel = new \APP\Model\Examen();
         $examens = $examenModel->getExamensByIdTheme($id_theme);
 
+        $coursModel = new \APP\Model\Cours();
+        $cours = $coursModel->getCoursByIdTheme($id_theme);
+
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
         $currentView->setParam("theme", $theme);
         $currentView->setParam("examens", $examens);
+        $currentView->setParam("cours", $cours);
 
         return $this->getView()
             ->setParam('currentView', $currentView)
@@ -74,6 +78,6 @@ class Controller extends \FSF\Controller
             ->setNom($nom)
             ->save();
 
-        return ('<a href="/theme/lister" >Retour à la liste des thèmes</a>');
+        header('Location: /theme/lister');
     }
 }

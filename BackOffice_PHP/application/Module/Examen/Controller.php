@@ -41,9 +41,9 @@ class Controller extends \FSF\Controller
             ->save();
 
         if ($id_theme > 0) {
-            return '<a href="/theme/afficher?id=' . $id_theme . '" >Retour au thème</a>';
+            header('Location: /theme/afficher?id=' . $id_theme);
         } else {
-            return '<a href="/theme/listerExamensBlanc" >Retour à la liste des examens blancs</a>';
+            header('Location: /theme/listerExamensBlanc');
         }
     }
 

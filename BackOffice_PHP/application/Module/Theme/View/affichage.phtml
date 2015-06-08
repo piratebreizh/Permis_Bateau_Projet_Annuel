@@ -3,8 +3,12 @@
 $theme = $this->theme;
 /** @var \APP\Entity\Examen[] $examens */
 $examens = $this->examens;
+/** @var \APP\Entity\Cours[] $cours */
+$cours = $this->cours;
 ?>
 <h2><?php echo $theme->getNom(); ?></h2>
+
+<h3>Examens</h3>
 <div class="list-group" style="width: 200px">
     <?php foreach ($examens as $examen) { ?>
         <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="list-group-item">
@@ -29,8 +33,16 @@ $examens = $this->examens;
     Créer un nouvel examen
 </a>
 
-<script type="application/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+<h3>Cours</h3>
+<div class="list-group" style="width: 200px">
+    <?php foreach ($cours as $c) { ?>
+        <a href="/cours/afficher?id=<?php echo $c->getIdCours(); ?>" class="list-group-item">
+            <?php echo $c->getNom(); ?>
+        </a>
+    <?php } ?>
+</div>
+
+<a class="btn btn-primary" href="/cours/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Ajouter un nouveau cours
+</a>

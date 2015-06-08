@@ -68,6 +68,6 @@ class Controller extends \FSF\Controller
             ->setIsCorrectD($is_correct_D)
             ->save();
 
-        return '<a href="/examen/afficher?id=' . $id_examen . '" >Retour à l\'examen</a>';
+        header('Location: /examen/afficher?id=' . $id_examen);
     }
 }

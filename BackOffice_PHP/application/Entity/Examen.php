@@ -130,12 +130,12 @@ class Examen extends \FSF\Entity
      */
     public function isPublished()
     {
-        return (bool) $this->cols['is_published'];
+        return (bool)$this->cols['is_published'];
     }
 
     /**
      * @param bool $is_published
-     * @return \APP\Entity\Theme
+     * @return \APP\Entity\Examen
      */
     public function setIsPublished($is_published)
     {
@@ -149,14 +149,14 @@ class Examen extends \FSF\Entity
      */
     public function isDeleted()
     {
-        return (bool) $this->cols['is_deleted'];
+        return (bool)$this->cols['is_deleted'];
     }
 
     /**
      * @param bool $is_deleted
-     * @return \APP\Entity\Theme
+     * @return \APP\Entity\Examen
      */
-    public function setisDeleted($is_deleted)
+    public function setIsDeleted($is_deleted)
     {
         $this->cols['is_deleted'] = $is_deleted ? 1 : 0;
 

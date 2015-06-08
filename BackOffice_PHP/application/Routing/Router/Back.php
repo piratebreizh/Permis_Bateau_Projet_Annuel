@@ -14,6 +14,7 @@ class Back extends Router
         $this->addRoute(new Route\Theme());
         $this->addRoute(new Route\Examen());
         $this->addRoute(new Route\Question());
+        $this->addRoute(new Route\Cours());
         parent::__construct();
     }
 }
