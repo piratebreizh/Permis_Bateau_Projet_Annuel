@@ -22,14 +22,24 @@ public class DataBase {
         mDbHelper = new DatabaseHelper(mContext);
     }
 
+    public boolean checkDbExist(){
+        return mDbHelper.checkDataBaseExist();
+    }
+
     public void createDataBase(){
-        mDb.execSQL("CREATE TABLE Thematique (" +
-                "idThematique INTEGER PRIMARY KEY AUTOINCREMENT," +
+        mDb.execSQL("CREATE TABLE IF NOT EXISTS Thematique (" +
+                "idThematique INTEGER PRIMARY KEY," +
                 "nomThematique TEXT," +
-                "themeValide INTEGER" +
+                "numeroThematique INTEGER" +
                 ");");
-        mDb.execSQL("CREATE TABLE Question (" +
-                "idQuestion INTEGER PRIMARY KEY AUTOINCREMENT," +
+        mDb.execSQL("CREATE TABLE IF NOT EXISTS Serie (" +
+                "idSerie INTEGER PRIMARY KEY," +
+                "nomSerie TEXT," +
+                "theme INTEGER," +
+                "numeroSerie INTEGER" +
+                ");");
+        mDb.execSQL("CREATE TABLE IF NOT EXISTS Question (" +
+                "idQuestion INTEGER PRIMARY KEY," +
                 "numero INTEGER," +
                 "pathimage TEXT," +
                 "enoncer TEXT," +
@@ -40,26 +50,16 @@ public class DataBase {
                 "correct_A TEXT," +
                 "correct_B TEXT," +
                 "correct_C TEXT," +
-                "correct_D TEXT" +
+                "correct_D TEXT," +
+                "idSerie INTEGER," +
+                "FOREIGN KEY(idSerie) REFERENCES Serie(idSerie)" +
                 ");");
-        mDb.execSQL("CREATE TABLE Serie (" +
-                "idSerie INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "nomSerie TEXT," +
-                "theme INTEGER," +
-                "FOREIGN KEY(theme) REFERENCES Thematique(idThematique)" +
-                ");");
-        mDb.execSQL("CREATE TABLE SerieQuestion (" +
-                "idQuestion INTEGER ," +
-                "idSerie INTEGER" +
-                ");");
-
     }
 
     public void dropDataBase(){
         mDb.execSQL("DROP TABLE IF EXISTS Question");
         mDb.execSQL("DROP TABLE IF EXISTS Thematique");
         mDb.execSQL("DROP TABLE IF EXISTS Serie");
-        mDb.execSQL("DROP TABLE IF EXISTS SerieQuestion");
     }
 
     public DataBase open() throws SQLException
@@ -85,6 +85,10 @@ public class DataBase {
 
     public void insert(String table,String column,ContentValues cv){
         mDb.insert(table,column,cv);
+    }
+
+    public void execSql(String sql){
+        mDb.execSQL(sql);
     }
 
     /**
@@ -138,8 +142,8 @@ public class DataBase {
         try
         {
             String MY_QUERY = "SELECT Question.idQuestion,numero, pathimage,enoncer,reponse_A,reponse_B,reponse_C,reponse_D," +
-                    "                    correct_A,correct_B,correct_C,correct_D FROM SerieQuestion " +
-                    "INNER JOIN Question ON SerieQuestion.idQuestion=Question.idQuestion WHERE idSerie=?";
+                    "                    correct_A,correct_B,correct_C,correct_D FROM Question " +
+                    "WHERE idSerie=? ORDER BY numero";
             Cursor cursor = mDb.rawQuery(MY_QUERY, new String[]{ Integer.toString(idSerie)});
             if (cursor != null)
                 cursor.moveToFirst();
@@ -153,6 +157,23 @@ public class DataBase {
     }
 
     //fonction temporaire
+
+    public Cursor getQuestions(){
+        try
+        {
+            String MY_QUERY = "SELECT * FROM Question";
+            Cursor cursor = mDb.rawQuery(MY_QUERY, new String[]{});
+            if (cursor != null)
+                cursor.moveToFirst();
+            return cursor;
+        }
+        catch (Exception mSQLException)
+        {
+            Log.e("Error", "getQuestionsSeries >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+
     public Cursor getAQuestion()
     {
         try

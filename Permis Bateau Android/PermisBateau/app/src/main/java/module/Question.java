@@ -16,13 +16,13 @@ public class Question implements Parcelable {
     String reponse_B;
     String reponse_C;
     String reponse_D;
-    String correct_A;
-    String correct_B;
-    String correct_C;
-    String correct_D;
+    int correct_A;
+    int correct_B;
+    int correct_C;
+    int correct_D;
 
     public Question(int _id,int num,String path, String txt, String rA,String rB,String rC,String rD,
-                    String cA,String cB,String cC,String cD ){
+                    int cA,int cB,int cC,int cD ){
 
         id=_id;
         numero=num;
@@ -64,19 +64,19 @@ public class Question implements Parcelable {
         return reponse_D;
     }
 
-    public String getCorrect_A() {
+    public int getCorrect_A() {
         return correct_A;
     }
 
-    public String getCorrect_B() {
+    public int getCorrect_B() {
         return correct_B;
     }
 
-    public String getCorrect_C() {
+    public int getCorrect_C() {
         return correct_C;
     }
 
-    public String getCorrect_D() {
+    public int getCorrect_D() {
         return correct_D;
     }
 
@@ -107,10 +107,10 @@ public class Question implements Parcelable {
         dest.writeString(reponse_B);
         dest.writeString(reponse_C);
         dest.writeString(reponse_D);
-        dest.writeString(correct_A);
-        dest.writeString(correct_B);
-        dest.writeString(correct_C);
-        dest.writeString(correct_D);
+        dest.writeInt(correct_A);
+        dest.writeInt(correct_B);
+        dest.writeInt(correct_C);
+        dest.writeInt(correct_D);
     }
 
     public void readFromParcel(Parcel in) {
@@ -122,10 +122,10 @@ public class Question implements Parcelable {
         reponse_B = in.readString();
         reponse_C = in.readString();
         reponse_D = in.readString();
-        correct_A = in.readString();
-        correct_B = in.readString();
-        correct_C = in.readString();
-        correct_D = in.readString();
+        correct_A = in.readInt();
+        correct_B = in.readInt();
+        correct_C = in.readInt();
+        correct_D = in.readInt();
     }
 
     public static final Creator<Question> CREATOR = new Creator<Question>() {

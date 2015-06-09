@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Vérifie que la base de données existe ici: /data/data/your package/databases/Da Name
-    private boolean checkDataBase()
+    public boolean checkDataBaseExist()
     {
         File dbFile = new File(DB_PATH + DB_NAME);
         return dbFile.exists();

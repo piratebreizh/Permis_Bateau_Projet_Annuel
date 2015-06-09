@@ -1,10 +1,18 @@
 package com.projet.esgi.permisbateau;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -12,12 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.projet.esgi.myapplication.R;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,12 +35,12 @@ import database.DataBase;
 import module.Question;
 import module.Reponse;
 
-public class QuestionActivity extends ActionBarActivity {
+public class QuestionActivity extends Activity {
 
-    private DataBase db;
     private ArrayList<Question> listQuestions;
     private ArrayList<Reponse> listReponses;
     private int indexCurrentQuestion;
+    private ImageView image;
     private TextView enonce;
     private TextView txtRepA;
     private TextView txtRepB;
@@ -43,6 +53,7 @@ public class QuestionActivity extends ActionBarActivity {
     private Button nextQuestion;
     private ProgressBar timer;
     private CountDownTimer countDownTimer;
+    private boolean delaiDepasse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,7 @@ public class QuestionActivity extends ActionBarActivity {
         setContentView(R.layout.activity_question);
 
         enonce = (TextView) findViewById(R.id.enonce);
+        image = (ImageView) findViewById(R.id.imageQuestion);
         txtRepA = (TextView) findViewById(R.id.q1);
         txtRepB = (TextView) findViewById(R.id.q2);
         txtRepC = (TextView) findViewById(R.id.q3);
@@ -63,6 +75,7 @@ public class QuestionActivity extends ActionBarActivity {
         listReponses = new ArrayList<Reponse>();
         indexCurrentQuestion =0;
         timer = (ProgressBar) findViewById(R.id.timeBar);
+        delaiDepasse = false;
 
         //intit progressBar
         timer.setVisibility(ProgressBar.VISIBLE);
@@ -111,6 +124,7 @@ public class QuestionActivity extends ActionBarActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(getApplicationContext(),"Délai dépassé",Toast.LENGTH_LONG).show();
+                delaiDepasse=true;
                 chargeNextQuestion();
             }
         }.start();
@@ -122,9 +136,15 @@ public class QuestionActivity extends ActionBarActivity {
      */
     public void chargeNextQuestion(){
         //récupère les réponses si ce n'est pas la première question
-        if(indexCurrentQuestion>0){
-            Reponse rep = new Reponse(repA.isChecked(),repB.isChecked(),repC.isChecked(),repD.isChecked());
+        Reponse rep;
+        if(indexCurrentQuestion>0 ){
+            if(delaiDepasse){
+                rep = new Reponse(false,false,false,false);
+            }else{
+                rep = new Reponse(repA.isChecked(),repB.isChecked(),repC.isChecked(),repD.isChecked());
+            }
             listReponses.add(rep);
+            delaiDepasse = false;
         }
         //charge la prochaine question
         if(listQuestions.size()>indexCurrentQuestion){
@@ -136,6 +156,8 @@ public class QuestionActivity extends ActionBarActivity {
             Question q = listQuestions.get(indexCurrentQuestion);
             if(q!=null) {
                 enonce.setText(q.getEnoncer());
+                File filePath = getFileStreamPath(q.getPathimage());
+                image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
                 txtRepA.setText(q.getReponse_A());
                 txtRepB.setText(q.getReponse_B());
                 txtRepC.setText(q.getReponse_C());
@@ -149,36 +171,58 @@ public class QuestionActivity extends ActionBarActivity {
         }
         else{
             //ouvre l'activity Correction
-            countDownTimer.cancel();
+            if (countDownTimer!=null) countDownTimer.cancel();
             Intent intent = new Intent(QuestionActivity.this,CorrectionActivity.class);
             Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("listQuest",listQuestions);
             bundle.putParcelableArrayList("listRep",listReponses);
             intent.putExtras(bundle);
             startActivity(intent);
-
+            finish();
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if (countDownTimer!=null) countDownTimer.cancel();
+        NavUtils.navigateUpFromSameTask(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_question, menu);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Validation du retour à l'accueil
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Cette action annulera l'examen, êtes-vous sûr(e) de vouloir retourner à l'écran d'accueil ?").setTitle("Annuler l'examen");
+                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (countDownTimer!=null) countDownTimer.cancel();
+                        onBackPressed();
+                    }
+                });
+                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
+

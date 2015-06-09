@@ -8,6 +8,8 @@
     <!-- accueil -->
     <string name="button_Theme_Exam">Examen Thematique</string>
     <string name="button_Blanc_Exam">Examen Blanc</string>
+    <string name="button_Cours">Liste des cours</string>
+    <string name="button_Maj">Lancer la mise à jour</string>
 
     <!-- contact -->
     <string name="title_activity_contact">Contact</string>
@@ -23,6 +25,17 @@
 
     <!-- thematique -->
     <string name="title_activity_thematique">Thematique</string>
-    <string name="title_activity_serie">SerieActivity</string>
 
+    <!-- série -->
+    <string name="title_activity_serie">Serie</string>
+
+    <!-- cours -->
+    <string name="title_activity_cours">Cours</string>
+
+    <!-- correction question -->
+    <string name="title_activity_correction_question">Correction Question</string>
+
+    <!--maj-->
+    <string name="title_activity_maj">MajActivity</string>
+    <string name="intitule_maj">Maj en cours</string>
 </resources>

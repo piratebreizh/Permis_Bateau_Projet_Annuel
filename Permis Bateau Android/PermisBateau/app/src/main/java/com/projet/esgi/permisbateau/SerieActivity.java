@@ -1,5 +1,6 @@
 package com.projet.esgi.permisbateau;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +21,7 @@ import module.Examen;
 import module.Question;
 
 
-public class SerieActivity extends ActionBarActivity {
+public class SerieActivity extends Activity {
 
     private DataBase db;
     private ListView listSeries;
@@ -43,6 +44,10 @@ public class SerieActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * Charge la liste de toutes les séries selon le thème choisi (0 si pas de thème=Examen Blanc)
+     * @throws SQLException
+     */
     public void chargeSeries() throws SQLException {
         db = new DataBase(getApplicationContext());
         Bundle bundle = getIntent().getExtras();
@@ -89,21 +94,18 @@ public class SerieActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_serie, menu);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
+

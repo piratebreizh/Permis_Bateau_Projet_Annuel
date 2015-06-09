@@ -58,68 +58,15 @@ public class Examen {
                             list.getString(list.getColumnIndex("reponse_B")),
                             list.getString(list.getColumnIndex("reponse_C")),
                             list.getString(list.getColumnIndex("reponse_D")),
-                            list.getString(list.getColumnIndex("correct_A")),
-                            list.getString(list.getColumnIndex("correct_B")),
-                            list.getString(list.getColumnIndex("correct_C")),
-                            list.getString(list.getColumnIndex("correct_D")));
+                            list.getInt(list.getColumnIndex("correct_A")),
+                            list.getInt(list.getColumnIndex("correct_B")),
+                            list.getInt(list.getColumnIndex("correct_C")),
+                            list.getInt(list.getColumnIndex("correct_D")));
                     listQuestions.add(q);
                 }while (list.moveToNext());
             }
         }
         list.close();
-        db.close();
-    }
-
-    /**
-     * Génère un nombre nbQuestions de questions aléatoires sur un thème précis ou non
-     */
-    public void GenerateRandomQuestions() throws SQLException {
-        db.open();
-        if(numThem == 0){
-            Cursor list = db.getRandomNbQuestions(2);
-            if (list != null ) {
-                if  (list.moveToFirst()) {
-                    do {
-                        Question q = new Question(list.getInt(list.getColumnIndex("id")),
-                                list.getInt(list.getColumnIndex("numero")),
-                                list.getString(list.getColumnIndex("pathimage")),
-                                list.getString(list.getColumnIndex("enoncer")),
-                                list.getString(list.getColumnIndex("reponse_A")),
-                                list.getString(list.getColumnIndex("reponse_B")),
-                                list.getString(list.getColumnIndex("reponse_C")),
-                                list.getString(list.getColumnIndex("reponse_D")),
-                                list.getString(list.getColumnIndex("correct_A")),
-                                list.getString(list.getColumnIndex("correct_B")),
-                                list.getString(list.getColumnIndex("correct_C")),
-                                list.getString(list.getColumnIndex("correct_D")));
-                        listQuestions.add(q);
-                    }while (list.moveToNext());
-                }
-            }
-            list.close();
-        }else
-        {
-            Cursor list = db.getRandomNbQuestionsByTheme(2,numThem);
-            if (list != null ) {
-                if (list.moveToFirst()) {
-                    do {
-                        Question q = new Question(list.getInt(list.getColumnIndex("id")),
-                                list.getInt(list.getColumnIndex("numero")),
-                                list.getString(list.getColumnIndex("pathimage")),
-                                list.getString(list.getColumnIndex("enoncer")),
-                                list.getString(list.getColumnIndex("reponse_A")),
-                                list.getString(list.getColumnIndex("reponse_B")),
-                                list.getString(list.getColumnIndex("reponse_C")),
-                                list.getString(list.getColumnIndex("reponse_D")),
-                                list.getString(list.getColumnIndex("correct_A")),
-                                list.getString(list.getColumnIndex("correct_B")),
-                                list.getString(list.getColumnIndex("correct_C")),
-                                list.getString(list.getColumnIndex("correct_D")));
-                        listQuestions.add(q);
-                    } while (list.moveToNext());
-                }
-            }
-        }
         db.close();
     }
 }
