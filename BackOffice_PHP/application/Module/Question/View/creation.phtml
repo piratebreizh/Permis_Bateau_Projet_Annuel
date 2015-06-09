@@ -1,6 +1,6 @@
 <h2>Création d'une question</h2>
 
-<form method="post" class="form-horizontal" action="/question/saveQuestion">
+<form method="post" class="form-horizontal" action="/question/saveQuestion" enctype="multipart/form-data">
     <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
 
     <!-- Numéro -->
@@ -63,6 +63,14 @@
                 <input name="is_correct_D" id="is_correct_D" type="checkbox"/>
             </span>
             <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D"/>
+        </div>
+    </div>
+    <!-- Image -->
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="image">Image : </label>
+
+        <div class="input-group col-sm-10">
+            <input class="form-control" name="image" id="image" type="file"/>
         </div>
     </div>
     <button type="submit" class="btn btn-default">Valider</button>

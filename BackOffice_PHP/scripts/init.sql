@@ -50,3 +50,9 @@ CREATE TABLE IF NOT EXISTS COURS (
   is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_cours)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS IMAGES (
+  id_image int(11) NOT NULL AUTO_INCREMENT,
+  nom_image varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (id_image)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

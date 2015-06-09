@@ -2,6 +2,7 @@
 
 namespace APP\Module\WebService;
 
+use APP\Entity\Cours;
 use APP\Model\Theme as ThemeModel;
 use APP\Model\Examen as ExamenModel;
 use APP\Model\Question as QuestionModel;
@@ -83,8 +84,67 @@ class Controller extends \FSF\Controller
         }
 
         // Cours
+        $cours_model = new \APP\Model\Cours();
+        $cours_nouveaux = $cours_model->getNewCours($date);
+        foreach ($cours_nouveaux as $cours_nouveau) {
+            /** @var \APP\Entity\Cours $cours_nouveau */
+            $json_array['cours_nouveaux'][] = $cours_nouveau->toArray();
+        }
+        $cours_supprimes = $cours_model->getDeletedCours();
+        foreach ($cours_supprimes as $cours_suppr) {
+            /** @var \APP\Entity\Cours $cours_suppr */
+            $json_array['cours_supprimes'][] = $cours_suppr->getIdCours();
+        }
 
 
         return json_encode($json_array, JSON_NUMERIC_CHECK);
+    }
+
+    function getImage()
+    {
+        $id_image = $this->getRequest()->get("id");
+
+        $modelImage = new \APP\Model\Image();
+        $image = $modelImage->get($id_image);
+
+        if (!is_null($image)) {
+            $image_path = ROOT."/public/datas/images/" . $image->getNomImage();
+        }
+
+        if (file_exists($image_path)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename='.basename($image_path));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($image_path));
+            readfile($image_path);
+            exit;
+        }
+    }
+    function getCours()
+    {
+        $id_cours = $this->getRequest()->get("id");
+
+        $modelCours = new \APP\Model\Cours();
+        /** @var Cours $cours */
+        $cours = $modelCours->get($id_cours);
+
+        if (!is_null($cours)) {
+            $cours_path = ROOT."/public/datas/cours/" . $cours->getNomPdf();
+        }
+
+        if (file_exists($cours_path)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename='.basename($cours_path));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($cours_path));
+            readfile($cours_path);
+            exit;
+        }
     }
 }

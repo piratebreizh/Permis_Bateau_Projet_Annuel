@@ -79,7 +79,7 @@ class Question extends \FSF\Entity
     /**
      * @return bool
      */
-    public function IsCorrectA()
+    public function isCorrectA()
     {
         return $this->cols['is_correct_A'] == 1;
     }
@@ -87,7 +87,7 @@ class Question extends \FSF\Entity
     /**
      * @return bool
      */
-    public function IsCorrectB()
+    public function isCorrectB()
     {
         return $this->cols['is_correct_B'] == 1;
     }
@@ -95,7 +95,7 @@ class Question extends \FSF\Entity
     /**
      * @return bool
      */
-    public function IsCorrectC()
+    public function isCorrectC()
     {
         return $this->cols['is_correct_C'] == 1;
     }
@@ -103,7 +103,7 @@ class Question extends \FSF\Entity
     /**
      * @return bool
      */
-    public function IsCorrectD()
+    public function isCorrectD()
     {
         return $this->cols['is_correct_D'] == 1;
     }

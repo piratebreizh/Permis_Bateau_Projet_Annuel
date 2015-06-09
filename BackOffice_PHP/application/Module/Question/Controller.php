@@ -3,6 +3,7 @@
 namespace APP\Module\Question;
 
 use APP\Entity\Examen;
+use APP\Entity\Image;
 use APP\Entity\Theme;
 use APP\Model\Question as QuestionModel;
 use APP\Entity\Question as Question;
@@ -19,9 +20,13 @@ class Controller extends \FSF\Controller
         /** @var \APP\Entity\Question $question */
         $question = $model->get($id);
 
+        $modelImage = new \APP\Model\Image();
+        $image = $modelImage->get($question->getIdImage());
+
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
         $currentView->setParam("question", $question);
+        $currentView->setParam("image", $image);
 
         return $this->getView()
             ->setParam('currentView', $currentView);
@@ -65,8 +70,33 @@ class Controller extends \FSF\Controller
             ->setIsCorrectA($is_correct_A)
             ->setIsCorrectB($is_correct_B)
             ->setIsCorrectC($is_correct_C)
-            ->setIsCorrectD($is_correct_D)
-            ->save();
+            ->setIsCorrectD($is_correct_D);
+
+        // Save the image
+        $target_folder = ROOT . "/public/datas/images/";
+        $image_file = $_FILES['image'];
+
+        $image = new Image();
+        $image->setNomImage(basename($image_file['name']));
+
+        $target_file = $target_folder . $image->getNomImage();
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $uploadOk = true;
+        // Allow certain file formats
+        if ($imageFileType != "jpg"
+            && $imageFileType != "png"
+            && $imageFileType != "jpeg"
+            && $imageFileType != "gif"
+        ) {
+            $uploadOk = false;
+        }
+        if ($uploadOk && move_uploaded_file($image_file["tmp_name"], $target_file)) {
+            $image->save();
+            $question->setIdImage($image->getIdImage());
+        }
+
+        // Save the question !
+        $question->save();
 
         header('Location: /examen/afficher?id=' . $id_examen);
     }

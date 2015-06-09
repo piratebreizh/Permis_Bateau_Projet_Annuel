@@ -64,6 +64,7 @@ class Cours extends Entity
     public function setNom($nom)
     {
         $this->cols['nom'] = (string)$nom;
+        $this->setNomPdf($nom);
 
         return $this;
     }
@@ -82,6 +83,9 @@ class Cours extends Entity
      */
     public function setNomPdf($nom_pdf)
     {
+        $nom_pdf = uniqid().'_'.$nom_pdf;
+        $nom_pdf = substr($nom_pdf, 0, 45).".pdf";
+
         $this->cols['nom_pdf'] = (string)$nom_pdf;
 
         return $this;

@@ -1,16 +1,37 @@
 <?php
+function getSpan($is_correst){
+    if($is_correst){
+        return '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
+    }else{
+        return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+    }
+}
+/** @var \APP\Entity\Image $image */
+$image = $this->image;
+if (!is_null($image)) {
+    $image_url = "/public/datas/images/" . $image->getNomImage();
+}
+
 /** @var \APP\Entity\Question $question */
 $question = $this->question;
-if(!is_null($question)) {
-    echo "<h3>".$question->getEnonceQuestion()."</h3>";
-    echo $question->getEnonceA();
-    echo "<br/>";
-    echo $question->getEnonceB();
-    echo "<br/>";
-    echo $question->getEnonceC();
-    echo "<br/>";
-    echo $question->getEnonceD();
-    echo "<br/>";
-}else{
-    echo "Pas de question correspondant à cet ID";
-}
+if (!is_null($question)) {
+    if (!is_null($image)) { ?>
+        <img src="<?php echo $image_url; ?>"/>
+    <?php } ?>
+    <h3><?php echo $question->getEnonceQuestion(); ?></h3>
+    <?php echo getSpan($question->isCorrectA()); ?>
+    <?php echo $question->getEnonceA(); ?>
+    <br/>
+    <?php echo getSpan($question->isCorrectB()); ?>
+    <?php echo $question->getEnonceB(); ?>
+    <br/>
+    <?php echo getSpan($question->isCorrectC()); ?>
+    <?php echo $question->getEnonceC(); ?>
+    <br/>
+    <?php echo getSpan($question->isCorrectD()); ?>
+    <?php echo $question->getEnonceD(); ?>
+    <br/>
+
+<?php } else { ?>
+    Pas de question correspondant à cet ID
+<?php } ?>
