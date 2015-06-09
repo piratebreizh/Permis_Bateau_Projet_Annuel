@@ -4,7 +4,23 @@ $examen = $this->examen;
 /** @var \APP\Entity\Question[] $questions */
 $questions = $this->questions;
 ?>
-<h2><?php echo $examen->getNom(); ?></h2>
+<h2>
+    <?php echo $examen->getNom(); ?>
+    <!-- Publication -->
+    <?php if ($examen->isPublished()) { ?>
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+              data-toggle="tooltip" data-placement="right" title="Publié"></span>
+    <?php } else { ?>
+        <span class="glyphicon glyphicon-eye-close publication" aria-hidden="true"
+              data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
+              data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
+    <?php } ?>
+
+    <!-- Suppression -->
+    <span class="glyphicon glyphicon-remove delete" aria-hidden="true"
+          data-toggle="tooltip" data-placement="right" title="Cliquer pour supprimer"
+          data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
+</h2>
 
 <table class="table table-striped table-hover" style="width: 80%">
     <col width="5%">

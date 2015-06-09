@@ -24,7 +24,8 @@ class Controller extends \FSF\Controller
         $currentView->setParam("questions", $questions);
 
         return $this->getView()
-            ->setParam('currentView', $currentView);
+            ->setParam('currentView', $currentView)
+            ->setParam("js", array("examen/affichage"));
     }
 
     function saveExamen()
@@ -57,5 +58,35 @@ class Controller extends \FSF\Controller
 
         return $this->getView()
             ->setParam('currentView', $currentView);
+    }
+
+    function publier()
+    {
+        $id_examen = $this->getRequest()->get("id_examen", "");
+
+        $examen_model = new \APP\Model\Examen();
+        /** @var Examen $examen */
+        $examen = $examen_model->get($id_examen);
+
+        $examen->setIsPublished(true);
+        $examen->save();
+    }
+
+    function supprimer()
+    {
+        $id_examen = $this->getRequest()->get("id_examen", "");
+
+        $examen_model = new \APP\Model\Examen();
+        /** @var Examen $examen */
+        $examen = $examen_model->get($id_examen);
+
+        $examen->setIsDeleted(true);
+        $examen->save();
+
+        $returned_json = array(
+            "URL" => "/theme/afficher?id=".$examen->getIdTheme()
+        );
+
+        return json_encode($returned_json);
     }
 }

@@ -34,9 +34,9 @@ class Theme extends \FSF\Model
 
     public function getThemes()
     {
-        $builder = $this->select();
+        $filters[] = new Filter("is_deleted", 0);
 
-        return $this->findAll($builder);
+        return $this->findAllWithFilters($filters);
     }
 
     /**

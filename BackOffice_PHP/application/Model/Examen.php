@@ -39,6 +39,7 @@ class Examen extends \FSF\Model
     public function getExamensByIdTheme($id_theme)
     {
         $filters[] = new Filter('id_theme', $id_theme);
+        $filters[] = new Filter("is_deleted", 0);
 
         return $this->findAllWithFilters($filters);
     }
@@ -49,6 +50,7 @@ class Examen extends \FSF\Model
     public function getExamensBlancs()
     {
         $filters[] = new Filter('id_theme', 0);
+        $filters[] = new Filter("is_deleted", 0);
 
         return $this->findAllWithFilters($filters);
     }

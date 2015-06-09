@@ -80,4 +80,34 @@ class Controller extends \FSF\Controller
 
         header('Location: /theme/lister');
     }
+
+    function publier()
+    {
+        $id_theme = $this->getRequest()->get("id_theme", "");
+
+        $theme_model = new \APP\Model\Theme();
+        /** @var Theme $theme */
+        $theme = $theme_model->get($id_theme);
+
+        $theme->setIsPublished(true);
+        $theme->save();
+    }
+
+    function supprimer()
+    {
+        $id_theme = $this->getRequest()->get("id_theme", "");
+
+        $theme_model = new \APP\Model\Theme();
+        /** @var Theme $theme */
+        $theme = $theme_model->get($id_theme);
+
+        $theme->setIsDeleted(true);
+        $theme->save();
+
+        $returned_json = array(
+            "URL" => "/theme/lister"
+        );
+
+        return json_encode($returned_json);
+    }
 }

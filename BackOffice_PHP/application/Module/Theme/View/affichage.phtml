@@ -6,7 +6,23 @@ $examens = $this->examens;
 /** @var \APP\Entity\Cours[] $cours */
 $cours = $this->cours;
 ?>
-<h2><?php echo $theme->getNom(); ?></h2>
+<h2>
+    <?php echo $theme->getNom(); ?>
+    <!-- Publication -->
+    <?php if ($theme->isPublished()) { ?>
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+              data-toggle="tooltip" data-placement="right" title="Publié"></span>
+    <?php } else { ?>
+        <span class="glyphicon glyphicon-eye-close publication" aria-hidden="true"
+              data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
+              data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
+    <?php } ?>
+
+    <!-- Suppression -->
+    <span class="glyphicon glyphicon-remove delete" aria-hidden="true"
+          data-toggle="tooltip" data-placement="right" title="Cliquer pour supprimer"
+          data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
+</h2>
 
 <h3>Examens</h3>
 <div class="list-group" style="width: 200px">
