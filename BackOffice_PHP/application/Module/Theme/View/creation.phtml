@@ -1,13 +1,23 @@
 <h2>Création d'un thème</h2>
 
-<form method="post"  action="/theme/saveTheme">
-    <div>
-        <label for="numero_theme">Numéro : </label>
-        <input name="numero_theme" id="numero_theme" type="number"/>
+<form method="post"  class="form-horizontal"  action="/theme/saveTheme">
+    <!-- Numéro -->
+    <div class="form-group">
+        <label class="col-sm-1 control-label" for="numero_theme">Numéro : </label>
+
+        <div class="col-sm-4">
+            <input class="form-control" name="numero_theme" id="numero_theme"
+                   placeholder="Numéro du thème" type="number"/>
+        </div>
     </div>
-    <div>
-        <label for="nom">Nom : </label>
-        <input name="nom" id="nom" type="text"/>
+    <!-- Nom -->
+    <div class="form-group">
+        <label class="col-sm-1 control-label" for="nom">Nom : </label>
+
+        <div class="col-sm-4">
+            <input class="form-control" name="nom" id="nom"
+                   placeholder="Nom du thème" type="text"/>
+        </div>
     </div>
-    <button type="submit">Valider</button>
+    <button type="submit" class="btn btn-default">Valider</button>
 </form>
