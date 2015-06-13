@@ -12,6 +12,8 @@ class Controller extends \FSF\Controller
 {
     public function getMaj()
     {
+        ini_set('precision', 14);
+
         $date = $this->getRequest()->get("date");
         $date = Date::blockToFr($date);
 
@@ -100,18 +102,12 @@ class Controller extends \FSF\Controller
             }
         }
 
+        // Test if JSON is not empty
         $fields = array(
-            "themes_nouveaux",
-            "themes_modifies",
-            "examens_nouveaux",
-            "examens_modifies",
-            "questions_nouvelles",
-            "questions_modifiees",
-            "themes_supprimes",
-            "examens_supprimes",
-            "questions_supprimees",
-            "cours_nouveaux",
-            "cours_supprimes",
+            "themes_nouveaux", "themes_modifies", "examens_nouveaux",
+            "examens_modifies", "questions_nouvelles", "questions_modifiees",
+            "themes_supprimes", "examens_supprimes", "questions_supprimees",
+            "cours_nouveaux", "cours_supprimes",
         );
         foreach ($fields as $field) {
             if (!empty($json_array[$field])) {
@@ -120,7 +116,7 @@ class Controller extends \FSF\Controller
             }
         }
 
-        return json_encode($json_array, JSON_NUMERIC_CHECK);
+        return json_encode($json_array, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
     }
 
     function getImage()
