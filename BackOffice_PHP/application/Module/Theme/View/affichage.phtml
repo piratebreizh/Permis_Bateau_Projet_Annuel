@@ -13,25 +13,22 @@ $cours = $this->cours;
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
               data-toggle="tooltip" data-placement="right" title="Publié"></span>
     <?php } else { ?>
-        <span class="glyphicon glyphicon-eye-close publication" aria-hidden="true"
+        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
               data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
               data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
     <?php } ?>
-
-    <!-- Suppression -->
-    <span class="glyphicon glyphicon-trash delete" aria-hidden="true"
-          data-toggle="tooltip" data-placement="right" title="Cliquer pour supprimer"
-          data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
 </h2>
 
 <h3>Examens</h3>
-<div class="list-group" style="width: 200px">
-    <?php foreach ($examens as $examen) { ?>
-        <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="list-group-item">
-            <?php echo $examen->getNom(); ?>
+<?php foreach ($examens as $examen) { ?>
+    <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default examen_link" style="width: 200px"
+                    onclick="window.location.href = '/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>'">
+                <?php echo $examen->getNom(); ?>
 
-            <!-- Publication -->
-            <span style="float: right;">
+                <!-- Publication -->
+                <span class="is_published" style="float: right;">
                 <?php if ($examen->isPublished()) { ?>
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
                           data-toggle="tooltip" data-placement="right" title="Publié"></span>
@@ -39,10 +36,24 @@ $cours = $this->cours;
                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
                           data-toggle="tooltip" data-placement="right" title="Non publié"></span>
                 <?php } ?>
-            </span>
-        </a>
-    <?php } ?>
-</div>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <?php if (!$examen->isPublished()) { ?>
+                <li><a href="#" class="examen_publication">Publier</a></li>
+                <?php } ?>
+                <li><a href="#" class="examen_delete">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>
+<?php } ?>
+
+<br/>
 
 <a class="btn btn-primary" href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

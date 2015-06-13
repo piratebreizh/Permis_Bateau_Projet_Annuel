@@ -4,27 +4,43 @@ $themes = $this->themes;
 ?>
 <h2>Liste des thèmes</h2>
 
-<div class="list-group" style="width: 200px">
-    <a href="/theme/listerExamensBlanc" class="list-group-item list-group-item-info">Examens blancs</a>
-    <?php foreach ($themes as $theme) { ?>
-        <a href="/theme/afficher?id=<?php echo $theme->getIdTheme(); ?>" class="list-group-item">
-            <?php echo $theme->getNom(); ?>
+<button type="button" class="btn btn-info btn-lg btn-block examens_blancs_link"
+        onclick="window.location.href = '/theme/listerExamensBlanc'" style="width: 235px">
+    Examens blancs
+</button>
+<?php foreach ($themes as $theme) { ?>
+    <div class="div_theme" data-id="<?php echo $theme->getIdTheme(); ?>">
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" style="width: 200px"
+                    onclick="window.location.href = '/theme/afficher?id=<?php echo $theme->getIdTheme(); ?>'">
+                <?php echo $theme->getNom(); ?>
+                <!-- Publication -->
+                <span class="is_published" style="float: right;">
+                    <?php if ($theme->isPublished()) { ?>
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+                              data-toggle="tooltip" data-placement="right" title="Publié"></span>
+                    <?php } else { ?>
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                              data-toggle="tooltip" data-placement="right" title="Non publié"></span>
+                    <?php } ?>
+                </span>
+            </button>
 
-            <!-- Publication -->
-            <span style="float: right;">
-                <?php if ($theme->isPublished()) { ?>
-                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
-                          data-toggle="tooltip" data-placement="right" title="Publié"></span>
-                <?php } else { ?>
-                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
-                          data-toggle="tooltip" data-placement="right" title="Non publié"></span>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <?php if (!$theme->isPublished()) { ?>
+                <li><a href="#" class="theme_publication">Publier</a></li>
                 <?php } ?>
-            </span>
-        </a>
-    <?php } ?>
-</div>
-
-<a class="btn btn-primary" href="/theme/creer">
+                <li><a href="#" class="theme_delete">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>
+<?php } ?>
+<br>
+<a class="btn btn-primary btn-lg" href="/theme/creer">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Créer un thème
 </a>

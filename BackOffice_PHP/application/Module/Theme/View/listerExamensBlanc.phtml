@@ -4,13 +4,15 @@ $examens_blancs = $this->examens_blancs;
 ?>
 
 <h2>Liste des examens blancs</h2>
-<div class="list-group" style="width: 200px">
-    <?php foreach ($examens_blancs as $examen) { ?>
-        <a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="list-group-item">
-            <?php echo $examen->getNom(); ?>
+<?php foreach ($examens_blancs as $examen) { ?>
+    <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default examen_link" style="width: 200px"
+                    onclick="window.location.href = '/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>'">
+                <?php echo $examen->getNom(); ?>
 
-            <!-- Publication -->
-            <span style="float: right;">
+                <!-- Publication -->
+                <span class="is_published" style="float: right;">
                 <?php if ($examen->isPublished()) { ?>
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
                           data-toggle="tooltip" data-placement="right" title="Publié"></span>
@@ -18,18 +20,26 @@ $examens_blancs = $this->examens_blancs;
                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
                           data-toggle="tooltip" data-placement="right" title="Non publié"></span>
                 <?php } ?>
-            </span>
-        </a>
-    <?php } ?>
-</div>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <?php if (!$examen->isPublished()) { ?>
+                    <li><a href="#" class="examen_publication">Publier</a></li>
+                <?php } ?>
+                <li><a href="#" class="examen_delete">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>
+<?php } ?>
+
+<br/>
 
 <a class="btn btn-primary" href="/examen/creer?id_theme=0">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Créer un nouvel examen
 </a>
-
-<script type="application/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>

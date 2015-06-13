@@ -55,7 +55,8 @@ class Controller extends \FSF\Controller
         $currentView->setParam("examens_blancs", $examens_blancs);
 
         return $this->getView()
-            ->setParam('currentView', $currentView);
+            ->setParam('currentView', $currentView)
+            ->setParam("js", array("theme/common"));
     }
 
     function creer()
@@ -105,7 +106,7 @@ class Controller extends \FSF\Controller
         $theme->save();
 
         $returned_json = array(
-            "URL" => "/theme/lister"
+            "is_deleted" => true
         );
 
         return json_encode($returned_json);

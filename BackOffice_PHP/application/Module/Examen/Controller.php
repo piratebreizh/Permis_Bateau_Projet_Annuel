@@ -84,7 +84,7 @@ class Controller extends \FSF\Controller
         $examen->save();
 
         $returned_json = array(
-            "URL" => "/theme/afficher?id=".$examen->getIdTheme()
+            "is_deleted" => true
         );
 
         return json_encode($returned_json);

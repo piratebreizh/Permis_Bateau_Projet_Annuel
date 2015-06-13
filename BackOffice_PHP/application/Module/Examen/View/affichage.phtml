@@ -11,15 +11,10 @@ $questions = $this->questions;
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
               data-toggle="tooltip" data-placement="right" title="Publié"></span>
     <?php } else { ?>
-        <span class="glyphicon glyphicon-eye-close publication" aria-hidden="true"
+        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
               data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
               data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
     <?php } ?>
-
-    <!-- Suppression -->
-    <span class="glyphicon glyphicon-trash delete" aria-hidden="true"
-          data-toggle="tooltip" data-placement="right" title="Cliquer pour supprimer"
-          data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
 </h2>
 
 <table class="table table-striped table-hover" style="width: 80%">
