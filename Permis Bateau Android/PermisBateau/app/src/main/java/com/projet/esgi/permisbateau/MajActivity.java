@@ -2,10 +2,15 @@ package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.projet.esgi.myapplication.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import webservice.UpdateTask;
 
@@ -20,8 +25,16 @@ public class MajActivity extends Activity {
     }
 
     public void launchMaj(){
-        UpdateTask update = new UpdateTask(getApplicationContext());
-        update.execute("");
+        try{
+            DateFormat df = new SimpleDateFormat("ddMMyyyyHHmmss");
+            Date d = new Date();
+
+            UpdateTask update = new UpdateTask(getApplicationContext());
+            //update.execute(df.format(d));
+            update.execute("14012015150431");
+        }catch (Exception e){
+            Log.e("erreur", e.getMessage());
+        }
     }
 
     @Override

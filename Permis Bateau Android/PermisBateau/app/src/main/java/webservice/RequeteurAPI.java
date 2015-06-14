@@ -21,7 +21,9 @@ import java.net.URLEncoder;
  */
 public class RequeteurAPI {
 
-    private static String URL_WEBSERVICE_MAJ = "http://cap-horn.olympe.in/ws/getmaj";
+    private static String URL_WEBSERVICE_MAJ = "http://cap-horn.osmose-hebergement.com/ws/getmaj";
+    private static String URL_WEBSERVICE_IMAGE = "http://cap-horn.osmose-hebergement.com/ws/getImage";
+    private static String URL_WEBSERVICE_COURS= "http://cap-horn.osmose-hebergement.com/ws/getCours";
     private static String CHARSET = "UTF-8";
 
     private String buildParamDate(String date) throws UnsupportedEncodingException {
@@ -30,12 +32,12 @@ public class RequeteurAPI {
     }
 
     private String buildParamImage(String idImage) throws UnsupportedEncodingException {
-        return String.format("image=%s",
+        return String.format("id=%s",
                 URLEncoder.encode(idImage, CHARSET));
     }
 
     private String buildParamCours(String idCours) throws UnsupportedEncodingException {
-        return String.format("cours=%s",
+        return String.format("id=%s",
                 URLEncoder.encode(idCours, CHARSET));
     }
 
@@ -45,42 +47,46 @@ public class RequeteurAPI {
      * @param date
      * @return
      */
-    public String queryMaj(String date){
+    public String queryMaj(String date) throws Exception{
         String reponse = "";
         HttpURLConnection connection = null;
         InputStream iStream = null;
-        try {
-            String requete;
-            if(date.length()>0) {
-                String paramDate = this.buildParamDate(date);
-                requete = String.format("%s&%s", URL_WEBSERVICE_MAJ, paramDate);
-            }else {
-                requete = URL_WEBSERVICE_MAJ;
-            }
 
-            connection = (HttpURLConnection) new URL(requete).openConnection();
-            connection.setRequestProperty("Accept-Charset", CHARSET);
-            connection.setRequestMethod("GET");
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.connect();
-
-            iStream = connection.getInputStream();
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(iStream));
-
-            String line;
-            StringBuffer sBuffer = new StringBuffer();
-            while ((line = bReader.readLine()) != null){
-                sBuffer.append(line);
-            }
-            iStream.close();
-            connection.disconnect();
-
-            reponse = sBuffer.toString();
-        } catch (Exception e) {
-            Log.e("RequeteurAPI", "Erreur lors de la récupération des données", e);
+        String requete;
+        if(date.length()>0) {
+            String paramDate = this.buildParamDate(date);
+            requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
+        }else {
+            requete = URL_WEBSERVICE_MAJ;
         }
+Log.e("re",requete);
+        connection = (HttpURLConnection) new URL(requete).openConnection();
+        connection.setRequestProperty("Accept-Charset", CHARSET);
+        connection.setRequestMethod("GET");
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.connect();
 
+        iStream = connection.getInputStream();
+        BufferedReader bReader = new BufferedReader(new InputStreamReader(iStream));
+Log.e("br",bReader.readLine());
+        String line;
+        StringBuffer sBuffer = new StringBuffer();
+        line = bReader.readLine();
+        while (line != null){
+Log.e("lin",line);
+            sBuffer.append(line);
+            line = bReader.readLine();
+        }
+        /*while ((line = bReader.readLine()) != null){
+Log.e("lin",bReader.readLine());
+            sBuffer.append(line);
+        }*/
+        iStream.close();
+        connection.disconnect();
+
+        reponse = sBuffer.toString();
+Log.e("rep",reponse);
         return reponse;
     }
 
@@ -89,18 +95,41 @@ public class RequeteurAPI {
      * @param idImage
      * @param context
      */
-    public void stockImage(String idImage,Context context){
+    public void stockImage(String idImage,Context context) throws Exception{
+
+        Bitmap bmp;
+        String paramImage = this.buildParamImage(idImage);
+
+        String requete = String.format("%s?%s", URL_WEBSERVICE_IMAGE, paramImage);
+        InputStream in = new URL(requete).openStream();
+        bmp = BitmapFactory.decodeStream(in);
+
+        FileOutputStream fos = context.openFileOutput( "images/" + idImage + ".png", Context.MODE_PRIVATE);
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        fos.close();
+
+
+    }
+
+    /**
+     * Récupération et stockage interne des images
+     * @param idCours
+     * @param context
+     */
+    public void stockCours(String idCours,Context context){
         try {
             Bitmap bmp;
-            String paramImage = this.buildParamImage(idImage);
+            String paramCours = this.buildParamCours(idCours);
 
-            String requete = String.format("%s&%s", URL_WEBSERVICE_MAJ, paramImage);
-            InputStream in = new URL(requete).openStream();
+            String requete = String.format("%s?%s", URL_WEBSERVICE_COURS, paramCours);
+
+            /*InputStream in = new URL(requete).openStream();
             bmp = BitmapFactory.decodeStream(in);
 
             FileOutputStream fos = context.openFileOutput( "images/" + idImage + ".png", Context.MODE_PRIVATE);
             bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
+            */
 
         } catch (Exception e) {
             Log.e("RequeteurAPI", "Erreur lors de la récupération et stockage des images", e);
