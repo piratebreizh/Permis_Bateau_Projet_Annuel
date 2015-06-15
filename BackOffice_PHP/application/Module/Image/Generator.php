@@ -152,7 +152,7 @@ class Generator
 
         foreach(self::$RESOLUTION_SIZE as $res => $size){
             $fileOutput = self::getImagesDirectory() . $res . '/' . $this->image->getNomImage();
-            $fileOutput = substr($fileOutput, 0, strpos($fileOutput, '.')) . '.jpeg';
+            $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.jpeg';
             $this->resizeImageFile($file, $fileOutput, $size, $size);
         }
     }
