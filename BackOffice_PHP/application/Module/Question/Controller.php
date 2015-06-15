@@ -2,12 +2,9 @@
 
 namespace APP\Module\Question;
 
-use APP\Entity\Examen;
-use APP\Entity\Image;
-use APP\Entity\Theme;
-use APP\Model\Question as QuestionModel;
 use APP\Entity\Question as Question;
-
+use APP\Model\Question as QuestionModel;
+use APP\Module\Image\Generator as ImageGenerator;
 use APP\Module\Question\View as ViewPath;
 
 class Controller extends \FSF\Controller
@@ -73,26 +70,11 @@ class Controller extends \FSF\Controller
             ->setIsCorrectD($is_correct_D);
 
         // Save the image
-        $target_folder = ROOT . "/public/datas/images/";
-        $image_file = $_FILES['image'];
+        $image_generator = new ImageGenerator();
 
-        $image = new Image();
-        $image->setNomImage(basename($image_file['name']));
-
-        $target_file = $target_folder . $image->getNomImage();
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $uploadOk = true;
-        // Allow certain file formats
-        if ($imageFileType != "jpg"
-            && $imageFileType != "png"
-            && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
-        ) {
-            $uploadOk = false;
-        }
-        if ($uploadOk && move_uploaded_file($image_file["tmp_name"], $target_file)) {
-            $image->save();
-            $question->setIdImage($image->getIdImage());
+        if ($image_generator->saveImage($_FILES['image'])) {
+            $image_generator->resizeImage();
+            $question->setIdImage($image_generator->image->getIdImage());
         }
 
         // Save the question !

@@ -3,9 +3,10 @@
 namespace APP\Module\WebService;
 
 use APP\Entity\Cours;
-use APP\Model\Theme as ThemeModel;
 use APP\Model\Examen as ExamenModel;
 use APP\Model\Question as QuestionModel;
+use APP\Model\Theme as ThemeModel;
+use APP\Module\Image\Generator as ImageGenerator;
 use FSF\Helper\Date;
 
 class Controller extends \FSF\Controller
@@ -104,10 +105,17 @@ class Controller extends \FSF\Controller
 
         // Test if JSON is not empty
         $fields = array(
-            "themes_nouveaux", "themes_modifies", "examens_nouveaux",
-            "examens_modifies", "questions_nouvelles", "questions_modifiees",
-            "themes_supprimes", "examens_supprimes", "questions_supprimees",
-            "cours_nouveaux", "cours_supprimes",
+            "themes_nouveaux",
+            "themes_modifies",
+            "examens_nouveaux",
+            "examens_modifies",
+            "questions_nouvelles",
+            "questions_modifiees",
+            "themes_supprimes",
+            "examens_supprimes",
+            "questions_supprimees",
+            "cours_nouveaux",
+            "cours_supprimes",
         );
         foreach ($fields as $field) {
             if (!empty($json_array[$field])) {
@@ -122,12 +130,18 @@ class Controller extends \FSF\Controller
     function getImage()
     {
         $id_image = $this->getRequest()->get("id");
+        $resolution = $this->getRequest()->get("resolution", ImageGenerator::HD);
+
+        if (!array_key_exists($resolution, ImageGenerator::$RESOLUTION_SIZE)) {
+            $resolution = ImageGenerator::HD;
+        }
 
         $modelImage = new \APP\Model\Image();
         $image = $modelImage->get($id_image);
 
         if (!is_null($image)) {
-            $image_path = ROOT . "/public/datas/images/" . $image->getNomImage();
+            $image_path = ImageGenerator::getImagesDirectory() . $resolution . '/' . $image->getNomImage();
+            $image_path = substr($image_path, 0, strpos($image_path, '.')) . '.jpeg';
         }
 
         if (file_exists($image_path)) {

@@ -52,12 +52,15 @@ class Image extends Entity
 
     /**
      * @param string $nom_image
-     * @return \APP\Entity\Image
+     * @param bool   $rename
+     * @return Image
      */
-    public function setNomImage($nom_image)
+    public function setNomImage($nom_image, $rename = true)
     {
-        $nom_image = uniqid().'_'.$nom_image;
-        $nom_image = substr($nom_image, 0, 50);
+        if($rename) {
+            $nom_image = uniqid() . '_' . $nom_image;
+            $nom_image = substr($nom_image, 0, 50);
+        }
 
         $this->cols['nom_image'] = (string)$nom_image;
 
