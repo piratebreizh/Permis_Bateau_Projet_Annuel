@@ -6,6 +6,7 @@ use FSF\Helper\FileSystem;
 
 class Generator
 {
+    const BO = "BO";
     const SD = "SD";
     const HD = "HD";
     const UHD = "UHD";
@@ -14,6 +15,7 @@ class Generator
         self::SD  => 100,
         self::HD  => 200,
         self::UHD => 300,
+        self::BO  => 500,
     );
 
     /** @var  Image */
@@ -22,9 +24,9 @@ class Generator
     /**
      * image resize function
      * @param string $file               file name to resize
+     * @param string $output             name of the new file (include path if needed)
      * @param int    $width              new image width
      * @param int    $height             new image height
-     * @param string $output             name of the new file (include path if needed)
      * @param bool   $delete_original    if true the original image will be deleted
      * @param bool   $use_linux_commands if set to true will use "rm" to delete the image, if false will use PHP unlink
      * @param int    $quality            enter 1-100 (100 is best quality) default is 100
@@ -53,10 +55,7 @@ class Generator
         # Setting defaults and meta
         $info = getimagesize($file);
         $image = '';
-        $final_width = 0;
-        $final_height = 0;
         list($width_old, $height_old) = $info;
-        $cropHeight = $cropWidth = 0;
 
         # Calculating proportionality
         $ratio_orig = $width_old / $height_old;
@@ -133,6 +132,7 @@ class Generator
             $uploadOk = false;
         }
         if ($uploadOk && move_uploaded_file($image_file["tmp_name"], $target_file)) {
+            $this->resizeOriginalImage();
             $this->image->save();
 
             return true;
@@ -150,7 +150,7 @@ class Generator
     {
         $file = self::getImagesDirectory() . $this->image->getNomImage();
 
-        foreach(self::$RESOLUTION_SIZE as $res => $size){
+        foreach (self::$RESOLUTION_SIZE as $res => $size) {
             $fileOutput = self::getImagesDirectory() . $res . '/' . $this->image->getNomImage();
             $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.jpeg';
             $this->resizeImageFile($file, $fileOutput, $size, $size);
@@ -159,12 +159,33 @@ class Generator
 
     private function createDirectoriesTreeForImages()
     {
+        $return = true;
         $directories = str_replace(PUBLIC_DIR, "", self::getImagesDirectory());
 
-        return FileSystem::createDirectoriesTree(PUBLIC_DIR, $directories . '/' . self::SD)
-               &&
-               FileSystem::createDirectoriesTree(PUBLIC_DIR, $directories . '/' . self::HD)
-               &&
-               FileSystem::createDirectoriesTree(PUBLIC_DIR, $directories . '/' . self::UHD);
+        foreach (self::$RESOLUTION_SIZE as $res => $size) {
+            $return = $return && FileSystem::createDirectoriesTree(PUBLIC_DIR, $directories . '/' . $res);
+        }
+
+        return $return;
+    }
+
+    private function resizeOriginalImage()
+    {
+        $size_BO = self::$RESOLUTION_SIZE[self::BO];
+        $file = self::getImagesDirectory() . $this->image->getNomImage();
+
+        $info = getimagesize($file);
+        list($width, $height) = $info;
+        $width = $width > $size_BO ? $size_BO : $width;
+        $height = $height > $size_BO ? $size_BO : $height;
+
+        $fileOutput = self::getImagesDirectory() . self::BO . '/' . $this->image->getNomImage();
+        $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.jpeg';
+        $this->resizeImageFile($file, $fileOutput, $width, $height);
+
+        $this->image->setNomImage(
+            substr($this->image->getNomImage(), 0, strrpos($this->image->getNomImage(), '.')) . '.jpeg',
+            false
+        );
     }
 }

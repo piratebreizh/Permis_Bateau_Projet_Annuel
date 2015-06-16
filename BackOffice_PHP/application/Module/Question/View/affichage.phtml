@@ -9,7 +9,7 @@ function getSpan($is_correst){
 /** @var \APP\Entity\Image $image */
 $image = $this->image;
 if (!is_null($image)) {
-    $image_url = "/public/datas/images/" . $image->getNomImage();
+    $image_url = "/public/datas/images/" . \APP\Module\Image\Generator::BO . '/' . $image->getNomImage();
 }
 
 /** @var \APP\Entity\Question $question */
