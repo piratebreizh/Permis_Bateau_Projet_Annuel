@@ -33,16 +33,6 @@ class Question extends \FSF\Model
     }
 
     /**
-     * @return \FSF\EntityIterator
-     */
-    public function getAllQuestions()
-    {
-        $builder = $this->select();
-
-        return $this->findAll($builder);
-    }
-
-    /**
      * @param int $id_examen
      * @return \FSF\EntityIterator
      */
@@ -50,7 +40,7 @@ class Question extends \FSF\Model
     {
         $filters[]= new Filter('id_examen', $id_examen);
 
-        return $this->findAllWithFilters($filters);
+        return $this->findAllWithFilters($filters, 'numero_question');
     }
 
     /**

@@ -2,16 +2,6 @@
 
 <form method="post" class="form-horizontal" action="/question/saveQuestion" enctype="multipart/form-data">
     <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
-
-    <!-- Numéro -->
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="numero_question">Numéro : </label>
-
-        <div class="col-sm-10">
-            <input class="form-control" name="numero_question" id="numero_question"
-                   placeholder="Numéro de la question" type="number"/>
-        </div>
-    </div>
     <!-- Enonce -->
     <div class="form-group">
         <label class="col-sm-2 control-label" for="question_enonce">Enoncé de la question : </label>

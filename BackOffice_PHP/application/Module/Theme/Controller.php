@@ -70,8 +70,12 @@ class Controller extends \FSF\Controller
 
     function saveTheme()
     {
-        $numero_theme = $this->getRequest()->get("numero_theme", "");
         $nom = $this->getRequest()->get("nom", "");
+
+        $numero_theme = 1;
+        $theme_model = new \APP\Model\Theme();
+        $allThemes = $theme_model->getThemes();
+        $numero_theme += $allThemes->count();
 
         $theme = new Theme();
         $theme

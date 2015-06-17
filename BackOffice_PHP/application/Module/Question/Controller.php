@@ -44,7 +44,6 @@ class Controller extends \FSF\Controller
     public function saveQuestion()
     {
         $id_examen = $this->getRequest()->get("id_examen", "");
-        $numero_question = $this->getRequest()->get("numero_question", "");
         $enonce_question = $this->getRequest()->get("question_enonce", "");
         $enonce_A = $this->getRequest()->get("enonce_A", "");
         $enonce_B = $this->getRequest()->get("enonce_B", "");
@@ -54,6 +53,12 @@ class Controller extends \FSF\Controller
         $is_correct_B = $this->getRequest()->get("is_correct_B", false);
         $is_correct_C = $this->getRequest()->get("is_correct_C", false);
         $is_correct_D = $this->getRequest()->get("is_correct_D", false);
+
+        //Numéro
+        $numero_question = 1;
+        $question_model = new QuestionModel();
+        $questions = $question_model->getQuestionsByIdExamen($id_examen);
+        $numero_question += $questions->count();
 
         $question = new Question();
         $question

@@ -4,6 +4,8 @@ namespace APP\Entity;
 
 class Theme extends \FSF\Entity
 {
+    const ID_THEME_EXAMENS_BLANCS = 0;
+
     protected $cols = array(
         'id_theme'          => null,
         'nom'               => null,

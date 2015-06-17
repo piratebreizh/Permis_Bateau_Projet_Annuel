@@ -3,6 +3,7 @@
 namespace APP\Module\Examen;
 
 use APP\Entity\Examen;
+use APP\Entity\Theme;
 use APP\Model\Question;
 use APP\Module\Examen\View as ViewPath;
 
@@ -30,9 +31,13 @@ class Controller extends \FSF\Controller
 
     function saveExamen()
     {
-        $numero_examen = $this->getRequest()->get("numero_examen", "");
-        $id_theme = $this->getRequest()->get("id_theme", ""); //TODO Default value == THEME Examen Blanc ?
+        $numero_examen = 1;
+        $id_theme = $this->getRequest()->get("id_theme", Theme::ID_THEME_EXAMENS_BLANCS);
         $nom = $this->getRequest()->get("nom", "");
+
+        $examen_model = new \APP\Model\Examen();
+        $examens = $examen_model->getExamensByIdTheme($id_theme);
+        $numero_examen += $examens->count();
 
         $examen = new Examen();
         $examen

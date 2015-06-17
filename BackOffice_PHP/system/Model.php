@@ -230,11 +230,14 @@ abstract class Model
 
     /**
      * @param Filter[] $filters
+     * @param string   $order
      * @return EntityIterator
      */
-    protected function findAllWithFilters($filters)
+    protected function findAllWithFilters($filters, $order = "")
     {
         $builder = $this->select();
+        if(!empty($order))
+            $builder->orderBy($order);
 
         foreach($filters as $filter){
             $filter->applyOnQueryBuilder($builder);

@@ -41,7 +41,7 @@ class Examen extends \FSF\Model
         $filters[] = new Filter('id_theme', $id_theme);
         $filters[] = new Filter("is_deleted", 0);
 
-        return $this->findAllWithFilters($filters);
+        return $this->findAllWithFilters($filters, 'numero');
     }
 
     /**

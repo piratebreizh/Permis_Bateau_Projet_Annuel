@@ -36,7 +36,7 @@ class Theme extends \FSF\Model
     {
         $filters[] = new Filter("is_deleted", 0);
 
-        return $this->findAllWithFilters($filters);
+        return $this->findAllWithFilters($filters, "numero");
     }
 
     /**
