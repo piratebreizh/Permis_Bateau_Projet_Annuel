@@ -116,22 +116,22 @@ public class RequeteurAPI {
     }
 
     /**
-     * Récupération et stockage interne des images
+     * Récupération et stockage externe des cours
      * @param idCours
      * @param context
      */
     public boolean stockCours(String idCours,Context context) throws Exception{
 
         dlImageEnd = false;
-        String paramCours = this.buildParamCours(idCours);
+       String paramCours = this.buildParamCours(idCours);
 
         String requete = String.format("%s?%s", URL_WEBSERVICE_COURS, paramCours);
-
+/*
         File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
         folder.mkdir();
 
         File pdfFile = new File(folder, idCours + ".pdf");
-
+/*
         // Create the download request
         DownloadManager.Request r = new DownloadManager.Request( Uri.parse( requete ) );
         r.setDestinationInExternalFilesDir( context, folder.getAbsolutePath(),pdfFile.getName() );
@@ -162,7 +162,8 @@ public class RequeteurAPI {
         dm.enqueue( r );
 
         return dlImageEnd;
-        /*
+        */
+/*
         DownloadManager downloadManager = (DownloadManager)context.getSystemService(context.DOWNLOAD_SERVICE);
         Uri Download_Uri = Uri.parse(requete);
         DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
@@ -181,7 +182,7 @@ public class RequeteurAPI {
 
         //Enqueue a new download and same the referenceId
         long downloadReference = downloadManager.enqueue(request);
-*/
+return true;*/
         /*Query myDownloadQuery = new Query();
         //set the query filter to our previously Enqueued download
         myDownloadQuery.setFilterById(downloadReference);
@@ -192,7 +193,7 @@ public class RequeteurAPI {
             checkStatus(cursor);
         }*/
 
-        /*URL url = new URL(requete);
+        URL url = new URL(requete);
         HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
         urlConnection.setRequestMethod("GET");
         urlConnection.setDoOutput(true);
@@ -213,6 +214,6 @@ public class RequeteurAPI {
         }
         fos.close();
         is.close();
-*/
+return  true;
     }
 }
