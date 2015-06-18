@@ -157,7 +157,11 @@ public class QuestionActivity extends Activity {
             if(q!=null) {
                 enonce.setText(q.getEnoncer());
                 File filePath = getFileStreamPath(q.getPathimage());
-                image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
+                if(filePath.exists()){
+                    image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
+                }else{
+                    image.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+                }
                 txtRepA.setText(q.getReponse_A());
                 txtRepB.setText(q.getReponse_B());
                 txtRepC.setText(q.getReponse_C());

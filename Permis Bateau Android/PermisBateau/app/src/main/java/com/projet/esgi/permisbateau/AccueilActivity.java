@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.projet.esgi.myapplication.R;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import database.DataBase;
@@ -119,14 +120,11 @@ public class AccueilActivity extends Activity {
     /**temporaire*/////
     public void createDb() throws SQLException {
 
-        DataBase db = new DataBase(getApplicationContext());
-
-        db.open();
-        Cursor c = db.getQuestionsFromSeries(2);
-        do {
-            Toast.makeText(getApplicationContext(),c.getInt(c.getColumnIndex("idQuestion")),Toast.LENGTH_SHORT).show();
-        }while (c.moveToNext());
-        db.close();
+        File dirFiles = getFilesDir();
+        for (String strFile : dirFiles.list())
+        {
+            Toast.makeText(getApplicationContext(),strFile.toString(),Toast.LENGTH_SHORT).show();
+        }
         /*
         db.dropDataBase();
         db.createDataBase();

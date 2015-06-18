@@ -1,9 +1,18 @@
 package webservice;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import android.net.Uri;
+import android.app.DownloadManager;
+import android.app.DownloadManager.Query;
+import android.app.DownloadManager.Request;
+import android.os.Environment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,8 +32,11 @@ public class RequeteurAPI {
 
     private static String URL_WEBSERVICE_MAJ = "http://cap-horn.osmose-hebergement.com/ws/getmaj";
     private static String URL_WEBSERVICE_IMAGE = "http://cap-horn.osmose-hebergement.com/ws/getImage";
+    //private static String URL_WEBSERVICE_IMAGE = "http://cap-horn.olympe.in/ws/getImage";
     private static String URL_WEBSERVICE_COURS= "http://cap-horn.osmose-hebergement.com/ws/getCours";
     private static String CHARSET = "UTF-8";
+
+    private boolean dlImageEnd;
 
     private String buildParamDate(String date) throws UnsupportedEncodingException {
         return String.format("date=%s",
@@ -53,40 +65,29 @@ public class RequeteurAPI {
         InputStream iStream = null;
 
         String requete;
-        if(date.length()>0) {
-            String paramDate = this.buildParamDate(date);
-            requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
-        }else {
-            requete = URL_WEBSERVICE_MAJ;
-        }
-Log.e("re",requete);
+        String paramDate = this.buildParamDate(date);
+        requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
+
         connection = (HttpURLConnection) new URL(requete).openConnection();
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
         connection.setRequestProperty("Accept-Charset", CHARSET);
         connection.setRequestMethod("GET");
         connection.setDoInput(true);
-        connection.setDoOutput(true);
         connection.connect();
+
 
         iStream = connection.getInputStream();
         BufferedReader bReader = new BufferedReader(new InputStreamReader(iStream));
-Log.e("br",bReader.readLine());
+
         String line;
         StringBuffer sBuffer = new StringBuffer();
-        line = bReader.readLine();
-        while (line != null){
-Log.e("lin",line);
+
+        while ((line = bReader.readLine()) != null){
             sBuffer.append(line);
-            line = bReader.readLine();
         }
-        /*while ((line = bReader.readLine()) != null){
-Log.e("lin",bReader.readLine());
-            sBuffer.append(line);
-        }*/
         iStream.close();
         connection.disconnect();
-
         reponse = sBuffer.toString();
-Log.e("rep",reponse);
         return reponse;
     }
 
@@ -104,9 +105,12 @@ Log.e("rep",reponse);
         InputStream in = new URL(requete).openStream();
         bmp = BitmapFactory.decodeStream(in);
 
-        FileOutputStream fos = context.openFileOutput( "images/" + idImage + ".png", Context.MODE_PRIVATE);
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        fos.close();
+        if(bmp!=null){
+            FileOutputStream fos = context.openFileOutput(idImage + ".jpeg", Context.MODE_PRIVATE);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+        }
+
 
 
     }
@@ -116,23 +120,99 @@ Log.e("rep",reponse);
      * @param idCours
      * @param context
      */
-    public void stockCours(String idCours,Context context){
-        try {
-            Bitmap bmp;
-            String paramCours = this.buildParamCours(idCours);
+    public boolean stockCours(String idCours,Context context) throws Exception{
 
-            String requete = String.format("%s?%s", URL_WEBSERVICE_COURS, paramCours);
+        dlImageEnd = false;
+        String paramCours = this.buildParamCours(idCours);
 
-            /*InputStream in = new URL(requete).openStream();
-            bmp = BitmapFactory.decodeStream(in);
+        String requete = String.format("%s?%s", URL_WEBSERVICE_COURS, paramCours);
 
-            FileOutputStream fos = context.openFileOutput( "images/" + idImage + ".png", Context.MODE_PRIVATE);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-            */
+        File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
+        folder.mkdir();
 
-        } catch (Exception e) {
-            Log.e("RequeteurAPI", "Erreur lors de la récupération et stockage des images", e);
+        File pdfFile = new File(folder, idCours + ".pdf");
+
+        // Create the download request
+        DownloadManager.Request r = new DownloadManager.Request( Uri.parse( requete ) );
+        r.setDestinationInExternalFilesDir( context, folder.getAbsolutePath(),pdfFile.getName() );
+        final DownloadManager dm = (DownloadManager) context.getSystemService( Context.DOWNLOAD_SERVICE );
+
+        BroadcastReceiver onComplete = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                context.unregisterReceiver( this );
+
+                long downloadId = intent.getLongExtra( DownloadManager.EXTRA_DOWNLOAD_ID, -1 );
+                Cursor c = dm.query( new DownloadManager.Query().setFilterById( downloadId ) );
+
+                if ( c.moveToFirst() ) {
+                    int status = c.getInt( c.getColumnIndex( DownloadManager.COLUMN_STATUS ) );
+                    if ( status == DownloadManager.STATUS_SUCCESSFUL ) {
+                        //fin du dl
+                        dlImageEnd = true;
+                    }
+                }
+                c.close();
+            }
+        };
+
+        context.registerReceiver( onComplete, new IntentFilter( DownloadManager.ACTION_DOWNLOAD_COMPLETE ) );
+
+        // Enqueue the request
+        dm.enqueue( r );
+
+        return dlImageEnd;
+        /*
+        DownloadManager downloadManager = (DownloadManager)context.getSystemService(context.DOWNLOAD_SERVICE);
+        Uri Download_Uri = Uri.parse(requete);
+        DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
+
+        //Restrict the types of networks over which this download may proceed.
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        //Set whether this download may proceed over a roaming connection.
+        request.setAllowedOverRoaming(false);
+        //Set the title of this download, to be displayed in notifications (if enabled).
+        request.setTitle("Téléchargement cours");
+        //Set a description of this download, to be displayed in notifications (if enabled)
+        request.setDescription("Téléchargement du cours n° " + idCours);
+        //Set the local destination for the downloaded file to a path within the application's external files directory
+        request.setDestinationInExternalFilesDir(context, folder.getAbsolutePath(),pdfFile.getName());
+
+
+        //Enqueue a new download and same the referenceId
+        long downloadReference = downloadManager.enqueue(request);
+*/
+        /*Query myDownloadQuery = new Query();
+        //set the query filter to our previously Enqueued download
+        myDownloadQuery.setFilterById(downloadReference);
+
+        //Query the download manager about downloads that have been requested.
+        Cursor cursor = downloadManager.query(myDownloadQuery);
+        if(cursor.moveToFirst()){
+            checkStatus(cursor);
+        }*/
+
+        /*URL url = new URL(requete);
+        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setDoOutput(true);
+        urlConnection.connect();
+
+        File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
+        folder.mkdir();
+
+        File pdfFile = new File(folder, idCours + ".pdf");
+
+        FileOutputStream fos = new FileOutputStream(pdfFile);
+        InputStream is = urlConnection.getInputStream();
+
+        byte[] buffer = new byte[1024];
+        int len1 = 0;
+        while ((len1 = is.read(buffer)) != -1) {
+            fos.write(buffer, 0, len1);
         }
+        fos.close();
+        is.close();
+*/
     }
 }

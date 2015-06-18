@@ -31,11 +31,19 @@ public class ParserJSON {
             JSONArray arrayQuestions = jsonObject.getJSONArray("questions_nouvelles");
             for (int i = 0; i < arrayQuestions.length(); ++i) {
                 JSONObject quest = arrayQuestions.getJSONObject(i);
-                data.addQuestion(new QuestionData(quest.getInt("id_question"),quest.getInt("numero_question"),quest.getString("id_image"),
+                data.addQuestion(new QuestionData(quest.getInt("id_question"),quest.getInt("numero_question"),
+                        quest.getString("id_image") + ".jpeg",
                         quest.getString("enonce_question"),quest.getString("enonce_A"),quest.getString("enonce_B"),
                         quest.getString("enonce_C"),quest.getString("enonce_D"),
                         quest.getInt("is_correct_A"),quest.getInt("is_correct_B"),quest.getInt("is_correct_C"),
                         quest.getInt("is_correct_D"), quest.getInt("id_examen")));
+            }
+            //cours
+            JSONArray arrayCours = jsonObject.getJSONArray("cours_nouveaux");
+            for (int i = 0; i < arrayCours.length(); ++i) {
+                JSONObject cours = arrayCours.getJSONObject(i);
+                data.addCours(new CoursData(cours.getInt("id_cours"),
+                        cours.getString("nom"), cours.getInt("id_theme")));
             }
             //themes_supprimes
             JSONArray arrayThemes_supprimes = jsonObject.getJSONArray("themes_supprimes");
@@ -54,11 +62,19 @@ public class ParserJSON {
             JSONArray arrayQuestions_supprimees = jsonObject.getJSONArray("questions_supprimees");
             for (int i = 0; i < arrayQuestions_supprimees.length(); ++i) {
                 JSONObject delquest = arrayQuestions_supprimees.getJSONObject(i);
-                data.deleteQuestion(new QuestionData(delquest.getInt("id_question"),delquest.getInt("numero_question"),delquest.getString("id_image"),
+                data.deleteQuestion(new QuestionData(delquest.getInt("id_question"),delquest.getInt("numero_question"),
+                        delquest.getString("id_image") + ".jpeg",
                         delquest.getString("enonce_question"),delquest.getString("enonce_A"),delquest.getString("enonce_B"),
                         delquest.getString("enonce_C"),delquest.getString("enonce_D"),
                         delquest.getInt("is_correct_A"),delquest.getInt("is_correct_B"),delquest.getInt("is_correct_C"),
                         delquest.getInt("is_correct_D"),delquest.getInt("id_examen")));
+            }
+            //cours_supprimes
+            JSONArray arrayCours_supprimees = jsonObject.getJSONArray("cours_supprimes");
+            for (int i = 0; i < arrayCours_supprimees.length(); ++i) {
+                JSONObject delCours = arrayCours_supprimees.getJSONObject(i);
+                data.addCours(new CoursData(delCours.getInt("id_cours"),
+                        delCours.getString("nom"), delCours.getInt("id_theme")));
             }
             return data;
         }else{

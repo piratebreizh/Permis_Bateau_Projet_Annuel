@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
+
 import database.DataBase;
 
 /**
@@ -30,7 +32,6 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
         try {
             RequeteurAPI requeteurAPI = new RequeteurAPI();
             rsltRequete = requeteurAPI.queryMaj(params[0]);
-Log.e("res",rsltRequete);
             if(!rsltRequete.equals(""))
                 data = ParserJSON.parseNewExamData(rsltRequete);
                 databaseUpdate(data,mContext);
@@ -54,7 +55,6 @@ Log.e("res",rsltRequete);
 
         if(data != null) {
 
-
             ContentValues values = new ContentValues();
             //SUPPRESSION//
             //themes
@@ -72,6 +72,10 @@ Log.e("res",rsltRequete);
 
                 //suppression image
                 delImage(q.getPathimage(), c);
+            }
+            //cours
+            for (CoursData co : data.getDelCours()) {
+                db.execSql("DELETE FROM Cours WHERE idCours=" + co.getIdCours());
             }
 
             //INSERTION//
@@ -118,6 +122,22 @@ Log.e("res",rsltRequete);
                 requeteurAPI.stockImage(q.getPathimage(), c);
             }
 
+            //cours
+            for (CoursData co : data.getCours()) {
+                values.put("idCours", co.getIdCours());
+                values.put("nomCours", co.getName());
+                values.put("idTheme", co.getIdTheme());
+                db.insert("Cours", null, values);
+                values.clear();
+
+                //stockage cours
+                RequeteurAPI requeteurAPI = new RequeteurAPI();
+                while (requeteurAPI.stockCours(Integer.toString(co.getIdCours()),c)==false){
+                    Thread.sleep(1000);
+                }
+
+            }
+
             db.close();
         }
     }
@@ -127,7 +147,7 @@ Log.e("res",rsltRequete);
      * @param idImage
      */
     public static void delImage(String idImage,Context c){
-        if(c.deleteFile("/images/" + idImage)){
+        if(c.deleteFile(idImage + ".jpeg")){
             Log.v("Suppression image","Suppression réussi");
         }else{
             Log.e("Suppression image","Erreur lors de la suppression");

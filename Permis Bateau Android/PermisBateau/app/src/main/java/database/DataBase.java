@@ -54,12 +54,19 @@ public class DataBase {
                 "idSerie INTEGER," +
                 "FOREIGN KEY(idSerie) REFERENCES Serie(idSerie)" +
                 ");");
+        mDb.execSQL("CREATE TABLE IF NOT EXISTS Cours (" +
+                "idCours INTEGER PRIMARY KEY," +
+                "nomCours TEXT," +
+                "idTheme INTEGER," +
+                "FOREIGN KEY(idTheme) REFERENCES Thematique(idThematique)" +
+                ");");
     }
 
     public void dropDataBase(){
-        mDb.execSQL("DROP TABLE IF EXISTS Question");
         mDb.execSQL("DROP TABLE IF EXISTS Thematique");
         mDb.execSQL("DROP TABLE IF EXISTS Serie");
+        mDb.execSQL("DROP TABLE IF EXISTS Question");
+        mDb.execSQL("DROP TABLE IF EXISTS Cours");
     }
 
     public DataBase open() throws SQLException
@@ -138,6 +145,11 @@ public class DataBase {
     }
 
 
+    /**
+     * Renvoie les questions d'une série
+     * @param idSerie
+     * @return
+     */
     public Cursor getQuestionsFromSeries(int idSerie){
         try
         {
@@ -156,6 +168,21 @@ public class DataBase {
         }
     }
 
+    public Cursor getCours(){
+        try
+        {
+            String MY_QUERY = "SELECT idCours,nomCours FROM Cours ORDER BY nomCours";
+            Cursor cursor = mDb.rawQuery(MY_QUERY, new String[]{ });
+            if (cursor != null)
+                cursor.moveToFirst();
+            return cursor;
+        }
+        catch (Exception mSQLException)
+        {
+            Log.e("Error", "getQuestionsSeries >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
     //fonction temporaire
 
     public Cursor getQuestions(){

@@ -2,6 +2,7 @@ package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,9 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
+
+import java.io.File;
 
 import module.Question;
 import module.Reponse;
@@ -20,6 +24,7 @@ import module.Reponse;
 public class CorrectionQuestionActivity extends Activity {
 
     private TextView enonce;
+    private ImageView image;
     private TextView txtRepA;
     private TextView txtRepB;
     private TextView txtRepC;
@@ -39,6 +44,7 @@ public class CorrectionQuestionActivity extends Activity {
         setContentView(R.layout.activity_correction_question);
 
         enonce = (TextView) findViewById(R.id.enonce);
+        image = (ImageView) findViewById(R.id.imageQuestion);
         txtRepA = (TextView) findViewById(R.id.q1);
         txtRepB = (TextView) findViewById(R.id.q2);
         txtRepC = (TextView) findViewById(R.id.q3);
@@ -72,6 +78,12 @@ public class CorrectionQuestionActivity extends Activity {
 
         //question
         enonce.setText(q.getEnoncer());
+        File filePath = getFileStreamPath(q.getPathimage());
+        if(filePath.exists()){
+            image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
+        }else{
+            image.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+        }
         txtRepA.setText(q.getReponse_A());
         txtRepB.setText(q.getReponse_B());
         txtRepC.setText(q.getReponse_C());

@@ -11,19 +11,23 @@ public class DataUpdate {
     ArrayList<QuestionData> questions;
     ArrayList<ThemeData> themes;
     ArrayList<SerieData> series;
+    ArrayList<CoursData> cours;
 
     ArrayList<QuestionData> delQuestions;
     ArrayList<ThemeData> delThemes;
     ArrayList<SerieData> delSeries;
+    ArrayList<CoursData> delCours;
 
     public DataUpdate(){
         questions = new ArrayList<QuestionData>();
         themes = new ArrayList<ThemeData>();
         series = new ArrayList<SerieData>();
+        cours = new ArrayList<CoursData>();
 
         delQuestions = new ArrayList<QuestionData>();
         delThemes = new ArrayList<ThemeData>();
         delSeries = new ArrayList<SerieData>();
+        delCours = new ArrayList<CoursData>();
     }
 
     public void addQuestion(QuestionData q){
@@ -36,6 +40,10 @@ public class DataUpdate {
 
     public void addSerie(SerieData s){
         series.add(s);
+    }
+
+    public void addCours(CoursData c){
+        cours.add(c);
     }
 
     public void deleteQuestion(QuestionData q){
@@ -73,4 +81,13 @@ public class DataUpdate {
     public ArrayList<SerieData> getDelSeries() {
         return delSeries;
     }
+
+    public ArrayList<CoursData> getCours() {
+        return cours;
+    }
+
+    public ArrayList<CoursData> getDelCours() {
+        return delCours;
+    }
+
 }

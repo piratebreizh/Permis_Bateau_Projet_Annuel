@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import webservice.RequeteurAPI;
 import webservice.UpdateTask;
 
 
@@ -32,6 +33,7 @@ public class MajActivity extends Activity {
             UpdateTask update = new UpdateTask(getApplicationContext());
             //update.execute(df.format(d));
             update.execute("14012015150431");
+
         }catch (Exception e){
             Log.e("erreur", e.getMessage());
         }
