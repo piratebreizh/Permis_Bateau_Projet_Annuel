@@ -132,10 +132,7 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
 
                 //stockage cours
                 RequeteurAPI requeteurAPI = new RequeteurAPI();
-                while (requeteurAPI.stockCours(Integer.toString(co.getIdCours()),c)==false){
-                    Thread.sleep(1000);
-                }
-
+                requeteurAPI.stockCours(Integer.toString(co.getIdCours()),c);
             }
 
             db.close();

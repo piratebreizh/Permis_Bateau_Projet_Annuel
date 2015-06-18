@@ -9,11 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.app.DownloadManager;
-import android.app.DownloadManager.Query;
-import android.app.DownloadManager.Request;
 import android.os.Environment;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,13 +26,54 @@ import java.net.URLEncoder;
  */
 public class RequeteurAPI {
 
-    private static String URL_WEBSERVICE_MAJ = "http://cap-horn.osmose-hebergement.com/ws/getmaj";
-    private static String URL_WEBSERVICE_IMAGE = "http://cap-horn.osmose-hebergement.com/ws/getImage";
-    //private static String URL_WEBSERVICE_IMAGE = "http://cap-horn.olympe.in/ws/getImage";
-    private static String URL_WEBSERVICE_COURS= "http://cap-horn.osmose-hebergement.com/ws/getCours";
+    private static String URL_BASE = "http://cap-horn.osmose-hebergement.com";
+    //    private static String URL_BASE = "http://cap-horn.olympe.in";
+    private static String URL_WEBSERVICE_MAJ = URL_BASE + "/ws/getmaj";
+    private static String URL_WEBSERVICE_IMAGE = URL_BASE + "/ws/getImage";
+    private static String URL_WEBSERVICE_COURS = URL_BASE + "/ws/getCours";
     private static String CHARSET = "UTF-8";
 
-    private boolean dlImageEnd;
+    private long downloadID;
+    private String downloadCompleteIntentName = DownloadManager.ACTION_DOWNLOAD_COMPLETE;
+    private IntentFilter downloadCompleteIntentFilter = new IntentFilter(downloadCompleteIntentName);
+    private BroadcastReceiver downloadCompleteReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0L);
+            //On ignore les autres DL
+            if (id != downloadID) {
+                return;
+            }
+            DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Query query = new DownloadManager.Query();
+            query.setFilterById(id);
+            Cursor cursor = downloadManager.query(query);
+
+            // Si vide
+            if (!cursor.moveToFirst()) {
+                return;
+            }
+            int statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+            //Si pas encore fini
+            if (DownloadManager.STATUS_SUCCESSFUL != cursor.getInt(statusIndex)) {
+                return;
+            }
+
+            int uriIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+            String downloadedPackageUriString = cursor.getString(uriIndex);
+
+            //Le fichier dans /.../Android/data/....
+            File fileOriginal = new File(downloadedPackageUriString.replaceFirst("file://", ""));
+
+            //On crée le dossier de destination si besoin
+            File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
+            if (!folder.exists())
+                folder.mkdir();
+
+            //On y déplace le fichier téléchargé
+            fileOriginal.renameTo(new File(folder, fileOriginal.getName()));
+        }
+    };
 
     private String buildParamDate(String date) throws UnsupportedEncodingException {
         return String.format("date=%s",
@@ -56,10 +93,11 @@ public class RequeteurAPI {
 
     /**
      * Récupération des données à mettre à jour selon la date
+     *
      * @param date
      * @return
      */
-    public String queryMaj(String date) throws Exception{
+    public String queryMaj(String date) throws Exception {
         String reponse = "";
         HttpURLConnection connection = null;
         InputStream iStream = null;
@@ -82,7 +120,7 @@ public class RequeteurAPI {
         String line;
         StringBuffer sBuffer = new StringBuffer();
 
-        while ((line = bReader.readLine()) != null){
+        while ((line = bReader.readLine()) != null) {
             sBuffer.append(line);
         }
         iStream.close();
@@ -93,11 +131,11 @@ public class RequeteurAPI {
 
     /**
      * Récupération et stockage interne des images
+     *
      * @param idImage
      * @param context
      */
-    public void stockImage(String idImage,Context context) throws Exception{
-
+    public void stockImage(String idImage, Context context) throws Exception {
         Bitmap bmp;
         String paramImage = this.buildParamImage(idImage);
 
@@ -105,114 +143,31 @@ public class RequeteurAPI {
         InputStream in = new URL(requete).openStream();
         bmp = BitmapFactory.decodeStream(in);
 
-        if(bmp!=null){
+        if (bmp != null) {
             FileOutputStream fos = context.openFileOutput(idImage + ".jpeg", Context.MODE_PRIVATE);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.close();
         }
-
-
-
     }
 
     /**
      * Récupération et stockage interne des images
+     *
      * @param idCours
      * @param context
      */
-    public boolean stockCours(String idCours,Context context) throws Exception{
+    public void stockCours(String idCours, Context context) throws Exception {
+        context.registerReceiver(downloadCompleteReceiver, downloadCompleteIntentFilter);
 
-        dlImageEnd = false;
         String paramCours = this.buildParamCours(idCours);
-
         String requete = String.format("%s?%s", URL_WEBSERVICE_COURS, paramCours);
 
-        File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
-        folder.mkdir();
-
-        File pdfFile = new File(folder, idCours + ".pdf");
-
         // Create the download request
-        DownloadManager.Request r = new DownloadManager.Request( Uri.parse( requete ) );
-        r.setDestinationInExternalFilesDir( context, folder.getAbsolutePath(),pdfFile.getName() );
-        final DownloadManager dm = (DownloadManager) context.getSystemService( Context.DOWNLOAD_SERVICE );
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(requete));
+        request.setDestinationInExternalFilesDir(context, null, idCours + ".pdf");
 
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                context.unregisterReceiver( this );
-
-                long downloadId = intent.getLongExtra( DownloadManager.EXTRA_DOWNLOAD_ID, -1 );
-                Cursor c = dm.query( new DownloadManager.Query().setFilterById( downloadId ) );
-
-                if ( c.moveToFirst() ) {
-                    int status = c.getInt( c.getColumnIndex( DownloadManager.COLUMN_STATUS ) );
-                    if ( status == DownloadManager.STATUS_SUCCESSFUL ) {
-                        //fin du dl
-                        dlImageEnd = true;
-                    }
-                }
-                c.close();
-            }
-        };
-
-        context.registerReceiver( onComplete, new IntentFilter( DownloadManager.ACTION_DOWNLOAD_COMPLETE ) );
-
-        // Enqueue the request
-        dm.enqueue( r );
-
-        return dlImageEnd;
-        /*
-        DownloadManager downloadManager = (DownloadManager)context.getSystemService(context.DOWNLOAD_SERVICE);
-        Uri Download_Uri = Uri.parse(requete);
-        DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
-
-        //Restrict the types of networks over which this download may proceed.
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        //Set whether this download may proceed over a roaming connection.
-        request.setAllowedOverRoaming(false);
-        //Set the title of this download, to be displayed in notifications (if enabled).
-        request.setTitle("Téléchargement cours");
-        //Set a description of this download, to be displayed in notifications (if enabled)
-        request.setDescription("Téléchargement du cours n° " + idCours);
-        //Set the local destination for the downloaded file to a path within the application's external files directory
-        request.setDestinationInExternalFilesDir(context, folder.getAbsolutePath(),pdfFile.getName());
-
-
-        //Enqueue a new download and same the referenceId
-        long downloadReference = downloadManager.enqueue(request);
-*/
-        /*Query myDownloadQuery = new Query();
-        //set the query filter to our previously Enqueued download
-        myDownloadQuery.setFilterById(downloadReference);
-
-        //Query the download manager about downloads that have been requested.
-        Cursor cursor = downloadManager.query(myDownloadQuery);
-        if(cursor.moveToFirst()){
-            checkStatus(cursor);
-        }*/
-
-        /*URL url = new URL(requete);
-        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setDoOutput(true);
-        urlConnection.connect();
-
-        File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
-        folder.mkdir();
-
-        File pdfFile = new File(folder, idCours + ".pdf");
-
-        FileOutputStream fos = new FileOutputStream(pdfFile);
-        InputStream is = urlConnection.getInputStream();
-
-        byte[] buffer = new byte[1024];
-        int len1 = 0;
-        while ((len1 = is.read(buffer)) != -1) {
-            fos.write(buffer, 0, len1);
-        }
-        fos.close();
-        is.close();
-*/
+        // enqueue this request
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadID = downloadManager.enqueue(request);
     }
 }
