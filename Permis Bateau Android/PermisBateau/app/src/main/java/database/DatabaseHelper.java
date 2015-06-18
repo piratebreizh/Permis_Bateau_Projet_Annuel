@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String mPath = DB_PATH + DB_NAME;
         File file = new File(mPath);
         if (file.exists() && !file.isDirectory())
-            mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
         return mDataBase != null;
     }
 
