@@ -1,6 +1,7 @@
 <h2>Création d'une question</h2>
 
-<form method="post" class="form-horizontal" action="/question/saveQuestion" enctype="multipart/form-data">
+<form method="post" id="form_question_creation" class="form-horizontal" action="/question/saveQuestion"
+      enctype="multipart/form-data">
     <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
     <!-- Enonce -->
     <div class="form-group">
@@ -8,7 +9,9 @@
 
         <div class="col-sm-10">
             <textarea class="form-control" name="question_enonce" id="question_enonce"
-                      placeholder="Enoncé de la question"></textarea>
+                      placeholder="Enoncé de la question" required></textarea>
+
+            <div class="help-block with-errors"></div>
         </div>
     </div>
     <!-- Réponse A -->
@@ -19,8 +22,10 @@
             <span class="input-group-addon">
                 <input name="is_correct_A" id="is_correct_A" type="checkbox"/>
             </span>
-            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A"/>
+            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" required/>
         </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse B -->
     <div class="form-group">
@@ -30,8 +35,10 @@
             <span class="input-group-addon">
                 <input name="is_correct_B" id="is_correct_B" type="checkbox"/>
             </span>
-            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B"/>
+            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" required/>
         </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse C -->
     <div class="form-group">
@@ -41,8 +48,10 @@
             <span class="input-group-addon">
                 <input name="is_correct_C" id="is_correct_C" type="checkbox"/>
             </span>
-            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C"/>
+            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" required/>
         </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse D -->
     <div class="form-group">
@@ -50,10 +59,12 @@
 
         <div class="input-group col-sm-10">
             <span class="input-group-addon">
-                <input name="is_correct_D" id="is_correct_D" type="checkbox"/>
+                <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="bar"/>
             </span>
-            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D"/>
+            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" required/>
         </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Image -->
     <div class="form-group">
@@ -63,5 +74,27 @@
             <input class="form-control" name="image" id="image" type="file"/>
         </div>
     </div>
-    <button type="submit" class="btn btn-default">Valider</button>
+    <button type="submit" id="btn_submit_form" class="btn btn-default">Valider</button>
 </form>
+
+<script>
+    $('#form_question_creation').validator({
+        'custom': {
+            checkbox: function ($el) {
+                if (
+                    $('#is_correct_A')[0].checked == false &&
+                    $('#is_correct_B')[0].checked == false &&
+                    $('#is_correct_C')[0].checked == false &&
+                    $('#is_correct_D')[0].checked == false) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        },
+        'errors' : {
+            checkbox : "efff"
+        }
+    });
+</script>

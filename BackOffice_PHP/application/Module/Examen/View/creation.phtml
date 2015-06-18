@@ -1,6 +1,6 @@
 <h2>Création d'un examen</h2>
 
-<form method="post"  class="form-horizontal"  action="/examen/saveExamen">
+<form method="post"  class="form-horizontal"  action="/examen/saveExamen" role="form" data-toggle="validator">
     <input type="hidden" name="id_theme" id="id_theme" value="<?php echo $this->id_theme; ?>"/>
     <!-- Nom -->
     <div class="form-group">
@@ -8,7 +8,8 @@
 
         <div class="col-sm-4">
             <input class="form-control" name="nom" id="nom"
-                   placeholder="Nom de l'examen" type="text"/>
+                   placeholder="Nom de l'examen" type="text" required/>
+            <div class="help-block with-errors"></div>
         </div>
     </div>
     <button type="submit" class="btn btn-default">Valider</button>

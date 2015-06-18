@@ -1,6 +1,6 @@
 <h2>Ajout d'un cours</h2>
 
-<form method="post" class="form-horizontal" action="/cours/save" enctype="multipart/form-data">
+<form method="post" class="form-horizontal" action="/cours/save" enctype="multipart/form-data" role="form" data-toggle="validator">
     <input type="hidden" name="id_theme" id="id_theme" value="<?php echo $this->id_theme; ?>"/>
 
     <!-- Nom -->
@@ -8,7 +8,8 @@
         <label class="col-sm-2 control-label" for="image">Nom : </label>
 
         <div class="input-group col-sm-6">
-            <input class="form-control" name="nom" id="nom" type="text"/>
+            <input class="form-control" name="nom" id="nom" type="text" required/>
+            <div class="help-block with-errors"></div>
         </div>
     </div>
     <!-- Cours -->
@@ -16,7 +17,8 @@
         <label class="col-sm-2 control-label" for="cours">Fichier : </label>
 
         <div class="input-group col-sm-6">
-            <input class="form-control" name="cours" id="cours" type="file"/>
+            <input class="form-control" name="cours" id="cours" type="file" required/>
+            <div class="help-block with-errors"></div>
         </div>
     </div>
     <button type="submit" class="btn btn-default">Valider</button>
