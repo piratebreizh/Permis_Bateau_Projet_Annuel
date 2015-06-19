@@ -180,7 +180,6 @@
 
       if (!errors.length) return
 
-        console.log(errors);
       errors = $('<ul/>')
         .addClass('list-unstyled')
         .append($.map(errors, function (error) { return $('<li/>')[method](error) }))
