@@ -8,37 +8,8 @@
     tools:context=".Accueil"
     android:weightSum="1">
 
-    <Button
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/createdb"
-        android:text="Création db" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/button_Blanc_Exam"
-        android:id="@+id/launchexam"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/button_Theme_Exam"
-        android:id="@+id/launchthemexam"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/button_Cours"
-        android:id="@+id/launchcours"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/button_Maj"
-        android:id="@+id/launchmaj"
-        android:layout_gravity="center_horizontal" />
+        android:layout_height="wrap_content"
+        android:id="@+id/listAccueil" />
 </LinearLayout>

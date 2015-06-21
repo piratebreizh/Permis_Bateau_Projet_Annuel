@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.projet.esgi.myapplication.R;
@@ -24,8 +27,11 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import adapter.AccueilAdapter;
+import adapter.ItemAccueil;
 import database.DataBase;
 import database.DatabaseHelper;
 import webservice.UpdateTask;
@@ -33,25 +39,54 @@ import webservice.UpdateTask;
 
 public class AccueilActivity extends Activity {
 
-    private DatabaseHelper dbHelper;
-
-    private Button createDbButton;
+    /*private Button createDbButton;
     private Button launchExamButton;
     private Button launchThemeExam;
     private Button launchCours;
     private Button launchMaj;
+    */
+    private ListView listAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
-        initListeners();
+        //initListeners();
+
+        ArrayList<ItemAccueil> items = new ArrayList<ItemAccueil>();
+
+        //examem blanc
+        Bitmap bmp_exblanc = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+        ItemAccueil item_exblanc = new ItemAccueil(bmp_exblanc,"Examen blanc");
+
+        //examen thématique
+        Bitmap bmp_exth = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+        ItemAccueil item_exth = new ItemAccueil(bmp_exth,"Examen thématique");
+
+        //liste des cours
+        Bitmap bmp_cours = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+        ItemAccueil item_cours = new ItemAccueil(bmp_cours,"Liste des cours");
+
+        //mise à jour
+        Bitmap bmp_maj = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+        ItemAccueil item_maj = new ItemAccueil(bmp_maj,"Mise à jour");
+
+        items.add(item_exblanc);
+        items.add(item_exth);
+        items.add(item_cours);
+        items.add(item_maj);
+
+        AccueilAdapter adapter = new AccueilAdapter(this,items);
+
+        //liste des villes
+        listAccueil = (ListView) findViewById(R.id.listAccueil);
+        listAccueil.setAdapter(adapter);
     }
 
     /**
      * initialise les listeners
      */
-    public void initListeners(){
+    /*public void initListeners(){
 
         createDbButton = (Button) findViewById(R.id.createdb);
         launchExamButton = (Button) findViewById(R.id.launchexam);
@@ -105,7 +140,7 @@ public class AccueilActivity extends Activity {
             }
         });
     }
-
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
