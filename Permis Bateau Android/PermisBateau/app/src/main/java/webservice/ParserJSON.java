@@ -76,6 +76,12 @@ public class ParserJSON {
                 data.addCours(new CoursData(delCours.getInt("id_cours"),
                         delCours.getString("nom"), delCours.getInt("id_theme")));
             }
+
+            //date de maj
+            data.setDateUpdate(jsonObject.getString("date_update"));
+            //est vide
+            data.setIsEmpty(jsonObject.getString("is_empty"));
+
             return data;
         }else{
             return null;

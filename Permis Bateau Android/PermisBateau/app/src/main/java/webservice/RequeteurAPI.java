@@ -13,9 +13,14 @@ import android.app.DownloadManager;
 import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
 import android.os.Environment;
+
+import com.projet.esgi.myapplication.R;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -105,6 +110,8 @@ public class RequeteurAPI {
         HttpURLConnection connection = null;
         InputStream iStream = null;
 
+        if (date=="") return "";
+
         String requete;
         String paramDate = this.buildParamDate(date);
         requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
@@ -130,6 +137,35 @@ public class RequeteurAPI {
         connection.disconnect();
         reponse = sBuffer.toString();
         return reponse;
+    }
+
+    /**
+     * Récupère les données à partir du fichier d'initialisation local
+     */
+    public String queryLocalMaj(Context c){
+        String json = null;
+        try {
+
+            InputStream is = c.getResources().openRawResource(
+                    c.getResources().getIdentifier("raw/json_init",
+                            "raw", c.getPackageName()));
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
     /**
@@ -167,6 +203,8 @@ public class RequeteurAPI {
 
         // Create the download request
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(requete));
+        request.setTitle("Téléchargement des cours");
+        request.setDescription("Cours n°" + idCours);
         request.setDestinationInExternalFilesDir(context, null, idCours + ".pdf");
 
         // enqueue this request

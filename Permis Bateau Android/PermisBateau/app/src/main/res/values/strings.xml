@@ -35,7 +35,9 @@
     <!-- correction question -->
     <string name="title_activity_correction_question">Correction Question</string>
 
-    <!--maj-->
+    <!-- maj -->
     <string name="title_activity_maj">MajActivity</string>
     <string name="intitule_maj">Maj en cours</string>
+    <string name="title_activity_load">LoadActivity</string>
+
 </resources>

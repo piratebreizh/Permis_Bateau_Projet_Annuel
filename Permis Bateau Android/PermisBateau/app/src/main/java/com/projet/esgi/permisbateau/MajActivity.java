@@ -1,7 +1,9 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,13 +29,10 @@ public class MajActivity extends Activity {
 
     public void launchMaj(){
         try{
-            DateFormat df = new SimpleDateFormat("ddMMyyyyHHmmss");
-            Date d = new Date();
-
-            UpdateTask update = new UpdateTask(getApplicationContext());
-            //update.execute(df.format(d));
-            update.execute("14012015150431");
-
+            SharedPreferences pref = getSharedPreferences("date", MODE_PRIVATE);
+            String lastdate = pref.getString("DATE_VERSION_LOCALE", null);
+            UpdateTask update = new UpdateTask(MajActivity.this);
+            update.execute(lastdate,"online");
         }catch (Exception e){
             Log.e("erreur", e.getMessage());
         }

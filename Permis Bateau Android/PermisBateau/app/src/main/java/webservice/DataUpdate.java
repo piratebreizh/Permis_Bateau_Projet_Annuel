@@ -18,6 +18,9 @@ public class DataUpdate {
     ArrayList<SerieData> delSeries;
     ArrayList<CoursData> delCours;
 
+    String dateUpdate;
+    String isEmpty;
+
     public DataUpdate(){
         questions = new ArrayList<QuestionData>();
         themes = new ArrayList<ThemeData>();
@@ -28,6 +31,9 @@ public class DataUpdate {
         delThemes = new ArrayList<ThemeData>();
         delSeries = new ArrayList<SerieData>();
         delCours = new ArrayList<CoursData>();
+
+        dateUpdate = null;
+        isEmpty = null;
     }
 
     public void addQuestion(QuestionData q){
@@ -90,4 +96,19 @@ public class DataUpdate {
         return delCours;
     }
 
+    public String getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(String dateUpdate) {
+        this.dateUpdate = dateUpdate;
+    }
+
+    public String getIsEmpty() {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(String isEmpty) {
+        this.isEmpty = isEmpty;
+    }
 }

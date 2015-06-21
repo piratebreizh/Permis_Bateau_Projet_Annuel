@@ -1,0 +1,152 @@
+{
+    "date_update":12062015130815,
+    "is_empty" : false,
+    "themes_nouveaux":[
+        {
+            "id_theme":1,
+            "nom":"Th\u00e8me 1",
+            "numero":1,
+            "date_creation":"2015-06-07 19:50:08",
+            "date_modification":"2015-06-07 19:50:08",
+            "is_published":1,
+            "is_deleted":0
+        }
+    ],
+    "themes_modifies":[
+
+    ],
+    "examens_nouveaux":[
+        {
+            "id_examen":1,
+            "nom":"Examen Blanc 1",
+            "numero":1,
+            "id_theme":0,
+            "date_creation":"2015-06-02 19:29:47",
+            "date_modification":"2015-06-02 19:29:47",
+            "is_published":1,
+            "is_deleted":0
+        },
+        {
+            "id_examen":2,
+            "nom":"Examen 1",
+            "numero":1,
+            "id_theme":1,
+            "date_creation":"2015-06-07 22:39:15",
+            "date_modification":"2015-06-07 22:39:15",
+            "is_published":1,
+            "is_deleted":0
+        },
+        {
+            "id_examen":3,
+            "nom":"Examen 2",
+            "numero":2,
+            "id_theme":1,
+            "date_creation":"2015-06-09 18:02:12",
+            "date_modification":"2015-06-09 18:25:59",
+            "is_published":1,
+            "is_deleted":0
+        }
+    ],
+    "examens_modifies":[
+
+    ],
+    "questions_nouvelles":[
+        {
+            "id_question":1,
+            "numero_question":1,
+            "enonce_question":"Pourquoi ?",
+            "is_correct_A":0,
+            "is_correct_B":1,
+            "is_correct_C":0,
+            "is_correct_D":0,
+            "enonce_A":"A",
+            "enonce_B":"B",
+            "enonce_C":"C",
+            "enonce_D":"D",
+            "id_image":0,
+            "id_examen":2,
+            "date_creation":"2015-06-07 22:47:23",
+            "date_modification":"2015-06-07 22:47:23",
+            "is_deleted":0
+        },
+        {
+            "id_question":2,
+            "numero_question":2,
+            "enonce_question":"Pourquoi pas ?",
+            "is_correct_A":1,
+            "is_correct_B":0,
+            "is_correct_C":0,
+            "is_correct_D":0,
+            "enonce_A":"AAAAA",
+            "enonce_B":"BBBBB",
+            "enonce_C":"CCCCC",
+            "enonce_D":"DDDDD",
+            "id_image":0,
+            "id_examen":2,
+            "date_creation":"2015-06-09 17:50:38",
+            "date_modification":"2015-06-09 17:50:38",
+            "is_deleted":0
+        },
+        {
+            "id_question":6,
+            "numero_question":3,
+            "enonce_question":"Quel est la raison ?",
+            "is_correct_A":0,
+            "is_correct_B":0,
+            "is_correct_C":1,
+            "is_correct_D":0,
+            "enonce_A":132,
+            "enonce_B":"yj",
+            "enonce_C":"C",
+            "enonce_D":21,
+            "id_image":1,
+            "id_examen":2,
+            "date_creation":"2015-06-09 20:53:18",
+            "date_modification":"2015-06-09 20:53:19",
+            "is_deleted":0
+        },
+        {
+            "id_question":7,
+            "numero_question":4,
+            "enonce_question":"Ceci est une tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s tr\u00e8s grande question",
+            "is_correct_A":0,
+            "is_correct_B":1,
+            "is_correct_C":0,
+            "is_correct_D":1,
+            "enonce_A":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "enonce_B":"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "enonce_C":"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+            "enonce_D":"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+            "id_image":2,
+            "id_examen":2,
+            "date_creation":"2015-06-09 21:58:51",
+            "date_modification":"2015-06-09 21:58:51",
+            "is_deleted":0
+        }
+    ],
+    "questions_modifiees":[
+
+    ],
+    "themes_supprimes":[
+
+    ],
+    "examens_supprimes":[
+
+    ],
+    "questions_supprimees":[
+
+    ],
+    "cours_nouveaux":[
+        {
+            "id_cours":1,
+            "nom":"Droits",
+            "nom_pdf":"55773e06efd05_Droits.pdf",
+            "id_theme":1,
+            "date_creation":"2015-06-09 21:27:02",
+            "is_deleted":0
+        }
+    ],
+    "cours_supprimes":[
+
+    ]
+}

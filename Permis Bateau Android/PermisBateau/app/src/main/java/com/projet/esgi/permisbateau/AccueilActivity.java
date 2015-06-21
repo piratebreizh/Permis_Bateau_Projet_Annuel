@@ -3,9 +3,14 @@ package com.projet.esgi.permisbateau;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +20,15 @@ import android.widget.Toast;
 import com.projet.esgi.myapplication.R;
 
 import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import database.DataBase;
 import database.DatabaseHelper;
+import webservice.UpdateTask;
 
 
 public class AccueilActivity extends Activity {
@@ -38,6 +48,9 @@ public class AccueilActivity extends Activity {
         initListeners();
     }
 
+    /**
+     * initialise les listeners
+     */
     public void initListeners(){
 
         createDbButton = (Button) findViewById(R.id.createdb);
@@ -116,15 +129,22 @@ public class AccueilActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 
     /**temporaire*/////
     public void createDb() throws SQLException {
-
-        File dirFiles = getFilesDir();
+        SharedPreferences pref = getSharedPreferences("date", MODE_PRIVATE);
+        Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+        /*File dirFiles = getFilesDir();
         for (String strFile : dirFiles.list())
         {
             Toast.makeText(getApplicationContext(),strFile.toString(),Toast.LENGTH_SHORT).show();
-        }
+        }*/
         /*
         db.dropDataBase();
         db.createDataBase();
