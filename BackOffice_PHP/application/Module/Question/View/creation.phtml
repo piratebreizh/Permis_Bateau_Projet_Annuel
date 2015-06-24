@@ -20,12 +20,10 @@
 
         <div class="input-group col-sm-10">
             <span class="input-group-addon">
-                <input name="is_correct_A" id="is_correct_A" type="checkbox"/>
+                <input name="is_correct_A" id="is_correct_A" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" required/>
+            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" data-nb_responses="true"/>
         </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse B -->
     <div class="form-group">
@@ -33,12 +31,10 @@
 
         <div class="input-group col-sm-10">
             <span class="input-group-addon">
-                <input name="is_correct_B" id="is_correct_B" type="checkbox"/>
+                <input name="is_correct_B" id="is_correct_B" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" required/>
+            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" data-nb_responses="true"/>
         </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse C -->
     <div class="form-group">
@@ -46,12 +42,10 @@
 
         <div class="input-group col-sm-10">
             <span class="input-group-addon">
-                <input name="is_correct_C" id="is_correct_C" type="checkbox"/>
+                <input name="is_correct_C" id="is_correct_C" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" required/>
+            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" data-nb_responses="true"/>
         </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Réponse D -->
     <div class="form-group">
@@ -59,42 +53,90 @@
 
         <div class="input-group col-sm-10">
             <span class="input-group-addon">
-                <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="bar"/>
+                <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" required/>
+            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" data-nb_responses="true"/>
         </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-10 help-block with-errors"></div>
     </div>
     <!-- Image -->
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="image">Image : </label>
+        <label class="col-sm-2 control-label">Image : </label>
 
         <div class="input-group col-sm-10">
             <input class="form-control" name="image" id="image" type="file"/>
         </div>
     </div>
+    <div class="has-error">
+        <div class="col-sm-10 help-block with-errors" id="error_checkbox" style="display: none;"><ul class="list-unstyled"><li>Veuillez sélectionner au moins une réponse</li></ul></div>
+        <div class="col-sm-10 help-block with-errors" id="error_nb_responses" style="display: none;"><ul class="list-unstyled"><li>Veuillez renseigner 2 ou 4 réponses</li></ul></div>
+    </div>
+    <div class="clearfix"></div>
     <button type="submit" id="btn_submit_form" class="btn btn-default">Valider</button>
 </form>
 
 <script>
-    $('#form_question_creation').validator({
+    var validator = $('#form_question_creation').validator({
         'custom': {
             checkbox: function ($el) {
+                var is_correct_A = $('#is_correct_A')[0].checked;
+                var is_correct_B = $('#is_correct_B')[0].checked;
+                var is_correct_C = $('#is_correct_C')[0].checked;
+                var is_correct_D = $('#is_correct_D')[0].checked;
                 if (
-                    $('#is_correct_A')[0].checked == false &&
-                    $('#is_correct_B')[0].checked == false &&
-                    $('#is_correct_C')[0].checked == false &&
-                    $('#is_correct_D')[0].checked == false) {
+                    (is_correct_A == false && is_correct_B == false && is_correct_C == false && is_correct_D == false)
+                || (isTwoResponses() && ((is_correct_A == false && is_correct_B == false) || is_correct_C == true && is_correct_D == true))
+                ) {
+                    $('#error_checkbox').show();
                     return false;
                 }
                 else {
+                    $('#error_checkbox').hide();
+                    return true;
+                }
+            },
+            nb_responses: function($el){
+                if(!isTwoResponses() && !isFourResponses()){
+                    $('#error_nb_responses').show();
+                    return false;
+                }else{
+                    $('#error_nb_responses').hide();
                     return true;
                 }
             }
         },
         'errors' : {
-            checkbox : "efff"
+            checkbox : "Veuillez sélectionner au moins une réponse.",
+            nb_responses : "Veuillez renseigner 2 ou 4 réponses."
         }
     });
+
+    function isTwoResponses() {
+        var $enonce_A = $('#enonce_A');
+        var $enonce_B = $('#enonce_B');
+        var $enonce_C = $('#enonce_C');
+        var $enonce_D = $('#enonce_D');
+        return $enonce_A.val() != ""
+            && $enonce_B.val() != ""
+            && $enonce_C.val() == ""
+            && $enonce_D.val() == "";
+    }
+
+    function isNbResponsesIncorrect() {
+        var $enonce_C = $('#enonce_C');
+        var $enonce_D = $('#enonce_D');
+        return
+
+        ($enonce_C.val() != "" && $enonce_D.val() == "") || ($enonce_C.val() == "" && $enonce_D.val() != "") ;
+    }
+
+    function isFourResponses() {
+        var $enonce_A = $('#enonce_A');
+        var $enonce_B = $('#enonce_B');
+        var $enonce_C = $('#enonce_C');
+        var $enonce_D = $('#enonce_D');
+        return $enonce_A.val() != ""
+            && $enonce_B.val() != ""
+            && $enonce_C.val() != ""
+            && $enonce_D.val() != "";
+    }
 </script>
