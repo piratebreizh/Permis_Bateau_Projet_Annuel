@@ -12,10 +12,22 @@ class Generator
     const UHD = "UHD";
 
     public static $RESOLUTION_SIZE = array(
-        self::SD  => 100,
-        self::HD  => 200,
-        self::UHD => 300,
-        self::BO  => 500,
+        self::SD  => array(
+            "width" => 100,
+            "height" => 60,
+        ),
+        self::HD  => array(
+            "width" => 200,
+            "height" => 120,
+        ),
+        self::UHD => array(
+            "width" => 300,
+            "height" => 180,
+        ),
+        self::BO  => array(
+            "width" => 500,
+            "height" => 300,
+        ),
     );
 
     /** @var  Image */
@@ -29,7 +41,7 @@ class Generator
      * @param int    $height             new image height
      * @param bool   $delete_original    if true the original image will be deleted
      * @param bool   $use_linux_commands if set to true will use "rm" to delete the image, if false will use PHP unlink
-     * @param int    $quality            enter 1-100 (100 is best quality) default is 100
+     * @param int    $compression            0-9
      * @return bool
      */
     public static function resizeImageFile(
@@ -39,38 +51,52 @@ class Generator
         $height,
         $delete_original = false,
         $use_linux_commands = false,
-        $quality = 100
+        $compression = 9
     ) {
 
         if ($height <= 0 && $width <= 0) {
             return false;
         }
-        if ($file === null) {
+        if ($file === null || !file_exists($file)) {
             return false;
         }
         if ($output === "") {
             $output = $file;
         }
 
-        # Setting defaults and meta
+        // Setting defaults and meta
         $info = getimagesize($file);
         $image = '';
         list($width_old, $height_old) = $info;
 
-        # Calculating proportionality
-        $ratio_orig = $width_old / $height_old;
+        echo("<br/>width_old : ".$width_old);
+        echo("<br/>height_old : ".$height_old);
+        echo("<br/>width : ".$width);
+        echo("<br/>height : ".$height);
 
-        # This is the resizing/resampling/transparency-preserving magic
+        // Calculating proportionality
+        $ratio_orig = $width_old / $height_old;
+        $ratio_new = $width / $height;
+
+        // Update size
+        if($ratio_orig > $ratio_new){
+            if ($width_old < $width) {
+                $width = $width_old;
+            }
+            $height = $width / $ratio_orig;
+        }else{
+            if ($height_old < $height) {
+                $height = $height_old;
+            }
+            $width = $height * $ratio_orig;
+        }
+
+
+        // This is the resizing/resampling/transparency-preserving magic
         $image_resized = imagecreatetruecolor($width, $height);
         imagefill($image_resized, 0, 0, imagecolorallocate($image_resized, 255, 255, 255));
 
-        if ($width / $height > $ratio_orig) {
-            $width = $height * $ratio_orig;
-        } else {
-            $height = $width / $ratio_orig;
-        }
-
-        # Loading image to memory according to type
+        // Loading image to memory according to type
         switch ($info[2]) {
             case IMAGETYPE_JPEG:
                 $image = imagecreatefromjpeg($file);
@@ -84,20 +110,10 @@ class Generator
             default:
                 return false;
         }
-
-        // Si on est en portrait (w > h)
-        if ($width > $height) {
-            $new_x = 0;
-            $new_y = ($width - $height) / 2;
-        } else {
-            $new_x = ($height - $width) / 2;
-            $new_y = 0;
-        }
-
-        imagecopyresampled($image_resized, $image, $new_x, $new_y, 0, 0, $width, $height, $width_old, $height_old);
+        imagecopyresampled($image_resized, $image, 0, 0, 0, 0, $width, $height, $width_old, $height_old);
 
 
-        # Taking care of original, if needed
+        // Taking care of original, if needed
         if ($delete_original) {
             if ($use_linux_commands) {
                 exec('rm ' . $file);
@@ -106,7 +122,7 @@ class Generator
             }
         }
 
-        imagejpeg($image_resized, $output, $quality);
+        imagepng($image_resized, $output, $compression);
 
         return true;
     }
@@ -132,7 +148,6 @@ class Generator
             $uploadOk = false;
         }
         if ($uploadOk && move_uploaded_file($image_file["tmp_name"], $target_file)) {
-            $this->resizeOriginalImage();
             $this->image->save();
 
             return true;
@@ -152,8 +167,8 @@ class Generator
 
         foreach (self::$RESOLUTION_SIZE as $res => $size) {
             $fileOutput = self::getImagesDirectory() . $res . '/' . $this->image->getNomImage();
-            $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.jpeg';
-            $this->resizeImageFile($file, $fileOutput, $size, $size);
+            $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.png';
+            $this->resizeImageFile($file, $fileOutput, $size['width'], $size['height']);
         }
     }
 

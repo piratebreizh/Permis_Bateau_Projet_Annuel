@@ -51,6 +51,14 @@ class Image extends Entity
     }
 
     /**
+     * @return string
+     */
+    public function getNomImagePNG()
+    {
+        return (string) substr($this->cols['nom_image'], 0, strrpos($this->cols['nom_image'], '.')) . '.png';
+    }
+
+    /**
      * @param string $nom_image
      * @param bool   $rename
      * @return Image

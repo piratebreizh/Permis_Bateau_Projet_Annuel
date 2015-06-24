@@ -9,7 +9,7 @@ function getSpan($is_correst){
 /** @var \APP\Entity\Image $image */
 $image = $this->image;
 if (!is_null($image)) {
-    $image_url = "/public/datas/images/" . \APP\Module\Image\Generator::BO . '/' . $image->getNomImage();
+    $image_url = "/public/datas/images/" . \APP\Module\Image\Generator::BO . '/' . $image->getNomImagePNG();
 }
 
 /** @var \APP\Entity\Question $question */
@@ -25,12 +25,14 @@ if (!is_null($question)) {
     <?php echo getSpan($question->isCorrectB()); ?>
     <?php echo $question->getEnonceB(); ?>
     <br/>
-    <?php echo getSpan($question->isCorrectC()); ?>
-    <?php echo $question->getEnonceC(); ?>
-    <br/>
-    <?php echo getSpan($question->isCorrectD()); ?>
-    <?php echo $question->getEnonceD(); ?>
-    <br/>
+    <?php if ($question->getEnonceC() != "") { ?>
+        <?php echo getSpan($question->isCorrectC()); ?>
+        <?php echo $question->getEnonceC(); ?>
+        <br/>
+        <?php echo getSpan($question->isCorrectD()); ?>
+        <?php echo $question->getEnonceD(); ?>
+        <br/>
+    <?php } ?>
 
 <?php } else { ?>
     Pas de question correspondant à cet ID
