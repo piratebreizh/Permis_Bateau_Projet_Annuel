@@ -141,6 +141,9 @@ class Controller extends \FSF\Controller
 
         if (!is_null($image)) {
             $image_path = ImageGenerator::getImagesDirectory() . $resolution . '/' . $image->getNomImage();
+            $image_path = substr($image_path, 0, strrpos($image_path, '.')) . '.png';
+        }
+        if (!file_exists($image_path)) {
             $image_path = substr($image_path, 0, strrpos($image_path, '.')) . '.jpeg';
         }
 
