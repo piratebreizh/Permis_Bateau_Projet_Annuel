@@ -86,6 +86,12 @@ class Controller extends \FSF\Controller
         // Save the question !
         $question->save();
 
-        header('Location: /examen/afficher?id=' . $id_examen);
+        $add_an_other = $this->getRequest()->get("add_an_other", 0);
+
+        if($add_an_other){
+            header('Location: /question/creer?id_examen=' . $id_examen);
+        }else{
+            header('Location: /examen/afficher?id=' . $id_examen);
+        }
     }
 }

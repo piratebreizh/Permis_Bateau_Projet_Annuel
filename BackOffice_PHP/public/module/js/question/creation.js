@@ -1,5 +1,12 @@
 $(document).ready(function(){
-    $('#btn_submit_form').on('click', validateForm);
+    $('#btn_submit_form').on('click', function () {
+        $('#add_an_other').val('0');
+        validateForm();
+    });
+    $('#btn_submit_form_and_add').on('click', function () {
+        $('#add_an_other').val('1');
+        validateForm();
+    });
 });
 
 function validateForm(){

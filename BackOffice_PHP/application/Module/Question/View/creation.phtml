@@ -7,9 +7,9 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="question_enonce">Enoncé de la question : </label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-5">
             <textarea class="form-control" name="question_enonce" id="question_enonce"
-                      placeholder="Enoncé de la question" required></textarea>
+                      placeholder="Enoncé de la question" maxlength="150" rows="3" required></textarea>
 
             <div class="help-block with-errors"></div>
         </div>
@@ -18,58 +18,61 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="enonce_A">Réponse A : </label>
 
-        <div class="input-group col-sm-10">
+        <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_A" id="is_correct_A" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" data-nb_responses="true"/>
+            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" maxlength="50"/>
         </div>
     </div>
     <!-- Réponse B -->
     <div class="form-group">
         <label class="col-sm-2 control-label" for="enonce_B">Réponse B : </label>
 
-        <div class="input-group col-sm-10">
+        <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_B" id="is_correct_B" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" data-nb_responses="true"/>
+            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" maxlength="50"/>
         </div>
     </div>
     <!-- Réponse C -->
     <div class="form-group">
         <label class="col-sm-2 control-label" for="enonce_C">Réponse C : </label>
 
-        <div class="input-group col-sm-10">
+        <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_C" id="is_correct_C" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" data-nb_responses="true"/>
+            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" maxlength="50"/>
         </div>
     </div>
     <!-- Réponse D -->
     <div class="form-group">
         <label class="col-sm-2 control-label" for="enonce_D">Réponse D : </label>
 
-        <div class="input-group col-sm-10">
+        <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="true"/>
             </span>
-            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" data-nb_responses="true"/>
+            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" maxlength="50"/>
         </div>
     </div>
     <!-- Image -->
     <div class="form-group">
         <label class="col-sm-2 control-label">Image : </label>
 
-        <div class="input-group col-sm-10">
+        <div class="input-group col-sm-5">
             <input class="form-control" name="image" id="image" type="file"/>
         </div>
     </div>
     <div class="has-error">
-        <div class="col-sm-10 help-block with-errors" id="error_checkbox" style="display: none;"><ul class="list-unstyled"><li>Veuillez sélectionner au moins une réponse</li></ul></div>
-        <div class="col-sm-10 help-block with-errors" id="error_nb_responses" style="display: none;"><ul class="list-unstyled"><li>Veuillez renseigner 2 ou 4 réponses</li></ul></div>
+        <div class="col-sm-5 help-block with-errors" id="error_checkbox" style="display: none;"><ul class="list-unstyled"><li>Veuillez sélectionner au moins une réponse</li></ul></div>
+        <div class="col-sm-5 help-block with-errors" id="error_nb_responses" style="display: none;"><ul class="list-unstyled"><li>Veuillez renseigner 2 ou 4 réponses</li></ul></div>
     </div>
     <div class="clearfix"></div>
-    <button type="button" id="btn_submit_form" class="btn btn-default">Valider</button>
+    <input type="hidden" id="add_an_other" name="add_an_other" value="0"/>
+    <button type="button" id="btn_submit_form" class="btn btn-success">Sauvegarder</button>
+    <button type="button" id="btn_submit_form_and_add" class="btn btn-success">Sauvegarder et Ajout</button>
+    <a href="/examen/afficher?id=<?php echo $this->id_examen; ?>" class="btn btn-warning">Annuler</a>
 </form>

@@ -183,24 +183,4 @@ class Generator
 
         return $return;
     }
-
-    private function resizeOriginalImage()
-    {
-        $size_BO = self::$RESOLUTION_SIZE[self::BO];
-        $file = self::getImagesDirectory() . $this->image->getNomImage();
-
-        $info = getimagesize($file);
-        list($width, $height) = $info;
-        $width = $width > $size_BO ? $size_BO : $width;
-        $height = $height > $size_BO ? $size_BO : $height;
-
-        $fileOutput = self::getImagesDirectory() . self::BO . '/' . $this->image->getNomImage();
-        $fileOutput = substr($fileOutput, 0, strrpos($fileOutput, '.')) . '.jpeg';
-        $this->resizeImageFile($file, $fileOutput, $width, $height);
-
-        $this->image->setNomImage(
-            substr($this->image->getNomImage(), 0, strrpos($this->image->getNomImage(), '.')) . '.jpeg',
-            false
-        );
-    }
 }
