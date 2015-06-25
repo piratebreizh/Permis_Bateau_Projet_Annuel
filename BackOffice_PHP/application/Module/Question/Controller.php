@@ -38,6 +38,7 @@ class Controller extends \FSF\Controller
         $currentView->setParam("id_examen", $id_examen);
 
         return $this->getView()
+            ->setParam("js", array("question/creation"))
             ->setParam('currentView', $currentView);
     }
 
