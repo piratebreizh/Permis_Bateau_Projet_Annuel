@@ -96,4 +96,19 @@ class Examen extends \FSF\Model
 
         return $this->findAllWithFilters($filters);
     }
+
+    public function updateNumerotation($id_theme, $numero)
+    {
+        $filters[]= new Filter('id_theme', $id_theme);
+        $filters[]= new Filter('numero', $numero, 'numero_question', Filter::OPERATOR_GREATER);
+        $filters[] = new Filter("is_deleted", 0);
+
+        $examens = $this->findAllWithFilters($filters);
+
+        foreach($examens as $examen){
+            /** @var \APP\Entity\Examen $examen */
+            $examen->setNumero($examen->getNumero()-1);
+            $examen->save();
+        }
+    }
 }

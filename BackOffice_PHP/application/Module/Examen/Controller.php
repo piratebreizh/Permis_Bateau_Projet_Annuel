@@ -88,6 +88,8 @@ class Controller extends \FSF\Controller
         $examen->setIsDeleted(true);
         $examen->save();
 
+        $examen_model->updateNumerotation($examen->getIdTheme(), $examen->getNumero());
+
         $returned_json = array(
             "is_deleted" => true
         );

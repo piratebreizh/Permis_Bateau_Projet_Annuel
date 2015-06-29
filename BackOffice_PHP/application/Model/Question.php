@@ -82,4 +82,19 @@ class Question extends \FSF\Model
 
         return $this->findAllWithFilters($filters);
     }
+
+    public function updateNumerotation($id_examen, $numero)
+    {
+        $filters[]= new Filter('id_examen', $id_examen);
+        $filters[]= new Filter('numero_question', $numero, 'numero_question', Filter::OPERATOR_GREATER);
+        $filters[] = new Filter("is_deleted", 0);
+
+        $questions = $this->findAllWithFilters($filters);
+
+        foreach($questions as $question){
+            /** @var \APP\Entity\Question $question */
+            $question->setNumeroQuestion($question->getNumeroQuestion()-1);
+            $question->save();
+        }
+    }
 }

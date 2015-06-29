@@ -80,4 +80,18 @@ class Theme extends \FSF\Model
 
         return $this->findAllWithFilters($filters);
     }
+
+    public function updateNumerotation($numero)
+    {
+        $filters[]= new Filter('numero', $numero, 'numero_question', Filter::OPERATOR_GREATER);
+        $filters[] = new Filter("is_deleted", 0);
+
+        $themes = $this->findAllWithFilters($filters);
+
+        foreach($themes as $theme){
+            /** @var \APP\Entity\Theme $theme */
+            $theme->setNumero($theme->getNumero()-1);
+            $theme->save();
+        }
+    }
 }

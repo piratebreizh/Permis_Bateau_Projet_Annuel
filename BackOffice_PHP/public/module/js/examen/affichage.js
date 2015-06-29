@@ -36,8 +36,9 @@ $(document).ready(function(){
             dataType: "json",
             type: 'POST',
             complete: function (response) {
-                if (response.responseJSON.is_deleted)
-                    $('.ligne_question[data-id='+id_question+']').remove();
+                if (response.responseJSON.is_deleted){
+                    window.location.reload();
+                }
                 $('#deleteModal').modal('hide');
             }
         })

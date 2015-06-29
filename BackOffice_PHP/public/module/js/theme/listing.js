@@ -44,8 +44,9 @@ $(document).ready(function () {
             dataType: "json",
             type: 'POST',
             complete: function (response) {
-                if (response.responseJSON.is_deleted)
-                    $('.div_theme[data-id='+id_theme+']').remove();
+                if (response.responseJSON.is_deleted){
+                    window.location.reload();
+                }
                 $('#deleteModal').modal('hide');
             }
         })

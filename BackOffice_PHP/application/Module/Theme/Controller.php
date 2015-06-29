@@ -109,6 +109,8 @@ class Controller extends \FSF\Controller
         $theme->setIsDeleted(true);
         $theme->save();
 
+        $theme_model->updateNumerotation($theme->getNumero());
+
         $returned_json = array(
             "is_deleted" => true
         );

@@ -111,8 +111,10 @@ class Controller extends \FSF\Controller
             $question->setisDeleted(true);
             $question->save();
 
+            $model->updateNumerotation($question->getIdExamen(), $question->getNumeroQuestion());
+
             $returned_json = array(
-                "is_deleted" => true
+                "is_deleted" => true,
             );
         }
 
