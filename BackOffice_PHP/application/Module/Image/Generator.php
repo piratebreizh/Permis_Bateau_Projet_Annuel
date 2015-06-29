@@ -69,11 +69,6 @@ class Generator
         $image = '';
         list($width_old, $height_old) = $info;
 
-        echo("<br/>width_old : ".$width_old);
-        echo("<br/>height_old : ".$height_old);
-        echo("<br/>width : ".$width);
-        echo("<br/>height : ".$height);
-
         // Calculating proportionality
         $ratio_orig = $width_old / $height_old;
         $ratio_new = $width / $height;
