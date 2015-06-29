@@ -39,6 +39,7 @@ class Question extends \FSF\Model
     public function getQuestionsByIdExamen($id_examen)
     {
         $filters[]= new Filter('id_examen', $id_examen);
+        $filters[]= new Filter('is_deleted', '0');
 
         return $this->findAllWithFilters($filters, 'numero_question');
     }

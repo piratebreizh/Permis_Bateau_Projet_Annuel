@@ -34,7 +34,8 @@ $themes = $this->themes;
                 <?php if (!$theme->isPublished()) { ?>
                 <li><a href="#" class="theme_publication">Publier</a></li>
                 <?php } ?>
-                <li><a href="#" class="theme_delete">Supprimer</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#deleteModal"
+                       data-id="<?php echo $theme->getIdTheme(); ?>">Supprimer</a></li>
             </ul>
         </div>
     </div>
@@ -44,3 +45,22 @@ $themes = $this->themes;
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Créer un thème
 </a>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment supprimer ce thème ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary theme_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

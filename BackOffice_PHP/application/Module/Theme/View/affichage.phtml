@@ -47,7 +47,8 @@ $cours = $this->cours;
                 <?php if (!$examen->isPublished()) { ?>
                 <li><a href="#" class="examen_publication">Publier</a></li>
                 <?php } ?>
-                <li><a href="#" class="examen_delete">Supprimer</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#deleteExamenModal"
+                       data-id="<?php echo $examen->getIdExamen(); ?>">Supprimer</a></li>
             </ul>
         </div>
     </div>
@@ -73,3 +74,22 @@ $cours = $this->cours;
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Ajouter un nouveau cours
 </a>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="deleteExamenModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment supprimer cet examen ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary examen_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

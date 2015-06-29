@@ -17,28 +17,63 @@ $questions = $this->questions;
     <?php } ?>
 </h2>
 
-<table class="table table-striped table-hover" style="width: 80%">
-    <col width="5%">
-    <col width="95%">
+<div class="col-sm-9">
+    <table class="table table-striped table-hover">
+        <col width="5%">
+        <col width="94%">
+        <col width="1%">
 
-    <thead>
-    <tr>
-        <th>Numéro</th>
-        <th>Enoncé</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($this->questions as $question) {
-        /** @var \APP\Entity\Question $question */ ?>
-        <tr onclick="window.location='/question/afficher?id=<?php echo $question->getId(); ?>'" style="cursor: pointer">
-            <td><?php echo $question->getNumeroQuestion(); ?></td>
-            <td><?php echo $question->getEnonceQuestion(); ?></td>
+        <thead>
+        <tr>
+            <th>Numéro</th>
+            <th>Enoncé</th>
+            <th></th>
         </tr>
-    <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <?php foreach ($this->questions as $question) {
+            /** @var \APP\Entity\Question $question */ ?>
+            <tr style="cursor: pointer" class="ligne_question" data-id="<?php echo $question->getId(); ?>">
+                <td><?php echo $question->getNumeroQuestion(); ?></td>
+                <td class="question_link"><?php echo $question->getEnonceQuestion(); ?></td>
+                <td>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="true">
+                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a href="#" class="question_modify">Modifier</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#deleteModal"
+                                   data-id="<?php echo $question->getId(); ?>">Supprimer</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
 
-<a class="btn btn-primary" href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Créer une nouvelle question
-</a>
+    <a class="btn btn-primary" href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Créer une nouvelle question
+    </a>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment supprimer cette question ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary question_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

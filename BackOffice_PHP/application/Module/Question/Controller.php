@@ -94,4 +94,28 @@ class Controller extends \FSF\Controller
             header('Location: /examen/afficher?id=' . $id_examen);
         }
     }
+
+    function supprimer()
+    {
+        $returned_json = array(
+            "is_deleted" => false
+        );
+
+        $id_question = $this->getRequest()->get("id_question", "");
+
+        if($id_question != "") {
+            $model = new QuestionModel();
+            /** @var \APP\Entity\Question $question */
+            $question = $model->get($id_question);
+
+            $question->setisDeleted(true);
+            $question->save();
+
+            $returned_json = array(
+                "is_deleted" => true
+            );
+        }
+
+        return json_encode($returned_json);
+    }
 }
