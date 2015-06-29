@@ -23,8 +23,7 @@ $cours = $this->cours;
 <?php foreach ($examens as $examen) { ?>
     <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
         <div class="btn-group btn-group-lg" role="group" aria-label="...">
-            <button type="button" class="btn btn-default examen_link" style="width: 200px"
-                    onclick="window.location.href = '/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>'">
+            <button type="button" class="btn btn-default examen_link" style="width: 200px">
                 <?php echo $examen->getNom(); ?>
 
                 <!-- Publication -->
@@ -45,7 +44,7 @@ $cours = $this->cours;
             </button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                 <?php if (!$examen->isPublished()) { ?>
-                <li><a href="#" class="examen_publication">Publier</a></li>
+                    <li><a href="#" class="examen_publication">Publier</a></li>
                 <?php } ?>
                 <li><a href="#" data-toggle="modal" data-target="#deleteExamenModal"
                        data-id="<?php echo $examen->getIdExamen(); ?>">Supprimer</a></li>
@@ -62,13 +61,27 @@ $cours = $this->cours;
 </a>
 
 <h3>Cours</h3>
-<div class="list-group" style="width: 200px">
-    <?php foreach ($cours as $c) { ?>
-        <a href="/cours/afficher?id=<?php echo $c->getIdCours(); ?>" class="list-group-item">
-            <?php echo $c->getNom(); ?>
-        </a>
-    <?php } ?>
-</div>
+<?php foreach ($cours as $c) { ?>
+    <div class="div_cours" data-id="<?php echo $c->getIdCours(); ?>">
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default cours_link" style="width: 200px"
+                    class="list-group-item">
+                <?php echo $c->getNom(); ?>
+            </button>
+
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a href="#" data-toggle="modal" data-target="#deleteCoursModal"
+                       data-id="<?php echo $c->getIdCours(); ?>">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>
+<?php } ?>
+
+<br/>
 
 <a class="btn btn-primary" href="/cours/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -76,11 +89,13 @@ $cours = $this->cours;
 </a>
 
 <!-- Modal -->
-<div class="modal fade bs-example-modal-sm" id="deleteExamenModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal fade bs-example-modal-sm" id="deleteExamenModal" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
             </div>
             <div class="modal-body">
@@ -88,6 +103,27 @@ $cours = $this->cours;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary examen_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-sm" id="deleteCoursModal" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment supprimer ce cours ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary cours_delete" data-id="">Confirmer</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
             </div>
         </div>

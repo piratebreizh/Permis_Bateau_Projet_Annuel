@@ -4,6 +4,7 @@ namespace APP\Module\Cours;
 
 use APP\Entity\Cours;
 use APP\Module\Cours\View as ViewPath;
+use FSF\Helper\FileSystem;
 
 class Controller extends \FSF\Controller
 {
@@ -30,6 +31,8 @@ class Controller extends \FSF\Controller
 
         // Save the image
         $target_folder = ROOT . "/public/datas/cours/";
+        FileSystem::createDirectoriesTree(ROOT . "/public/datas/", "cours");
+
         $cours_file = $_FILES['cours'];
 
         $target_file = $target_folder . $cours->getNomPdf();
@@ -70,5 +73,29 @@ class Controller extends \FSF\Controller
             readfile($cours_path);
             exit;
         }
+    }
+
+    function supprimer()
+    {
+        $returned_json = array(
+            "is_deleted" => false
+        );
+
+        $id_cours = $this->getRequest()->get("id_cours", "");
+
+        if($id_cours != "") {
+            $modelCours = new \APP\Model\Cours();
+            /** @var \APP\Entity\Cours $cours */
+            $cours = $modelCours->get($id_cours);
+
+            $cours->setIsDeleted(true);
+            $cours->save();
+
+            $returned_json = array(
+                "is_deleted" => true,
+            );
+        }
+
+        return json_encode($returned_json);
     }
 }

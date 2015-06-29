@@ -40,6 +40,7 @@ class Cours extends Model
     public function getCoursByIdTheme($id_theme)
     {
         $filters[] = new Filter('id_theme', $id_theme);
+        $filters[] = new Filter("is_deleted", 0);
 
         return $this->findAllWithFilters($filters);
     }
