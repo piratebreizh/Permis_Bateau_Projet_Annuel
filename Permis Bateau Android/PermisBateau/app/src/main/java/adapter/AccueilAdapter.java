@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import com.projet.esgi.myapplication.R;
 import com.projet.esgi.permisbateau.AccueilActivity;
 import com.projet.esgi.permisbateau.CoursActivity;
 import com.projet.esgi.permisbateau.MajActivity;
 import com.projet.esgi.permisbateau.SerieActivity;
+import com.projet.esgi.permisbateau.StatistiquesActivity;
 import com.projet.esgi.permisbateau.ThematiqueActivity;
 
 /**
@@ -38,12 +42,24 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
         }
         // Lookup view for data ville
         final TextView text = (TextView) convertView.findViewById(R.id.item_accueil_text);
+        final TextView desc = (TextView) convertView.findViewById(R.id.item_accueil_desc);
         final ImageView img = (ImageView) convertView.findViewById(R.id.item_accueil_image);
         // Populate the data into the template view using the data object
         text.setText(item.getText());
+        desc.setText(item.getDesc());
 
         switch (position){
             case 0:
+            text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(),ThematiqueActivity.class);
+                    getContext().startActivity(intent);
+                }
+            });
+            img.setImageBitmap(item.getImage());
+            break;
+            case 1:
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -56,27 +72,32 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
                 });
                 img.setImageBitmap(item.getImage());
                 break;
-            case 1:
-                text.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(),ThematiqueActivity.class);
-                        getContext().startActivity(intent);
-                    }
-                });
-                img.setImageBitmap(item.getImage());
-                break;
             case 2:
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(),CoursActivity.class);
+                        Intent intent = new Intent(getContext(),StatistiquesActivity.class);
                         getContext().startActivity(intent);
                     }
                 });
                 img.setImageBitmap(item.getImage());
                 break;
             case 3:
+                text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Intent intent = new Intent(getContext(),CoursActivity.class);
+                        //getContext().startActivity(intent);
+                        File dirFiles = getContext().getFilesDir();
+                        for (String strFile : dirFiles.list())
+                        {
+                            Toast.makeText(getContext(),strFile.toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                img.setImageBitmap(item.getImage());
+                break;
+            case 4:
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -90,6 +111,12 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
         }
 
         img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text.callOnClick();
+            }
+        });
+        desc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 text.callOnClick();

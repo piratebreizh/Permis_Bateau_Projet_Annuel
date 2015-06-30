@@ -77,43 +77,52 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        //si le JSON est vide
-        if (data.getIsEmpty().equals("true")){
-            Toast.makeText(mContext,"Aucune mise à jour disponible",Toast.LENGTH_LONG).show();
+        //si erreur dans la récupération des données
+        if (data==null){
+            Toast.makeText(mContext,"Erreur lors de la récupération de la mise à jour",Toast.LENGTH_LONG).show();
             Intent intent = new Intent(mContext,AccueilActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
-        }
-        //si le JSON n'est pas vide
-        if (data.getIsEmpty().equals("false")){
-
-            if(stateNetwork.equals("online")){
-                //Proposition de la mise à jour
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Une nouvelle mise à jour est disponible, voulez-vous la télécharger ?").setTitle("Téléchargement mise à jour");
-                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //mise à jour des données
-                        UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
-                        uot.execute(data);
-                    }
-                });
-                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.setCancelable(false);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+        }else{
+            //si le JSON est vide
+            if (data.getIsEmpty().equals("true")){
+                Toast.makeText(mContext,"Aucune mise à jour disponible",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,AccueilActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
+            //si le JSON n'est pas vide
+            if (data.getIsEmpty().equals("false")){
 
-            if(stateNetwork.equals("local")){
-                UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
-                uot.execute(data);
+                if(stateNetwork.equals("online")){
+                    //Proposition de la mise à jour
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage("Une nouvelle mise à jour est disponible, voulez-vous la télécharger ?").setTitle("Téléchargement mise à jour");
+                    builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //mise à jour des données
+                            UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
+                            uot.execute(data);
+                        }
+                    });
+                    builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.setCancelable(false);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+                if(stateNetwork.equals("local")){
+                    UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
+                    uot.execute(data);
+                }
+
             }
-
         }
+
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.projet.esgi.myapplication.R;
 
@@ -29,10 +30,10 @@ public class CorrectionQuestionActivity extends Activity {
     private TextView txtRepB;
     private TextView txtRepC;
     private TextView txtRepD;
-    private CheckBox repA;
-    private CheckBox repB;
-    private CheckBox repC;
-    private CheckBox repD;
+    private ToggleButton repA;
+    private ToggleButton repB;
+    private ToggleButton repC;
+    private ToggleButton repD;
     private Button quit;
 
     private Question theQuestion;
@@ -49,10 +50,10 @@ public class CorrectionQuestionActivity extends Activity {
         txtRepB = (TextView) findViewById(R.id.q2);
         txtRepC = (TextView) findViewById(R.id.q3);
         txtRepD = (TextView) findViewById(R.id.q4);
-        repA = (CheckBox) findViewById(R.id.rep1);
-        repB = (CheckBox) findViewById(R.id.rep2);
-        repC = (CheckBox) findViewById(R.id.rep3);
-        repD = (CheckBox) findViewById(R.id.rep4);
+        repA = (ToggleButton) findViewById(R.id.rep1);
+        repB = (ToggleButton) findViewById(R.id.rep2);
+        repC = (ToggleButton) findViewById(R.id.rep3);
+        repD = (ToggleButton) findViewById(R.id.rep4);
         quit = (Button) findViewById(R.id.quit);
 
         quit.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +95,16 @@ public class CorrectionQuestionActivity extends Activity {
         repB.setChecked(r.getRepB());
         repC.setChecked(r.getRepC());
         repD.setChecked(r.getRepD());
+
+        //si moins de réponse
+        if (q.getReponse_C().equals("")){
+            txtRepC.setVisibility(View.INVISIBLE);
+            repC.setVisibility(View.GONE);
+        }
+        if(q.getReponse_D().equals("")){
+            txtRepD.setVisibility(View.INVISIBLE);
+            repD.setVisibility(View.GONE);
+        }
 
         //correction des réponses
         if(q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) {

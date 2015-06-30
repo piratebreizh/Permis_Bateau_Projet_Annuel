@@ -84,6 +84,16 @@ public class SerieActivity extends Activity {
                     e.printStackTrace();
                 }
                 bundle.putParcelableArrayList("listQuestions",exam.getlistQuestions());
+
+                Bundle inputBundle = getIntent().getExtras();
+
+                //gestion de l'affichage de la progressbar dans l'activity question
+                if(0 == inputBundle.getInt("idThematique")){
+                    bundle.putString("parent","Blanc");
+                }else {
+                    bundle.putString("parent","Theme");
+                }
+
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

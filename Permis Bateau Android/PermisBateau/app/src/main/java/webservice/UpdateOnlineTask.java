@@ -49,7 +49,6 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
      */
     public void databaseUpdate (DataUpdate data, Context c) throws Exception{
         db.open();
-        db.dropDataBase();
         db.createDataBase();
 
         if(data != null) {
@@ -143,7 +142,7 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
      * @param idImage
      */
     public static void delImage(String idImage,Context c){
-        if(c.deleteFile(idImage + ".jpeg")){
+        if(c.deleteFile(idImage)){
             Log.v("Suppression image", "Suppression réussi");
         }else{
             Log.e("Suppression image","Erreur lors de la suppression");

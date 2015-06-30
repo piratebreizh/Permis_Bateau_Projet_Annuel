@@ -2,6 +2,7 @@ package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.projet.esgi.myapplication.R;
 
@@ -46,14 +48,15 @@ public class QuestionActivity extends Activity {
     private TextView txtRepB;
     private TextView txtRepC;
     private TextView txtRepD;
-    private CheckBox repA;
-    private CheckBox repB;
-    private CheckBox repC;
-    private CheckBox repD;
+    private ToggleButton repA;
+    private ToggleButton repB;
+    private ToggleButton repC;
+    private ToggleButton repD;
     private Button nextQuestion;
     private ProgressBar timer;
     private CountDownTimer countDownTimer;
     private boolean delaiDepasse;
+    private String parent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +69,10 @@ public class QuestionActivity extends Activity {
         txtRepB = (TextView) findViewById(R.id.q2);
         txtRepC = (TextView) findViewById(R.id.q3);
         txtRepD = (TextView) findViewById(R.id.q4);
-        repA = (CheckBox) findViewById(R.id.rep1);
-        repB = (CheckBox) findViewById(R.id.rep2);
-        repC = (CheckBox) findViewById(R.id.rep3);
-        repD = (CheckBox) findViewById(R.id.rep4);
+        repA = (ToggleButton) findViewById(R.id.rep1);
+        repB = (ToggleButton) findViewById(R.id.rep2);
+        repC = (ToggleButton) findViewById(R.id.rep3);
+        repD = (ToggleButton) findViewById(R.id.rep4);
         nextQuestion = (Button) findViewById(R.id.nextQuestion);
         listQuestions = new ArrayList<Question>();
         listReponses = new ArrayList<Reponse>();
@@ -77,11 +80,13 @@ public class QuestionActivity extends Activity {
         timer = (ProgressBar) findViewById(R.id.timeBar);
         delaiDepasse = false;
 
-        //intit progressBar
-        timer.setVisibility(ProgressBar.VISIBLE);
-        timer.setMax(30);
-
         chargeQuestions();
+
+        //intit progressBar
+        if(parent.equals("Serie")){
+            timer.setVisibility(ProgressBar.VISIBLE);
+            timer.setMax(30);
+        }
 
         initListeners();
 
@@ -103,6 +108,7 @@ public class QuestionActivity extends Activity {
     public void chargeQuestions(){
         Bundle bundle = getIntent().getExtras();
         listQuestions = bundle.getParcelableArrayList("listQuestions");
+        parent=bundle.getString("parent");
     }
 
     /**
@@ -135,7 +141,7 @@ public class QuestionActivity extends Activity {
      * Charge la prochaine question ou lance l'activity correction
      */
     public void chargeNextQuestion(){
-        //récupère les réponses si ce n'est pas la première question
+        //récupère les réponses si ce n'est pas la première questionx
         Reponse rep;
         if(indexCurrentQuestion>0 ){
             if(delaiDepasse){
@@ -152,11 +158,13 @@ public class QuestionActivity extends Activity {
                 countDownTimer.cancel();
                 timer.setProgress(0);
             }
-            launchTimer();
+            //timer que si examen blanc
+            if(parent.equals("Serie"))launchTimer();
+
             Question q = listQuestions.get(indexCurrentQuestion);
             if(q!=null) {
                 enonce.setText(q.getEnoncer());
-                File filePath = getFileStreamPath(q.getPathimage());
+                File filePath = getFileStreamPath(q.getPathimage() + ".png");
                 if(filePath.exists()){
                     image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
                 }else{
@@ -171,6 +179,17 @@ public class QuestionActivity extends Activity {
                 repC.setChecked(false);
                 repD.setChecked(false);
                 indexCurrentQuestion++;
+
+                //si moins de réponse
+                if (q.getReponse_C().equals("")){
+                    txtRepC.setVisibility(View.INVISIBLE);
+                    repC.setVisibility(View.GONE);
+                }
+                if(q.getReponse_D().equals("")){
+                    txtRepD.setVisibility(View.INVISIBLE);
+                    repD.setVisibility(View.GONE);
+                }
+
             }
         }
         else{

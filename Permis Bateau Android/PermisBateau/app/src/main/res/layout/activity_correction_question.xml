@@ -40,11 +40,13 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:layout_weight="100"
         android:id="@+id/q1" />
-    <CheckBox
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:id="@+id/rep1" />
+        android:id="@+id/rep1"
+        android:textOff="A"
+        android:textOn="A" />
 </LinearLayout>
 
 <!--Question 2 + bouton reponse-->
@@ -59,11 +61,13 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:layout_weight="100"
         android:id="@+id/q2" />
-    <CheckBox
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:id="@+id/rep2" />
+        android:id="@+id/rep2"
+        android:textOff="B"
+        android:textOn="B" />
 </LinearLayout>
 
 <!--Question 3 + bouton reponse-->
@@ -76,12 +80,15 @@ android:orientation="vertical">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="100"
-        android:id="@+id/q3" />
-    <CheckBox
+        android:id="@+id/q3"/>
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:id="@+id/rep3" />
+        android:id="@+id/rep3"
+        android:textOff="C"
+        android:textOn="C"
+        android:visibility="visible" />
 </LinearLayout>
 
 <!--Question 4 + bouton reponse-->
@@ -95,11 +102,14 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:layout_weight="100"
         android:id="@+id/q4" />
-    <CheckBox
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:id="@+id/rep4" />
+        android:id="@+id/rep4"
+        android:textOff="D"
+        android:textOn="D"
+        android:visibility="visible" />
 </LinearLayout>
 
 <!--Barre de progression temps de question + Bouton Question suivante-->

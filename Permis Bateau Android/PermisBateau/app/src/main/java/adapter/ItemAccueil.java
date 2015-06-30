@@ -9,10 +9,12 @@ import android.widget.ImageView;
 public class ItemAccueil {
     private Bitmap image;
     private String text;
+    private String desc;
 
-    public ItemAccueil(Bitmap bmp,String txt){
+    public ItemAccueil(Bitmap bmp,String txt,String d){
         image = bmp;
         text=txt;
+        desc=d;
     }
 
     public Bitmap getImage() {
@@ -31,4 +33,11 @@ public class ItemAccueil {
         this.text = text;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 }

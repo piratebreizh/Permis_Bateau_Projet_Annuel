@@ -1,78 +1,58 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.projet.esgi.myapplication.R;
 
-import java.io.File;
-import java.io.InputStream;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import adapter.AccueilAdapter;
 import adapter.ItemAccueil;
-import database.DataBase;
-import database.DatabaseHelper;
-import webservice.UpdateTask;
 
 
 public class AccueilActivity extends Activity {
 
-    /*private Button createDbButton;
-    private Button launchExamButton;
-    private Button launchThemeExam;
-    private Button launchCours;
-    private Button launchMaj;
-    */
     private ListView listAccueil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
-        //initListeners();
 
         ArrayList<ItemAccueil> items = new ArrayList<ItemAccueil>();
 
         //examem blanc
-        Bitmap bmp_exblanc = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
-        ItemAccueil item_exblanc = new ItemAccueil(bmp_exblanc,"Examen blanc");
+        Bitmap bmp_exblanc = BitmapFactory.decodeResource(getResources(), R.drawable.d_examblanc);
+        ItemAccueil item_exblanc = new ItemAccueil(bmp_exblanc,"Examen blanc","Conditions réelles d'examen");
 
         //examen thématique
-        Bitmap bmp_exth = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
-        ItemAccueil item_exth = new ItemAccueil(bmp_exth,"Examen thématique");
+        Bitmap bmp_exth = BitmapFactory.decodeResource(getResources(), R.drawable.d_examthem);
+        ItemAccueil item_exth = new ItemAccueil(bmp_exth,"Examen thématique","Des questions par thèmes");
 
         //liste des cours
-        Bitmap bmp_cours = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
-        ItemAccueil item_cours = new ItemAccueil(bmp_cours,"Liste des cours");
+        Bitmap bmp_cours = BitmapFactory.decodeResource(getResources(), R.drawable.d_cours);
+        ItemAccueil item_cours = new ItemAccueil(bmp_cours,"Cours","Révisez vos leçons");
+
+        //stats
+        Bitmap bmp_stats = BitmapFactory.decodeResource(getResources(), R.drawable.d_historique);
+        ItemAccueil item_stats = new ItemAccueil(bmp_stats,"Historiques","Suivez votre évolution");
 
         //mise à jour
-        Bitmap bmp_maj = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
-        ItemAccueil item_maj = new ItemAccueil(bmp_maj,"Mise à jour");
+        Bitmap bmp_maj = BitmapFactory.decodeResource(getResources(), R.drawable.d_maj);
+        ItemAccueil item_maj = new ItemAccueil(bmp_maj,"Mettre à jour","Mise à jour manuelle des données");
 
-        items.add(item_exblanc);
         items.add(item_exth);
+        items.add(item_exblanc);
+        items.add(item_stats);
         items.add(item_cours);
         items.add(item_maj);
 
@@ -83,64 +63,6 @@ public class AccueilActivity extends Activity {
         listAccueil.setAdapter(adapter);
     }
 
-    /**
-     * initialise les listeners
-     */
-    /*public void initListeners(){
-
-        createDbButton = (Button) findViewById(R.id.createdb);
-        launchExamButton = (Button) findViewById(R.id.launchexam);
-        launchThemeExam = (Button) findViewById(R.id.launchthemexam);
-        launchCours = (Button) findViewById(R.id.launchcours);
-        launchMaj = (Button) findViewById(R.id.launchmaj);
-
-        createDbButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    createDb();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        launchExamButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccueilActivity.this, SerieActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("idThematique",0);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        launchThemeExam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccueilActivity.this,ThematiqueActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        launchCours.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccueilActivity.this,CoursActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        launchMaj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccueilActivity.this,MajActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
