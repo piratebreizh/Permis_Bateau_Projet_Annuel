@@ -80,12 +80,29 @@ if($question->getId() == 0){ ?>
         <label class="col-sm-2 control-label">Image : </label>
 
         <div class="input-group col-sm-5">
+
+            <?php }
+
+            $modelImage = new \APP\Model\Image();
+            $image = $modelImage->get($question->getIdImage());
+            if (!is_null($image) && $image->imageFileExist()) {
+                $image_url = "/public/datas/images/" . \APP\Module\Image\Generator::SD . '/' . $image->getNomImagePNG();
+                echo '<div style="margin: 5px"><img src="'.$image_url.'"/></div>';
+            } ?>
             <input class="form-control" name="image" id="image" type="file"/>
         </div>
     </div>
     <div class="has-error">
-        <div class="col-sm-5 help-block with-errors" id="error_checkbox" style="display: none;"><ul class="list-unstyled"><li>Veuillez sélectionner au moins une réponse correcte</li></ul></div>
-        <div class="col-sm-5 help-block with-errors" id="error_nb_responses" style="display: none;"><ul class="list-unstyled"><li>Veuillez renseigner 2 ou 4 réponses</li></ul></div>
+        <div class="col-sm-5 help-block with-errors" id="error_checkbox" style="display: none;">
+            <ul class="list-unstyled">
+                <li>Veuillez sélectionner au moins une réponse correcte</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 help-block with-errors" id="error_nb_responses" style="display: none;">
+            <ul class="list-unstyled">
+                <li>Veuillez renseigner 2 ou 4 réponses</li>
+            </ul>
+        </div>
     </div>
     <div class="clearfix"></div>
     <input type="hidden" id="add_an_other" name="add_an_other" value="0"/>
