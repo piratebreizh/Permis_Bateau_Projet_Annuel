@@ -86,7 +86,7 @@ class Controller extends \FSF\Controller
             $questions_supprimes = $question_model->getDeletedQuestions($date);
             foreach ($questions_supprimes as $question_suppr) {
                 /** @var \APP\Entity\Question $question_suppr */
-                $json_array['questions_supprimees'][] = $question_suppr->getIdQuestion();
+                $json_array['questions_supprimees'][] = $question_suppr->getId();
             }
 
             // Cours
