@@ -1,11 +1,30 @@
 <?php
 /** @var \APP\Entity\Question $question */
 $question = $this->question;
-if($question->getId() == 0){ ?>
-<h2>Création d'une question</h2>
-<?php }else{ ?>
-    <h2>Modification d'une question</h2>
-<?php } ?>
+/** @var \APP\Entity\Examen $examen */
+$examen = $this->examen;
+/** @var \APP\Entity\Theme $theme */
+$theme = $this->theme;
+if ($question->getId() == 0) {
+    $titre = "Création d'une question";
+} else {
+    $titre = "Modification d'une question";
+}
+?>
+
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/theme/lister">Gestion du contenu</a></li>
+    <?php if(!is_null($theme)){ ?>
+        <li><a href="/theme/afficher?id=<?php echo $examen->getIdTheme(); ?>"><?php echo $theme->getNom(); ?></a></li>
+    <?php }else{ ?>
+        <li><a href="/theme/listerExamensBlanc">Examens blancs</a></li>
+    <?php } ?>
+    <li><a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>"><?php echo $examen->getNom(); ?></a></li>
+    <li class="active"><?php echo $titre; ?></li>
+</ol>
+
+<h2><?php echo $titre; ?></h2>
 
 <form method="post" id="form_question_creation" class="form-horizontal" action="/question/saveQuestion"
       enctype="multipart/form-data">

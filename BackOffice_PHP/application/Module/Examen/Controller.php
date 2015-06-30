@@ -16,12 +16,16 @@ class Controller extends \FSF\Controller
         $examenModel = new \APP\Model\Examen();
         $examen = $examenModel->get($id_examen);
 
+        $themeModel = new \APP\Model\Theme();
+        $theme = $themeModel->get($examen->getIdTheme());
+
         $question_model = new Question();
         $questions = $question_model->getQuestionsByIdExamen($id_examen);
 
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
         $currentView->setParam("examen", $examen);
+        $currentView->setParam("theme", $theme);
         $currentView->setParam("questions", $questions);
 
         return $this->getView()

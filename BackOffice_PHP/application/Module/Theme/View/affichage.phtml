@@ -6,6 +6,13 @@ $examens = $this->examens;
 /** @var \APP\Entity\Cours[] $cours */
 $cours = $this->cours;
 ?>
+
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/theme/lister">Gestion du contenu</a></li>
+    <li class="active"><?php echo $theme->getNom(); ?></li>
+</ol>
+
 <h2>
     <?php echo $theme->getNom(); ?>
     <!-- Publication -->
@@ -18,7 +25,6 @@ $cours = $this->cours;
               data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
     <?php } ?>
 </h2>
-
 <h3>Examens</h3>
 <?php foreach ($examens as $examen) { ?>
     <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">

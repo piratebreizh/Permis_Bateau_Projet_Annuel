@@ -1,9 +1,23 @@
 <?php
 /** @var \APP\Entity\Examen $examen */
 $examen = $this->examen;
+/** @var \APP\Entity\Theme $theme */
+$theme = $this->theme;
 /** @var \APP\Entity\Question[] $questions */
 $questions = $this->questions;
 ?>
+
+
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/theme/lister">Gestion du contenu</a></li>
+    <?php if(!is_null($theme)){ ?>
+        <li><a href="/theme/afficher?id=<?php echo $examen->getIdTheme(); ?>"><?php echo $theme->getNom(); ?></a></li>
+    <?php }else{ ?>
+        <li><a href="/theme/listerExamensBlanc">Examens blancs</a></li>
+    <?php } ?>
+    <li class="active"><?php echo $examen->getNom(); ?></li>
+</ol>
 <h2>
     <?php echo $examen->getNom(); ?>
     <!-- Publication -->

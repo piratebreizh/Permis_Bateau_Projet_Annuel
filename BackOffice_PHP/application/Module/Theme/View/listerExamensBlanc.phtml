@@ -3,6 +3,12 @@
 $examens_blancs = $this->examens_blancs;
 ?>
 
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/theme/lister">Gestion du contenu</a></li>
+    <li class="active">Examens blancs</li>
+</ol>
+
 <h2>Liste des examens blancs</h2>
 <?php foreach ($examens_blancs as $examen) { ?>
     <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">

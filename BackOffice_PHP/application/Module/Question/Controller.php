@@ -33,9 +33,17 @@ class Controller extends \FSF\Controller
     {
         $id_examen = $this->getRequest()->get("id_examen", "");
 
+        $examenModel = new \APP\Model\Examen();
+        $examen = $examenModel->get($id_examen);
+
+        $themeModel = new \APP\Model\Theme();
+        $theme = $themeModel->get($examen->getIdTheme());
+
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
         $currentView->setParam("id_examen", $id_examen);
+        $currentView->setParam("examen", $examen);
+        $currentView->setParam("theme", $theme);
         $currentView->setParam("question", new Question());
 
         return $this->getView()
@@ -139,10 +147,18 @@ class Controller extends \FSF\Controller
         /** @var \APP\Entity\Question $question */
         $question = $model->get($id_question);
 
+        $examenModel = new \APP\Model\Examen();
+        $examen = $examenModel->get($question->getIdExamen());
+
+        $themeModel = new \APP\Model\Theme();
+        $theme = $themeModel->get($examen->getIdTheme());
+
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
         $currentView->setParam("question", $question);
         $currentView->setParam("id_examen", $question->getIdExamen());
+        $currentView->setParam("examen", $examen);
+        $currentView->setParam("theme", $theme);
 
 
         return $this->getView()
