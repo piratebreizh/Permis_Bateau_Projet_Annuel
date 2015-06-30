@@ -55,7 +55,7 @@ $cours = $this->cours;
 
 <br/>
 
-<a class="btn btn-primary" href="/examen/creer?id_theme=<?php echo $theme->getIdTheme(); ?>">
+<a class="btn btn-primary"  href="#" data-toggle="modal" data-target="#addExamenModal">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Créer un nouvel examen
 </a>
@@ -109,7 +109,6 @@ $cours = $this->cours;
     </div>
 </div>
 
-
 <div class="modal fade bs-example-modal-sm" id="deleteCoursModal" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog" role="document">
@@ -124,6 +123,39 @@ $cours = $this->cours;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary cours_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addExamenModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajout d'un examen</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form method="post"  class="form-horizontal"  action="/examen/saveExamen" role="form" data-toggle="validator">
+                        <input type="hidden" name="id_theme" id="id_theme" value="<?php echo $theme->getIdTheme(); ?>"/>
+                        <!-- Nom -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="nom">Nom : </label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" name="nom" id="nom"
+                                       placeholder="Nom de l'examen" type="text" maxlength="30" required/>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary add_examen">Sauvegarder</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
             </div>
         </div>

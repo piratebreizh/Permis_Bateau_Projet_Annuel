@@ -51,4 +51,16 @@ $(document).ready(function () {
             }
         })
     });
+
+    $('.add_theme').on("click", function () {
+        $('#addThemeModal form').submit();
+    });
+
+    $('#addThemeModal').on('hidden.bs.modal', function (e) {
+        $('#addThemeModal form')[0].reset();
+    });
+
+    $('#addThemeModal').on('shown.bs.modal', function (e) {
+        $('#addThemeModal input.form-control')[0].focus();
+    });
 });

@@ -59,15 +59,6 @@ class Controller extends \FSF\Controller
             ->setParam("js", array("theme/affichage"));
     }
 
-    function creer()
-    {
-        $currentView = new View();
-        $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
-
-        return $this->getView()
-            ->setParam('currentView', $currentView);
-    }
-
     function saveTheme()
     {
         $nom = $this->getRequest()->get("nom", "");

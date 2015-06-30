@@ -41,13 +41,13 @@ $themes = $this->themes;
     </div>
 <?php } ?>
 <br>
-<a class="btn btn-primary btn-lg" href="/theme/creer">
+<a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#addThemeModal">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     Créer un thème
 </a>
 
 <!-- Modal -->
-<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,6 +59,39 @@ $themes = $this->themes;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary theme_delete" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addThemeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajout d'un thème</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form method="post" class="form-horizontal" action="/theme/saveTheme" role="form"
+                          data-toggle="validator">
+                        <!-- Nom -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="nom_theme">Nom : </label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" name="nom" id="nom_theme"
+                                       placeholder="Nom du thème" type="text" maxlength="30" required/>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary add_theme">Sauvegarder</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
             </div>
         </div>

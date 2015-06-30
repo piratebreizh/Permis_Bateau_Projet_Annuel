@@ -88,4 +88,16 @@ $(document).ready(function () {
             }
         })
     });
+
+    $('.add_examen').on("click", function () {
+        $('#addExamenModal form').submit();
+    });
+
+    $('#addExamenModal').on('hidden.bs.modal', function (e) {
+        $('#addExamenModal form')[0].reset();
+    });
+
+    $('#addExamenModal').on('shown.bs.modal', function (e) {
+        $('#addExamenModal input.form-control')[0].focus();
+    });
 });
