@@ -62,8 +62,8 @@ public class CorrectionAdapter extends ArrayAdapter<ItemCorrection> {
         });
 
 
-        Bitmap bmp_yes = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.yes);
-        Bitmap bmp_no = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.no);
+        Bitmap bmp_yes = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.correction_valide);
+        Bitmap bmp_no = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.correction_cancel);
 
         if(goodAnswer(item.getQuestionAtIndex(position),item.getReponseAtIndex(position))){
             img.setImageBitmap(bmp_yes);

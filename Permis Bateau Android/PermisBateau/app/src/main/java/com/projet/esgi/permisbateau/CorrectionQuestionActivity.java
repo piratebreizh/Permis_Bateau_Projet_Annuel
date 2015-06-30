@@ -108,24 +108,24 @@ public class CorrectionQuestionActivity extends Activity {
 
         //correction des réponses
         if(q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) {
-            txtRepA.setTextColor(Color.GREEN);
+            txtRepA.setBackgroundColor(Color.GREEN);
         }else{
-            txtRepA.setTextColor(Color.RED);
+            txtRepA.setBackgroundColor(Color.RED);
         }
         if(q.getCorrect_B()==((r.getRepB()) ? 1 : 0)) {
-            txtRepB.setTextColor(Color.GREEN);
+            txtRepB.setBackgroundColor(Color.GREEN);
         }else{
-            txtRepB.setTextColor(Color.RED);
+            txtRepB.setBackgroundColor(Color.RED);
         }
         if(q.getCorrect_C()==((r.getRepC()) ? 1 : 0)) {
-            txtRepC.setTextColor(Color.GREEN);
+            txtRepC.setBackgroundColor(Color.GREEN);
         }else{
-            txtRepC.setTextColor(Color.RED);
+            txtRepC.setBackgroundColor(Color.RED);
         }
         if(q.getCorrect_D()==((r.getRepD()) ? 1 : 0)) {
-            txtRepD.setTextColor(Color.GREEN);
+            txtRepD.setBackgroundColor(Color.GREEN);
         }else{
-            txtRepD.setTextColor(Color.RED);
+            txtRepD.setBackgroundColor(Color.RED);
         }
     }
 
