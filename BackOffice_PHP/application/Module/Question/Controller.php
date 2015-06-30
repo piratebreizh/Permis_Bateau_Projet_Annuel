@@ -36,6 +36,7 @@ class Controller extends \FSF\Controller
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
         $currentView->setParam("id_examen", $id_examen);
+        $currentView->setParam("question", new Question());
 
         return $this->getView()
             ->setParam("js", array("question/creation"))
@@ -44,6 +45,7 @@ class Controller extends \FSF\Controller
 
     public function saveQuestion()
     {
+        $id_question = intval($this->getRequest()->get("id_question", 0));
         $id_examen = $this->getRequest()->get("id_examen", "");
         $enonce_question = $this->getRequest()->get("question_enonce", "");
         $enonce_A = $this->getRequest()->get("enonce_A", "");
@@ -55,16 +57,24 @@ class Controller extends \FSF\Controller
         $is_correct_C = $this->getRequest()->get("is_correct_C", false);
         $is_correct_D = $this->getRequest()->get("is_correct_D", false);
 
-        //Numéro
-        $numero_question = 1;
         $question_model = new QuestionModel();
-        $questions = $question_model->getQuestionsByIdExamen($id_examen);
-        $numero_question += $questions->count();
 
         $question = new Question();
+
+        //In case of update
+        if($id_question != 0) {
+            $question = $question_model->get($id_question);
+        }else{
+            //Numeration for new Question
+            $numero_question = 1;
+            $questions = $question_model->getQuestionsByIdExamen($id_examen);
+            $numero_question += $questions->count();
+
+            $question->setNumeroQuestion($numero_question);
+        }
+
         $question
             ->setIdExamen($id_examen)
-            ->setNumeroQuestion($numero_question)
             ->setEnonceQuestion($enonce_question)
             ->setEnonceA($enonce_A)
             ->setEnonceB($enonce_B)
@@ -132,6 +142,7 @@ class Controller extends \FSF\Controller
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
         $currentView->setParam("question", $question);
+        $currentView->setParam("id_examen", $question->getIdExamen());
 
 
         return $this->getView()

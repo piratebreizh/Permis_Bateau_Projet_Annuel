@@ -1,15 +1,24 @@
+<?php
+/** @var \APP\Entity\Question $question */
+$question = $this->question;
+if($question->getId() == 0){ ?>
 <h2>Création d'une question</h2>
+<?php }else{ ?>
+    <h2>Modification d'une question</h2>
+<?php } ?>
 
 <form method="post" id="form_question_creation" class="form-horizontal" action="/question/saveQuestion"
       enctype="multipart/form-data">
     <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
+    <input type="hidden" name="id_question" id="id_question" value="<?php echo $question->getId(); ?>"/>
     <!-- Enonce -->
     <div class="form-group">
         <label class="col-sm-2 control-label" for="question_enonce">Enoncé de la question : </label>
 
         <div class="col-sm-5">
             <textarea class="form-control" name="question_enonce" id="question_enonce"
-                      placeholder="Enoncé de la question" maxlength="150" rows="3" required></textarea>
+                      placeholder="Enoncé de la question"
+                      maxlength="150" rows="3" required><?php echo $question->getEnonceQuestion() ?></textarea>
 
             <div class="help-block with-errors"></div>
         </div>
@@ -20,9 +29,11 @@
 
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
-                <input name="is_correct_A" id="is_correct_A" type="checkbox" data-checkbox="true"/>
+                <input name="is_correct_A" id="is_correct_A" type="checkbox" data-checkbox="true"
+                       <?php if($question->isCorrectA()) echo "checked"; ?>/>
             </span>
-            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" maxlength="50"/>
+            <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" maxlength="50"
+                value="<?php echo $question->getEnonceA()?>"/>
         </div>
     </div>
     <!-- Réponse B -->
@@ -31,9 +42,11 @@
 
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
-                <input name="is_correct_B" id="is_correct_B" type="checkbox" data-checkbox="true"/>
+                <input name="is_correct_B" id="is_correct_B" type="checkbox" data-checkbox="true"
+                    <?php if($question->isCorrectB()) echo "checked"; ?>/>
             </span>
-            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" maxlength="50"/>
+            <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" maxlength="50"
+                   value="<?php echo $question->getEnonceB()?>"/>
         </div>
     </div>
     <!-- Réponse C -->
@@ -42,9 +55,11 @@
 
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
-                <input name="is_correct_C" id="is_correct_C" type="checkbox" data-checkbox="true"/>
+                <input name="is_correct_C" id="is_correct_C" type="checkbox" data-checkbox="true"
+                    <?php if($question->isCorrectC()) echo "checked"; ?>/>
             </span>
-            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" maxlength="50"/>
+            <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" maxlength="50"
+                   value="<?php echo $question->getEnonceC()?>"/>
         </div>
     </div>
     <!-- Réponse D -->
@@ -53,9 +68,11 @@
 
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
-                <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="true"/>
+                <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="true"
+                    <?php if($question->isCorrectD()) echo "checked"; ?>/>
             </span>
-            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" maxlength="50"/>
+            <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" maxlength="50"
+                   value="<?php echo $question->getEnonceD()?>"/>
         </div>
     </div>
     <!-- Image -->

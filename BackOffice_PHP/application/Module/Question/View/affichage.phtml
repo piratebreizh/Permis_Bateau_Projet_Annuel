@@ -15,7 +15,7 @@ if (!is_null($image)) {
 /** @var \APP\Entity\Question $question */
 $question = $this->question;
 if (!is_null($question)) {
-    if (!is_null($image)) { ?>
+    if (!is_null($image) && $image->imageFileExist()) { ?>
         <img src="<?php echo $image_url; ?>"/>
     <?php } ?>
     <h3><?php echo $question->getEnonceQuestion(); ?></h3>

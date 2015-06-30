@@ -2,6 +2,7 @@
 
 namespace APP\Entity;
 
+use APP\Module\Image\Generator;
 use FSF\Entity;
 
 class Image extends Entity
@@ -21,6 +22,16 @@ class Image extends Entity
         $this->setModel(new \APP\Model\Image());
     }
 
+    /**
+     * @return bool
+     */
+    public function imageFileExist()
+    {
+        $generator = new Generator;
+        $image_path = $generator->getImagesDirectory() . Generator::BO . '/' . $this->getNomImagePNG();
+
+        return file_exists($image_path);
+    }
 
 
     /**
