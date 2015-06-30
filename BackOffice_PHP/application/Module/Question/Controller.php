@@ -120,4 +120,22 @@ class Controller extends \FSF\Controller
 
         return json_encode($returned_json);
     }
+
+    public function modifier()
+    {
+        $id_question = $this->getRequest()->get('id', 0);
+
+        $model = new QuestionModel();
+        /** @var \APP\Entity\Question $question */
+        $question = $model->get($id_question);
+
+        $currentView = new View();
+        $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
+        $currentView->setParam("question", $question);
+
+
+        return $this->getView()
+            ->setParam("js", array("question/creation"))
+            ->setParam('currentView', $currentView);
+    }
 }

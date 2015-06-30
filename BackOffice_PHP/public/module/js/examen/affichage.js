@@ -16,6 +16,7 @@ $(document).ready(function(){
         var tr_question = $(this).closest('tr');
         var id_question = $(tr_question).data("id");
 
+        window.location='/question/modifier?id='+id_question;
     });
 
     $('#deleteModal').on('show.bs.modal', function (event) {
