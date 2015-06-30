@@ -7,6 +7,8 @@ $(document).ready(function(){
         $('#add_an_other').val('1');
         validateForm();
     });
+
+    document.getElementById('image').addEventListener('change', handleFileSelect, false);
 });
 
 function validateForm(){
@@ -72,4 +74,26 @@ function isFourResponses() {
         && $enonce_B.val() != ""
         && $enonce_C.val() != ""
         && $enonce_D.val() != "";
+}
+
+function handleFileSelect(evt) {
+    var file = evt.target.files[0];
+
+    // Only process image files
+    if (!file.type.match('image.*')) {
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (function (theFile) {
+        return function (e) {
+            // Render thumbnail.
+            var span = document.createElement('span');
+            span.innerHTML = ['<img style="height: 75px;" src="', e.target.result, '"/>'].join('');
+            $('#div_image').html(span);
+        };
+    })(file);
+
+    // Read in the image file as a data URL
+    reader.readAsDataURL(file);
 }
