@@ -10,14 +10,18 @@ $examens_blancs = $this->examens_blancs;
 </ol>
 
 <h2>Liste des examens blancs</h2>
-<?php foreach ($examens_blancs as $examen) { ?>
-    <div class="div_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
-        <div class="btn-group btn-group-lg" role="group" aria-label="...">
-            <button type="button" class="btn btn-default examen_link" style="width: 200px"
-                    onclick="window.location.href = '/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>'">
-                <?php echo $examen->getNom(); ?>
+<div class="col-sm-4">
+    <table class="table table-striped table-hover table-link">
+        <col width="94%">
+        <col width="1%">
 
-                <!-- Publication -->
+        <tbody>
+<?php foreach ($examens_blancs as $examen) { ?>
+    <tr class="tr_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
+        <td class="examen_link">
+            <?php echo $examen->getNom(); ?>
+
+            <!-- Publication -->
                 <span class="is_published" style="float: right;">
                 <?php if ($examen->isPublished()) { ?>
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
@@ -27,29 +31,30 @@ $examens_blancs = $this->examens_blancs;
                           data-toggle="tooltip" data-placement="right" title="Non publié"></span>
                 <?php } ?>
                 </span>
-            </button>
-
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                    aria-expanded="false">
-                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <?php if (!$examen->isPublished()) { ?>
-                    <li><a href="#" class="examen_publication">Publier</a></li>
-                <?php } ?>
-                <li><a href="#" data-toggle="modal" data-target="#deleteExamenModal"
-                       data-id="<?php echo $examen->getIdExamen(); ?>">Supprimer</a></li>
-            </ul>
-        </div>
-    </div>
+        </td>
+        <td>
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="true">
+                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <?php if (!$examen->isPublished()) { ?>
+                        <li><a href="#" class="examen_publication">Publier</a></li>
+                    <?php } ?>
+                    <li><a href="#" data-toggle="modal" data-target="#deleteExamenModal"
+                           data-id="<?php echo $examen->getIdExamen(); ?>">Supprimer</a></li>
+                </ul>
+        </td>
+    </tr>
 <?php } ?>
-
-<br/>
-
-<a class="btn btn-primary"  href="#" data-toggle="modal" data-target="#addExamenModal">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Créer un nouvel examen
-</a>
+        </tbody>
+    </table>
+    <a class="btn btn-primary"  href="#" data-toggle="modal" data-target="#addExamenModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Créer un nouvel examen
+    </a>
+</div>
 
 <!-- Modal -->
 <div class="modal fade bs-example-modal-sm" id="deleteExamenModal" tabindex="-1" role="dialog"

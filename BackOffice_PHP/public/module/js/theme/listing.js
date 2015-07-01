@@ -5,10 +5,21 @@ function initTooltip() {
 $(document).ready(function () {
     initTooltip();
 
+    $('.theme_link').on('click', function () {
+        var tr_theme = $(this).closest(".tr_theme");
+        var id_theme = $(tr_theme).data("id");
+
+        window.location = '/theme/afficher?id='+id_theme;
+    });
+
+    $('.examens_blancs_link').on('click', function () {
+        window.location.href = '/theme/listerExamensBlanc';
+    });
+
     $('.theme_publication').on('click', function () {
-        var div_theme = $(this).parent().parent().parent().parent();
-        var id_theme = $(div_theme).data("id");
-        var span = $(div_theme).find(".is_published > span");
+        var tr_theme = $(this).closest(".tr_theme");
+        var id_theme = $(tr_theme).data("id");
+        var span = $(tr_theme).find(".is_published > span");
         var link_menu = $(this).parent();
         $.ajax({
             url: '/theme/publier',

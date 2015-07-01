@@ -5,8 +5,8 @@ function initTooltip() {
 $(document).ready(function () {
     initTooltip();
     $('.examen_link').on('click', function(){
-        var div_examen = $(this).parent().parent();
-        var id_examen = $(div_examen).data("id");
+        var tr_examen = $(this).closest(".tr_examen");
+        var id_examen = $(tr_examen).data("id");
 
         window.location.href = '/examen/afficher?id='+id_examen;
     });
@@ -19,9 +19,9 @@ $(document).ready(function () {
     })
 
     $('.examen_publication').on('click', function () {
-        var div_examen = $(this).parent().parent().parent().parent();
-        var id_examen = $(div_examen).data("id");
-        var span = $(div_examen).find(".is_published > span");
+        var tr_examen = $(this).closest(".tr_examen");
+        var id_examen = $(tr_examen).data("id");
+        var span = $(tr_examen).find(".is_published > span");
         var link_menu = $(this).parent();
         $.ajax({
             url: '/examen/publier',
@@ -51,15 +51,15 @@ $(document).ready(function () {
             type: 'POST',
             complete: function (response) {
                 if (response.responseJSON.is_deleted)
-                    $('.div_examen[data-id='+id_examen+']').remove();
+                    $('.tr_examen[data-id='+id_examen+']').remove();
                 $('#deleteExamenModal').modal('hide');
             }
         })
     });
 
     $('.cours_link').on('click', function(){
-        var div_cours = $(this).parent().parent();
-        var id_cours = $(div_cours).data("id");
+        var tr_cours = $(this).closest(".tr_cours");
+        var id_cours = $(tr_cours).data("id");
 
         window.location.href = '/cours/afficher?id='+id_cours;
     });
@@ -83,7 +83,7 @@ $(document).ready(function () {
             type: 'POST',
             complete: function (response) {
                 if (response.responseJSON.is_deleted)
-                    $('.div_cours[data-id='+id_cours+']').remove();
+                    $('.tr_cours[data-id='+id_cours+']').remove();
                 $('#deleteCoursModal').modal('hide');
             }
         })
