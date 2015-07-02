@@ -183,7 +183,7 @@ public class RequeteurAPI {
         bmp = BitmapFactory.decodeStream(in);
 
         if (bmp != null) {
-            FileOutputStream fos = context.openFileOutput(idImage + "png", Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(idImage + ".png", Context.MODE_PRIVATE);
             bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
         }

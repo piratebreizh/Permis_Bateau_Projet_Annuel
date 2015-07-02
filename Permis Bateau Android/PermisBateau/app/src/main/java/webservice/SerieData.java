@@ -17,6 +17,10 @@ public class SerieData {
         this.num = num;
     }
 
+    public SerieData(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

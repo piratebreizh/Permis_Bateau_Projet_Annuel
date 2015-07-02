@@ -15,6 +15,9 @@ public class ThemeData {
         num = _num;
     }
 
+    public ThemeData(int _id){
+        id=_id;
+    }
 
     public int getId() {
         return id;

@@ -48,33 +48,22 @@ public class ParserJSON {
             //themes_supprimes
             JSONArray arrayThemes_supprimes = jsonObject.getJSONArray("themes_supprimes");
             for (int i = 0; i < arrayThemes_supprimes.length(); ++i) {
-                JSONObject deltheme = arrayThemes.getJSONObject(i);
-                data.deleteTheme(new ThemeData(deltheme.getInt("id_theme"),deltheme.getString("nom"),deltheme.getInt("numero")));
+                data.deleteTheme(new ThemeData(arrayThemes_supprimes.getInt(i)));
             }
             //examens_supprimes
             JSONArray arrayExamens_supprimes = jsonObject.getJSONArray("examens_supprimes");
             for (int i = 0; i < arrayExamens_supprimes.length(); ++i) {
-                JSONObject delserie = arrayExamens_supprimes.getJSONObject(i);
-                data.deleteSerie(new SerieData(delserie.getInt("id_examen"),delserie.getInt("id_theme"),delserie.getString("nom"),
-                        delserie.getInt("numero")));
+                data.deleteSerie(new SerieData(arrayExamens_supprimes.getInt(i)));
             }
             //questions_supprimees
             JSONArray arrayQuestions_supprimees = jsonObject.getJSONArray("questions_supprimees");
             for (int i = 0; i < arrayQuestions_supprimees.length(); ++i) {
-                JSONObject delquest = arrayQuestions_supprimees.getJSONObject(i);
-                data.deleteQuestion(new QuestionData(delquest.getInt("id_question"),delquest.getInt("numero_question"),
-                        delquest.getString("id_question"),
-                        delquest.getString("enonce_question"),delquest.getString("enonce_A"),delquest.getString("enonce_B"),
-                        delquest.getString("enonce_C"),delquest.getString("enonce_D"),
-                        delquest.getInt("is_correct_A"),delquest.getInt("is_correct_B"),delquest.getInt("is_correct_C"),
-                        delquest.getInt("is_correct_D"),delquest.getInt("id_examen")));
+                data.deleteQuestion(new QuestionData(arrayQuestions_supprimees.getInt(i)));
             }
             //cours_supprimes
             JSONArray arrayCours_supprimees = jsonObject.getJSONArray("cours_supprimes");
             for (int i = 0; i < arrayCours_supprimees.length(); ++i) {
-                JSONObject delCours = arrayCours_supprimees.getJSONObject(i);
-                data.addCours(new CoursData(delCours.getInt("id_cours"),
-                        delCours.getString("nom"), delCours.getInt("id_theme")));
+                data.addCours(new CoursData(arrayCours_supprimees.getInt(i)));
             }
 
             //date de maj

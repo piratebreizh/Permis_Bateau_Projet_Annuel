@@ -14,6 +14,10 @@ public class CoursData {
         this.idTheme = idTheme;
     }
 
+    public CoursData(int idCours) {
+        this.idCours = idCours;
+    }
+
     public int getIdCours() {
         return idCours;
     }

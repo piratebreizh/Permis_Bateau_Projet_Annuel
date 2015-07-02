@@ -141,4 +141,7 @@ public class QuestionData {
         idSerie=idS;
 
     }
+    public QuestionData(int _id ){
+        id=_id;
+    }
 }

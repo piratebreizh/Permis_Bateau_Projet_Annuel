@@ -66,7 +66,7 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
             //questions
             for (QuestionData q : data.getDelQuestions()) {
                 //bdd questions
-                db.execSql("DELETE FROM Questions WHERE idQuestion=" + q.getId());
+                db.execSql("DELETE FROM Question WHERE idQuestion=" + q.getId());
 
                 //suppression image
                 delImage(q.getPathimage(), c);
@@ -142,7 +142,7 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
      * @param idImage
      */
     public static void delImage(String idImage,Context c){
-        if(c.deleteFile(idImage)){
+        if(c.deleteFile(idImage + "png")){
             Log.v("Suppression image", "Suppression réussi");
         }else{
             Log.e("Suppression image","Erreur lors de la suppression");
