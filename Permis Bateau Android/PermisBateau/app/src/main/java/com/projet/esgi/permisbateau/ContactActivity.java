@@ -1,6 +1,7 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -30,6 +31,9 @@ public class ContactActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+            case R.id.action_contact:
+                Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -1,6 +1,7 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -108,24 +109,24 @@ public class CorrectionQuestionActivity extends Activity {
 
         //correction des réponses
         if(q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) {
-            txtRepA.setBackgroundColor(Color.GREEN);
+            txtRepA.setTextColor(Color.GREEN);
         }else{
-            txtRepA.setBackgroundColor(Color.RED);
+            txtRepA.setTextColor(Color.RED);
         }
         if(q.getCorrect_B()==((r.getRepB()) ? 1 : 0)) {
-            txtRepB.setBackgroundColor(Color.GREEN);
+            txtRepB.setTextColor(Color.GREEN);
         }else{
-            txtRepB.setBackgroundColor(Color.RED);
+            txtRepB.setTextColor(Color.RED);
         }
         if(q.getCorrect_C()==((r.getRepC()) ? 1 : 0)) {
-            txtRepC.setBackgroundColor(Color.GREEN);
+            txtRepC.setTextColor(Color.GREEN);
         }else{
-            txtRepC.setBackgroundColor(Color.RED);
+            txtRepC.setTextColor(Color.RED);
         }
         if(q.getCorrect_D()==((r.getRepD()) ? 1 : 0)) {
-            txtRepD.setBackgroundColor(Color.GREEN);
+            txtRepD.setTextColor(Color.GREEN);
         }else{
-            txtRepD.setBackgroundColor(Color.RED);
+            txtRepD.setTextColor(Color.RED);
         }
     }
 
@@ -156,7 +157,9 @@ public class CorrectionQuestionActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_contact) {
+            Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+            startActivity(intent);
             return true;
         }
 

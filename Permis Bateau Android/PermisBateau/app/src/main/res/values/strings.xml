@@ -5,6 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!--Menu-->
+    <string name="action_contact">Passez votre permis</string>
+
     <!-- accueil -->
     <string name="button_Theme_Exam">Examen Thematique</string>
     <string name="button_Blanc_Exam">Examen Blanc</string>
@@ -37,7 +40,7 @@
 
     <!-- maj -->
     <string name="title_activity_maj">Mise à jour</string>
-    <string name="intitule_maj">Maj en cours</string>
+    <string name="intitule_maj">Téléchargement en cours</string>
 
     <!-- load -->
     <string name="title_activity_load">Chargement</string>

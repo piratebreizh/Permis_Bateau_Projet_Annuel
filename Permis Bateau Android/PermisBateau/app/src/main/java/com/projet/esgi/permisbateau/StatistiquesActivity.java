@@ -1,6 +1,7 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -76,6 +77,9 @@ public class StatistiquesActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+            case R.id.action_contact:
+                Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

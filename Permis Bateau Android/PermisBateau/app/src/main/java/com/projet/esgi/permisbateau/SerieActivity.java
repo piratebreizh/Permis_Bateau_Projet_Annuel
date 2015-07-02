@@ -113,6 +113,9 @@ public class SerieActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+            case R.id.action_contact:
+                Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

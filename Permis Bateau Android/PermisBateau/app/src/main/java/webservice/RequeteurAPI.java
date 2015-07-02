@@ -35,7 +35,6 @@ import java.net.URLEncoder;
 public class RequeteurAPI {
 
     private static String URL_BASE = "http://cap-horn.osmose-hebergement.com";
-    //    private static String URL_BASE = "http://cap-horn.olympe.in";
     private static String URL_WEBSERVICE_MAJ = URL_BASE + "/ws/getmaj";
     private static String URL_WEBSERVICE_IMAGE = URL_BASE + "/ws/getImage";
     private static String URL_WEBSERVICE_COURS = URL_BASE + "/ws/getCours";
@@ -88,9 +87,9 @@ public class RequeteurAPI {
                 URLEncoder.encode(date, CHARSET));
     }
 
-    private String buildParamImage(String idImage) throws UnsupportedEncodingException {
-        return String.format("id=%s",
-                URLEncoder.encode(idImage, CHARSET));
+    private String buildParamImage(String idImage, Context c) throws UnsupportedEncodingException {
+        return String.format("id=%s&%s",
+                URLEncoder.encode(idImage, CHARSET),URLEncoder.encode(c.getString(R.string.url), CHARSET));
     }
 
     private String buildParamCours(String idCours) throws UnsupportedEncodingException {
@@ -176,7 +175,7 @@ public class RequeteurAPI {
      */
     public void stockImage(String idImage, Context context) throws Exception {
         Bitmap bmp;
-        String paramImage = this.buildParamImage(idImage);
+        String paramImage = this.buildParamImage(idImage,context);
 
         String requete = String.format("%s?%s", URL_WEBSERVICE_IMAGE, paramImage);
         InputStream in = new URL(requete).openStream();

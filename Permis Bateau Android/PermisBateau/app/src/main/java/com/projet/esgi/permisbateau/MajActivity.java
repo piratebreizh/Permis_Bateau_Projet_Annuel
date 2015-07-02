@@ -1,6 +1,7 @@
 package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -53,7 +54,9 @@ public class MajActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_contact) {
+            Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+            startActivity(intent);
             return true;
         }
 

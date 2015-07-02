@@ -242,7 +242,26 @@ public class QuestionActivity extends Activity {
                 builder.setCancelable(false);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
+            case R.id.action_contact:
+                //Validation du retour à l'accueil
+                AlertDialog.Builder builderContact = new AlertDialog.Builder(this);
+                builderContact.setMessage("Cette action annulera l'examen, êtes-vous sûr(e) de vouloir retourner à l'écran d'accueil ?").setTitle("Annuler l'examen");
+                builderContact.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (countDownTimer!=null) countDownTimer.cancel();
+                        Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                builderContact.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builderContact.setCancelable(false);
+                AlertDialog dialogContact = builderContact.create();
+                dialogContact.show();
             default:
                 return super.onOptionsItemSelected(item);
         }

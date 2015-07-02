@@ -2,6 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.projet.esgi.permisbateau.MajActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    <item android:id="@+id/action_contact" android:title="@string/action_contact"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
