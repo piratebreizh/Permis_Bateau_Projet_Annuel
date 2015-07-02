@@ -19,7 +19,7 @@ class Controller extends \FSF\Controller
         $date = Date::blockToFr($date);
 
         $json_array = array(
-            "date_update"          => date('dmYHis'),
+            "date_update"          => date('dmYHis').' ',
             "is_empty"             => true,
             "themes_nouveaux"      => array(),
             "themes_modifies"      => array(),
