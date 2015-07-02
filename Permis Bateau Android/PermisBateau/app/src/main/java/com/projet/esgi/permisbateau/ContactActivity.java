@@ -31,9 +31,11 @@ public class ContactActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
             case R.id.action_contact:
                 Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
                 startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -88,7 +88,7 @@ public class RequeteurAPI {
     }
 
     private String buildParamImage(String idImage, Context c) throws UnsupportedEncodingException {
-        return String.format("id=%s&%s",
+        return String.format("id=%s&resolution=%s",
                 URLEncoder.encode(idImage, CHARSET),URLEncoder.encode(c.getString(R.string.url), CHARSET));
     }
 
@@ -113,6 +113,7 @@ public class RequeteurAPI {
 
         String requete;
         String paramDate = this.buildParamDate(date);
+        paramDate="date=02072015120501";
         requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
 
         connection = (HttpURLConnection) new URL(requete).openConnection();

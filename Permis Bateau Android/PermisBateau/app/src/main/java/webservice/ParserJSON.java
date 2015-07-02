@@ -32,7 +32,7 @@ public class ParserJSON {
             for (int i = 0; i < arrayQuestions.length(); ++i) {
                 JSONObject quest = arrayQuestions.getJSONObject(i);
                 data.addQuestion(new QuestionData(quest.getInt("id_question"),quest.getInt("numero_question"),
-                        quest.getString("id_question"),
+                        quest.getString("id_image"),
                         quest.getString("enonce_question"),quest.getString("enonce_A"),quest.getString("enonce_B"),
                         quest.getString("enonce_C"),quest.getString("enonce_D"),
                         quest.getInt("is_correct_A"),quest.getInt("is_correct_B"),quest.getInt("is_correct_C"),

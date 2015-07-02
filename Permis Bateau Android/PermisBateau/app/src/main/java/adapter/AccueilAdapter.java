@@ -86,13 +86,8 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //Intent intent = new Intent(getContext(),CoursActivity.class);
-                        //getContext().startActivity(intent);
-                        File dirFiles = getContext().getFilesDir();
-                        for (String strFile : dirFiles.list())
-                        {
-                            Toast.makeText(getContext(),strFile.toString(),Toast.LENGTH_SHORT).show();
-                        }
+                    Intent intent = new Intent(getContext(),CoursActivity.class);
+                    getContext().startActivity(intent);
                     }
                 });
                 img.setImageBitmap(item.getImage());

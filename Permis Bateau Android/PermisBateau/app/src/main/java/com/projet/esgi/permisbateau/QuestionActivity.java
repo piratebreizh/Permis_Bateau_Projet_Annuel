@@ -242,6 +242,7 @@ public class QuestionActivity extends Activity {
                 builder.setCancelable(false);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                return true;
             case R.id.action_contact:
                 //Validation du retour à l'accueil
                 AlertDialog.Builder builderContact = new AlertDialog.Builder(this);
@@ -262,6 +263,7 @@ public class QuestionActivity extends Activity {
                 builderContact.setCancelable(false);
                 AlertDialog dialogContact = builderContact.create();
                 dialogContact.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
