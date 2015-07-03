@@ -43,6 +43,8 @@ $(document).ready(function () {
         var id = button.data('id');
         var modal = $(this);
         modal.find('.theme_delete').data("id", id);
+        var nom_theme = $(".tr_theme[data-id='"+id+"'] .nom_theme").html();
+        modal.find('.nom_theme').html(nom_theme);
     })
 
     $('.theme_delete').on('click', function () {

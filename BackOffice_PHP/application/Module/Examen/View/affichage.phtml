@@ -5,6 +5,7 @@ $examen = $this->examen;
 $theme = $this->theme;
 /** @var \APP\Entity\Question[] $questions */
 $questions = $this->questions;
+$nb_questions_max = $examen->getNbQuestionsMax();
 ?>
 
 
@@ -32,6 +33,14 @@ $questions = $this->questions;
 </h2>
 
 <div class="col-sm-8">
+
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $examen->getQuestions()->count(); ?>"
+             aria-valuemin="0" aria-valuemax="<?php echo $nb_questions_max;?>" style="width: <?php echo $examen->getQuestions()->count()/$nb_questions_max*100; ?>%;min-width: 15em;">
+            Nombre de questions : <?php echo $examen->getQuestions()->count().'/'.$nb_questions_max; ?>
+        </div>
+    </div>
+
     <table class="table table-striped table-hover">
         <col width="5%">
         <col width="94%">
@@ -68,7 +77,11 @@ $questions = $this->questions;
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">
+    <?php
+        $disabled_add = $examen->getQuestions()->count() == $nb_questions_max ? 'disabled' : '';
+    ?>
+    <a class="btn btn-primary <?php echo $disabled_add; ?>"
+       href="/question/creer?id_examen=<?php echo $examen->getIdExamen(); ?>">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         Créer une nouvelle question
     </a>

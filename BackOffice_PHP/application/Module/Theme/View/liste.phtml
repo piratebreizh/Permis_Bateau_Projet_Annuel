@@ -24,7 +24,7 @@ $themes = $this->themes;
         <?php foreach ($themes as $theme) { ?>
             <tr class="tr_theme" data-id="<?php echo $theme->getIdTheme(); ?>">
                 <td class="theme_link" aria-label="...">
-                    <?php echo $theme->getNom(); ?>
+                    <span class="nom_theme"><?php echo $theme->getNom(); ?></span>
                     <!-- Publication -->
             <span class="is_published" style="float: right;">
                 <?php if ($theme->isPublished()) { ?>
@@ -71,7 +71,10 @@ $themes = $this->themes;
                 <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
             </div>
             <div class="modal-body">
-                Voulez-vous vraiment supprimer ce thème ?
+                <div class="alert alert-danger" role="alert">
+                    <strong>Attention : </strong>La suppression de ce thème entrainera la suppression des données associées (Examens, Questions et Cours)
+                </div>
+                Voulez-vous vraiment supprimer le thème : <span class="nom_theme"></span> ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary theme_delete" data-id="">Confirmer</button>

@@ -36,7 +36,7 @@ $cours = $this->cours;
         <?php foreach ($examens as $examen) { ?>
             <tr class="tr_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
                 <td class="examen_link">
-                    <?php echo $examen->getNom(); ?>
+                    <span class="nom_examen"><?php echo $examen->getNom(); ?></span>
 
                     <!-- Publication -->
                 <span class="is_published" style="float: right;">
@@ -126,7 +126,10 @@ $cours = $this->cours;
                 <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
             </div>
             <div class="modal-body">
-                Voulez-vous vraiment supprimer cet examen ?
+                <div class="alert alert-danger" role="alert">
+                    <strong>Attention : </strong>La suppression de cet examen entrainera la suppression des questions associées
+                </div>
+                Voulez-vous vraiment supprimer l'examen : <span class="nom_examen"></span> ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary examen_delete" data-id="">Confirmer</button>

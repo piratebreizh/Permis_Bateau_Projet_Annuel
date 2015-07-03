@@ -2,8 +2,12 @@
 
 namespace APP\Entity;
 
+use FSF\EntityIterator;
+
 class Examen extends \FSF\Entity
 {
+    const NB_MAX_QUESTIONS_EXAMEN_BLANC = 15;
+    const NB_MAX_QUESTIONS_EXAMEN_THEMATIQUE = 40;
 
     protected $cols = array(
         'id_examen'         => null,
@@ -26,6 +30,9 @@ class Examen extends \FSF\Entity
         'is_published'      => \PDO::PARAM_INT,
         'is_deleted'        => \PDO::PARAM_INT,
     );
+
+    /** @var  EntityIterator */
+    private $questions;
 
     public function __construct()
     {
@@ -161,6 +168,28 @@ class Examen extends \FSF\Entity
         $this->cols['is_deleted'] = $is_deleted ? 1 : 0;
 
         return $this;
+    }
+
+    /**
+     * @return \FSF\EntityIterator
+     */
+    public function getQuestions()
+    {
+        if(is_null($this->questions)){
+            $questionModel = new \APP\Model\Question();
+            $this->questions = $questionModel->getQuestionsByIdExamen($this->getIdExamen());
+        }
+
+        return $this->questions;
+    }
+
+    public function getNbQuestionsMax()
+    {
+        if($this->getIdTheme() != 0){
+            return self::NB_MAX_QUESTIONS_EXAMEN_THEMATIQUE;
+        }else{
+            return self::NB_MAX_QUESTIONS_EXAMEN_BLANC;
+        }
     }
 
     /**

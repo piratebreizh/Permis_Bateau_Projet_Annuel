@@ -16,6 +16,8 @@ $(document).ready(function () {
         var id = button.data('id');
         var modal = $(this);
         modal.find('.examen_delete').data("id", id);
+        var nom_examen = $(".tr_examen[data-id='"+id+"'] .nom_examen").html();
+        modal.find('.nom_examen').html(nom_examen);
     })
 
     $('.examen_publication').on('click', function () {

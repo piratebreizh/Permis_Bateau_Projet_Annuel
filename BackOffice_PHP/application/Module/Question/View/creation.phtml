@@ -10,6 +10,7 @@ if ($question->getId() == 0) {
 } else {
     $titre = "Modification d'une question";
 }
+$nb_questions_max = $examen->getNbQuestionsMax();
 ?>
 
 <ol class="breadcrumb">
@@ -26,6 +27,16 @@ if ($question->getId() == 0) {
 
 <h2><?php echo $titre; ?></h2>
 
+<div class="col-sm-7">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $examen->getQuestions()->count(); ?>"
+             aria-valuemin="0" aria-valuemax="<?php echo $nb_questions_max;?>" style="width: <?php echo $examen->getQuestions()->count()/$nb_questions_max*100; ?>%;min-width: 15em;">
+            Nombre de questions : <?php echo $examen->getQuestions()->count().'/'.$nb_questions_max; ?>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
 <form method="post" id="form_question_creation" class="form-horizontal" action="/question/saveQuestion"
       enctype="multipart/form-data">
     <input type="hidden" name="id_examen" id="id_examen" value="<?php echo $this->id_examen; ?>"/>
