@@ -57,7 +57,8 @@ $cours = $this->cours;
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <?php if (!$examen->isPublished()) { ?>
-                                <li><a href="#" class="examen_publication">Publier</a></li>
+                                <li><a href="#" data-toggle="modal" class="publish_link" data-target="#publishExamenModal"
+                                       data-id="<?php echo $examen->getIdExamen(); ?>">Publier</a></li>
                             <?php } ?>
                             <li><a href="#" data-toggle="modal" data-target="#deleteExamenModal"
                                    data-id="<?php echo $examen->getIdExamen(); ?>">Supprimer</a></li>
@@ -116,6 +117,29 @@ $cours = $this->cours;
 </div>
 
 <!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="publishExamenModal" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de publication</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <strong>Attention : </strong>La publication de cet examen entrainera sa diffusion sur les applications mobiles.
+                </div>
+                Voulez-vous vraiment publier l'examen : <span class="nom_examen"></span> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary examen_publish" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade bs-example-modal-sm" id="deleteExamenModal" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog" role="document">

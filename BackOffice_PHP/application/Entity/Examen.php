@@ -6,7 +6,7 @@ use FSF\EntityIterator;
 
 class Examen extends \FSF\Entity
 {
-    const NB_MAX_QUESTIONS_EXAMEN_BLANC = 15;
+    const NB_MAX_QUESTIONS_EXAMEN_BLANC = 30;
     const NB_MAX_QUESTIONS_EXAMEN_THEMATIQUE = 40;
 
     protected $cols = array(

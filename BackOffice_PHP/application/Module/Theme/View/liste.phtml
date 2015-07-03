@@ -45,7 +45,8 @@ $themes = $this->themes;
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <?php if (!$theme->isPublished()) { ?>
-                                <li><a href="#" class="theme_publication">Publier</a></li>
+                                <li><a href="#" data-toggle="modal" class="publish_link" data-target="#publishModal"
+                                       data-id="<?php echo $theme->getIdTheme(); ?>">Publier</a></li>
                             <?php } ?>
                             <li><a href="#" data-toggle="modal" data-target="#deleteModal"
                                    data-id="<?php echo $theme->getIdTheme(); ?>">Supprimer</a></li>
@@ -63,6 +64,26 @@ $themes = $this->themes;
 </div>
 
 <!-- Modal -->
+<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation de publication</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <strong>Attention : </strong>La publication de ce thème entrainera sa diffusion sur les applications mobiles.
+                </div>
+                Voulez-vous vraiment publier le thème : <span class="nom_theme"></span> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary theme_publish" data-id="">Confirmer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

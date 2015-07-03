@@ -11,6 +11,15 @@ $(document).ready(function () {
         window.location.href = '/examen/afficher?id='+id_examen;
     });
 
+    $('#publishExamenModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var modal = $(this);
+        modal.find('.examen_publish').data("id", id);
+        var nom_examen = $(".tr_examen[data-id='"+id+"'] .nom_examen").html();
+        modal.find('.nom_examen').html(nom_examen);
+    })
+
     $('#deleteExamenModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var id = button.data('id');
@@ -20,11 +29,11 @@ $(document).ready(function () {
         modal.find('.nom_examen').html(nom_examen);
     })
 
-    $('.examen_publication').on('click', function () {
-        var tr_examen = $(this).closest(".tr_examen");
-        var id_examen = $(tr_examen).data("id");
+    $('.examen_publish').on('click', function () {
+        var id_examen = $(this).data("id");
+        var tr_examen = $('.tr_examen[data-id='+id_examen+']');
         var span = $(tr_examen).find(".is_published > span");
-        var link_menu = $(this).parent();
+        var publish_link = $(tr_examen).find('.publish_link');
         $.ajax({
             url: '/examen/publier',
             data: {
@@ -36,8 +45,9 @@ $(document).ready(function () {
                 $(span).addClass('glyphicon-eye-open');
                 $(span).attr("title", "Publié");
                 $(span).tooltip('destroy');
-                $(link_menu).remove();
+                $(publish_link).remove();
                 initTooltip();
+                $('#publishExamenModal').modal('hide');
             }
         })
     });

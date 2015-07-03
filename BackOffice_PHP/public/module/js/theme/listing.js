@@ -16,11 +16,11 @@ $(document).ready(function () {
         window.location.href = '/theme/listerExamensBlanc';
     });
 
-    $('.theme_publication').on('click', function () {
-        var tr_theme = $(this).closest(".tr_theme");
-        var id_theme = $(tr_theme).data("id");
+    $('.theme_publish').on('click', function () {
+        var id_theme = $(this).data("id");
+        var tr_theme = $('.tr_theme[data-id='+id_theme+']');
         var span = $(tr_theme).find(".is_published > span");
-        var link_menu = $(this).parent();
+        var publish_link = $(tr_theme).find('.publish_link');
         $.ajax({
             url: '/theme/publier',
             data: {
@@ -32,10 +32,20 @@ $(document).ready(function () {
                 $(span).addClass('glyphicon-eye-open');
                 $(span).attr("title", "Publié");
                 $(span).tooltip('destroy');
-                $(link_menu).remove();
+                $(publish_link).remove();
                 initTooltip();
+                $('#publishModal').modal('hide');
             }
         })
+    });
+
+    $('#publishModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id');
+        var modal = $(this);
+        modal.find('.theme_publish').data("id", id);
+        var nom_theme = $(".tr_theme[data-id='"+id+"'] .nom_theme").html();
+        modal.find('.nom_theme').html(nom_theme);
     });
 
     $('#deleteModal').on('show.bs.modal', function (event) {
@@ -45,7 +55,7 @@ $(document).ready(function () {
         modal.find('.theme_delete').data("id", id);
         var nom_theme = $(".tr_theme[data-id='"+id+"'] .nom_theme").html();
         modal.find('.nom_theme').html(nom_theme);
-    })
+    });
 
     $('.theme_delete').on('click', function () {
         var id_theme = $(this).data("id");
