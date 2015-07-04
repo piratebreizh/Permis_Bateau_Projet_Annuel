@@ -36,8 +36,8 @@ $(document).ready(function(){
             },
             dataType: "json",
             type: 'POST',
-            complete: function (response) {
-                if (response.responseJSON.is_deleted){
+            success: function (response) {
+                if (response.is_deleted){
                     window.location.reload();
                 }
                 $('#deleteModal').modal('hide');

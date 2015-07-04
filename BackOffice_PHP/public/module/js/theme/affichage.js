@@ -40,7 +40,7 @@ $(document).ready(function () {
                 id_examen: id_examen
             },
             type: 'POST',
-            success: function (response) {
+            success: function () {
                 $(span).removeClass('glyphicon-eye-close');
                 $(span).addClass('glyphicon-eye-open');
                 $(span).attr("title", "Publié");
@@ -61,8 +61,8 @@ $(document).ready(function () {
             },
             dataType: "json",
             type: 'POST',
-            complete: function (response) {
-                if (response.responseJSON.is_deleted)
+            success: function (response) {
+                if (response.is_deleted)
                     $('.tr_examen[data-id='+id_examen+']').remove();
                 $('#deleteExamenModal').modal('hide');
             }
@@ -93,8 +93,8 @@ $(document).ready(function () {
             },
             dataType: "json",
             type: 'POST',
-            complete: function (response) {
-                if (response.responseJSON.is_deleted)
+            success: function (response) {
+                if (response.is_deleted)
                     $('.tr_cours[data-id='+id_cours+']').remove();
                 $('#deleteCoursModal').modal('hide');
             }

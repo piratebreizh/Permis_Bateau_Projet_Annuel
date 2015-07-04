@@ -25,7 +25,8 @@ function isCheckboxCorrect(){
     var is_correct_D = $('#is_correct_D')[0].checked;
     if (
         (is_correct_A == false && is_correct_B == false && is_correct_C == false && is_correct_D == false)
-        || (isTwoResponses() && ((is_correct_A == false && is_correct_B == false) || is_correct_C == true && is_correct_D == true))
+        || (isTwoResponses() && ((is_correct_A == false && is_correct_B == false) || is_correct_C == true || is_correct_D == true))
+        || (isThreeResponses() && ((is_correct_A == false && is_correct_B == false && is_correct_C == false) || is_correct_D == true))
     ) {
         $('#error_checkbox').show();
         return false;
@@ -37,7 +38,7 @@ function isCheckboxCorrect(){
 }
 
 function isNbResponsesCorrect(){
-    if(!isTwoResponses() && !isFourResponses()){
+    if(!isTwoResponses() && !isThreeResponses() && !isFourResponses()){
         $('#error_nb_responses').show();
         return false;
     }else{
@@ -57,13 +58,17 @@ function isTwoResponses() {
         && $enonce_D.val() == "";
 }
 
-function isNbResponsesIncorrect() {
+function isThreeResponses() {
+    var $enonce_A = $('#enonce_A');
+    var $enonce_B = $('#enonce_B');
     var $enonce_C = $('#enonce_C');
     var $enonce_D = $('#enonce_D');
-    return
-
-    ($enonce_C.val() != "" && $enonce_D.val() == "") || ($enonce_C.val() == "" && $enonce_D.val() != "") ;
+    return $enonce_A.val() != ""
+        && $enonce_B.val() != ""
+        && $enonce_C.val() != ""
+        && $enonce_D.val() == "";
 }
+
 
 function isFourResponses() {
     var $enonce_A = $('#enonce_A');

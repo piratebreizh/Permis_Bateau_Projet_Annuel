@@ -27,7 +27,7 @@ $(document).ready(function () {
                 id_theme: id_theme
             },
             type: 'POST',
-            success: function (response) {
+            success: function () {
                 $(span).removeClass('glyphicon-eye-close');
                 $(span).addClass('glyphicon-eye-open');
                 $(span).attr("title", "Publié");
@@ -40,7 +40,7 @@ $(document).ready(function () {
     });
 
     $('#publishModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
+        var button = $(event.relatedTarget);
         var id = button.data('id');
         var modal = $(this);
         modal.find('.theme_publish').data("id", id);
@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
     $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
+        var button = $(event.relatedTarget);
         var id = button.data('id');
         var modal = $(this);
         modal.find('.theme_delete').data("id", id);
@@ -66,24 +66,24 @@ $(document).ready(function () {
             },
             dataType: "json",
             type: 'POST',
-            complete: function (response) {
-                if (response.responseJSON.is_deleted){
+            success: function (response) {
+                if (response.is_deleted){
                     window.location.reload();
                 }
                 $('#deleteModal').modal('hide');
             }
-        })
+        });
     });
 
     $('.add_theme').on("click", function () {
         $('#addThemeModal form').submit();
     });
 
-    $('#addThemeModal').on('hidden.bs.modal', function (e) {
-        $('#addThemeModal form')[0].reset();
-    });
-
-    $('#addThemeModal').on('shown.bs.modal', function (e) {
-        $('#addThemeModal input.form-control')[0].focus();
-    });
+    $('#addThemeModal')
+        .on('hidden.bs.modal', function () {
+            $('#addThemeModal form')[0].reset();
+        })
+        .on('shown.bs.modal', function () {
+            $('#addThemeModal input.form-control')[0].focus();
+        });
 });

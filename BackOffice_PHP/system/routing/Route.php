@@ -1,8 +1,10 @@
 <?php
 namespace FSF\Routing;
 
+use FSF\Controller;
 use FSF\Request;
 use FSF\Exception;
+use FSF\Response\Header\ContentType;
 use FSF\View;
 
 abstract class Route
@@ -78,13 +80,15 @@ abstract class Route
 
         $actionReturn = $this->getController()->$actionCalled();
 
+        //Considering that if $actionReturn is a View it's HTML else it's a JSON
+        $content_type = $actionReturn instanceof View ? ContentType::MIME_TEXT_HTML : ContentType::MIME_JSON;
+
         $this->getController()->getResponse()
             ->setBody(
                 $actionReturn instanceof View ? $actionReturn->render() : $actionReturn
             )
+            ->setHeader(new ContentType($content_type))
             ->send();
-
-
     }
 
     /**
