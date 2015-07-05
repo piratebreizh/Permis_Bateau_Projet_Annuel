@@ -5,7 +5,7 @@ namespace FSF;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-abstract class Model
+abstract class Model implements \Serializable
 {
 
     /** @var  Connection */
@@ -244,5 +244,12 @@ abstract class Model
         }
 
         return $this->findAll($builder);
+    }
+
+    public function serialize() {
+        return serialize($this->entityIteratorClass);
+    }
+    public function unserialize($data) {
+        $this->entityIteratorClass = unserialize($data);
     }
 }

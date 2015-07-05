@@ -2,6 +2,7 @@
 
 namespace FSF\Model;
 
+use FSF\Filter;
 use FSF\Model;
 
 class User extends Model
@@ -29,5 +30,12 @@ class User extends Model
     public function getPrimaryKey()
     {
         return array('id_user');
+    }
+
+    public function getUserByUserName($username)
+    {
+        $filters[] = new Filter('username', $username);
+
+        return $this->findAllWithFilters($filters)->current();
     }
 }

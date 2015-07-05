@@ -4,6 +4,8 @@ namespace FSF;
 
 class View
 {
+    /** @var  Session */
+    protected $session;
     private $viewPath;
     private $params = array();
 
@@ -115,5 +117,28 @@ class View
     public function getViewPath()
     {
         return $this->viewPath;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        if (is_null($this->session)) {
+            $this->session = Session::getInstance();
+        }
+
+        return $this->session;
+    }
+
+    /**
+     * @param Session $session
+     * @return Controller
+     */
+    public function setSession(Session $session)
+    {
+        $this->session = $session;
+
+        return $this;
     }
 }

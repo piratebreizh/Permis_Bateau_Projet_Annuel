@@ -17,6 +17,7 @@ class Router
      */
     public function __construct()
     {
+        $this->addRoute(new \FSF\Routing\Route\Authentication());
     }
 
     /**

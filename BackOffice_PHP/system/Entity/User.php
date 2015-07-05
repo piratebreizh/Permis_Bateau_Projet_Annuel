@@ -8,20 +8,25 @@ class User extends Entity
 {
 
     protected $cols = array(
-        'id_user'  => null,
-        'nom'      => null,
-        'prenom'   => null,
-        'login'    => null,
-        'password' => null,
+        'id_user'   => null,
+        'name'      => null,
+        'firstname' => null,
+        'username'  => null,
+        'password'  => null,
     );
 
     protected $types = array(
-        'id_user'  => \PDO::PARAM_INT,
-        'nom'      => \PDO::PARAM_STR,
-        'prenom'   => \PDO::PARAM_STR,
-        'login'    => \PDO::PARAM_STR,
-        'password' => \PDO::PARAM_STR,
+        'id_user'   => \PDO::PARAM_INT,
+        'name'      => \PDO::PARAM_STR,
+        'firstname' => \PDO::PARAM_STR,
+        'username'  => \PDO::PARAM_STR,
+        'password'  => \PDO::PARAM_STR,
     );
+
+    public function __construct()
+    {
+        $this->setModel(new \FSF\Model\User());
+    }
 
     /**
      * @return int
@@ -33,58 +38,70 @@ class User extends Entity
 
     /**
      * @param int $id_user
+     * @return User
      */
     public function setIdUser($id_user)
     {
         $this->cols['id_user'] = (int)$id_user;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getNom()
+    public function getName()
     {
-        return (string)$this->cols['nom'];
+        return (string)$this->cols['name'];
     }
 
     /**
-     * @param string $nom
+     * @param string $name
+     * @return User
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->cols['nom'] = (string)$nom;
-    }
+        $this->cols['name'] = (string)$name;
 
-    /**
-     * @return string
-     */
-    public function getPrenom()
-    {
-        return (string)$this->cols['prenom'];
-    }
-
-    /**
-     * @param string $prenom
-     */
-    public function setPrenom($prenom)
-    {
-        $this->cols['prenom'] = (string)$prenom;
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getLogin()
+    public function getFirstName()
     {
-        return (string)$this->cols['login'];
+        return (string)$this->cols['firstname'];
     }
 
     /**
-     * @param string $login
+     * @param string $firstname
+     * @return User
      */
-    public function setLogin($login)
+    public function setFirstName($firstname)
     {
-        $this->cols['login'] = (string)$login;
+        $this->cols['firstname'] = (string)$firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserName()
+    {
+        return (string)$this->cols['username'];
+    }
+
+    /**
+     * @param string $username
+     * @return User
+     */
+    public function setUserName($username)
+    {
+        $this->cols['username'] = (string)$username;
+
+        return $this;
     }
 
     /**
@@ -97,11 +114,25 @@ class User extends Entity
 
     /**
      * @param string $password
+     * @return User
      */
     public function setPassword($password)
     {
-        $this->cols['password'] = (string)$password;
+        $cost = 10;
+        $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+        $salt = sprintf("$2a$%02d$", $cost).$salt;
+        $hash = crypt($password, $salt);
+
+        $this->cols['password'] = (string)$hash;
+
+        return $this;
     }
 
-
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->getFirstName().' '.$this->getName();
+    }
 }

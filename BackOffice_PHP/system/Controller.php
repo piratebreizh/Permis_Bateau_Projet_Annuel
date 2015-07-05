@@ -2,17 +2,18 @@
 
 namespace FSF;
 
-use FSF\Request;
 use FSF\Response;
 
 class Controller
 {
     /** @var  Request */
     protected $request;
-    /** @var  Response */
-    private $response;
     /** @var  View */
     protected $view;
+    /** @var  Session */
+    protected $session;
+    /** @var  Response */
+    private $response;
 
     /**
      * @param Request $request
@@ -30,6 +31,7 @@ class Controller
         if (is_null($this->request)) {
             $this->request = new Request();
         }
+
         return $this->request;
     }
 
@@ -57,6 +59,7 @@ class Controller
         if (is_null($this->response)) {
             $this->response = new Response();
         }
+
         return $this->response;
     }
 
@@ -67,6 +70,29 @@ class Controller
     public function setResponse(Response $response)
     {
         $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        if (is_null($this->session)) {
+            $this->session = Session::getInstance();
+        }
+
+        return $this->session;
+    }
+
+    /**
+     * @param Session $session
+     * @return Controller
+     */
+    public function setSession(Session $session)
+    {
+        $this->session = $session;
 
         return $this;
     }

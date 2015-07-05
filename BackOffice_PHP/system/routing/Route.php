@@ -5,10 +5,13 @@ use FSF\Controller;
 use FSF\Request;
 use FSF\Exception;
 use FSF\Response\Header\ContentType;
+use FSF\Session;
 use FSF\View;
 
 abstract class Route
 {
+    /** @var  Session */
+    protected $session;
 
     /** @var  Request */
     private $request;
@@ -76,6 +79,10 @@ abstract class Route
 
     public function run()
     {
+        if($this->needAuthentication() && is_null($this->getSession()->getUser())){
+            header('Location: '.\FSF\Module\Authentication\Controller::$authAdress);
+        }
+
         $actionCalled = $this->getAction();
 
         $actionReturn = $this->getController()->$actionCalled();
@@ -99,5 +106,33 @@ abstract class Route
     public function hasToBeReDispatched()
     {
         return false;
+    }
+
+    public function needAuthentication()
+    {
+        return true;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        if (is_null($this->session)) {
+            $this->session = Session::getInstance();
+        }
+
+        return $this->session;
+    }
+
+    /**
+     * @param Session $session
+     * @return Controller
+     */
+    public function setSession(Session $session)
+    {
+        $this->session = $session;
+
+        return $this;
     }
 }

@@ -1,12 +1,10 @@
 <?php
+namespace FSF\Routing\Route;
 
-namespace APP\Routing\Route;
-
-use APP\Module\WebService\Controller;
+use FSF\Module\Authentication\Controller;
 use FSF\Routing\Route;
 
-class WebService extends Route
-{
+class Authentication extends Route{
 
     /**
      * Must return true if URI can be handled by route
@@ -15,12 +13,12 @@ class WebService extends Route
     public function canHandle()
     {
         $request = $this->getRequest()->getRequestUri();
-        if (preg_match("~^/ws/(.+)~", $request, $matches)) {
+        if (preg_match("~^/authentication/(.+)~", $request, $matches)) {
             if (isset($matches[1])) {
                 $this->setAction($matches[1]);
-                if (method_exists($this->getController(), $this->getAction()))
-                    return true;
             }
+            if (method_exists($this->getController(), $this->getAction()))
+                return true;
         }
         return false;
     }
