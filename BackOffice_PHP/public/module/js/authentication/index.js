@@ -1,5 +1,12 @@
 $(document).ready(function () {
     $('#btn-login').on("click", login);
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            login();
+        }else{
+            $("#login-alert").parent().fadeOut();
+        }
+    });
 });
 
 function login() {

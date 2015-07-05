@@ -1,0 +1,41 @@
+<?php
+/** @var \FSF\EntityIterator $users */
+$users = $this->users;
+?>
+
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li class="active">Gestion des utilisateurs</li>
+</ol>
+
+<h2>Liste des utilisateurs</h2>
+
+<div class="col-sm-4">
+    <table class="table table-striped table-hover">
+        <thead>
+        <th> Prénom </th>
+        <th> Nom </th>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user) {
+            /** @var \FSF\Entity\User $user */
+            ?>
+            <tr>
+                <td>
+                    <?php echo $user->getFirstName() ?>
+                </td>
+                <td>
+                    <?php echo $user->getName() ?>
+                </td>
+                <td>
+
+                </td>
+
+            </tr>
+        <?php } ?>
+
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="/user/creation">Ajouter un nouvel utilisateur</a>
+</div>

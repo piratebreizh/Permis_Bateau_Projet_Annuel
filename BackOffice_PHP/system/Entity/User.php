@@ -8,19 +8,21 @@ class User extends Entity
 {
 
     protected $cols = array(
-        'id_user'   => null,
-        'name'      => null,
-        'firstname' => null,
-        'username'  => null,
-        'password'  => null,
+        'id_user'    => null,
+        'name'       => null,
+        'firstname'  => null,
+        'username'   => null,
+        'password'   => null,
+        'is_deleted' => false,
     );
 
     protected $types = array(
-        'id_user'   => \PDO::PARAM_INT,
-        'name'      => \PDO::PARAM_STR,
-        'firstname' => \PDO::PARAM_STR,
-        'username'  => \PDO::PARAM_STR,
-        'password'  => \PDO::PARAM_STR,
+        'id_user'    => \PDO::PARAM_INT,
+        'name'       => \PDO::PARAM_STR,
+        'firstname'  => \PDO::PARAM_STR,
+        'username'   => \PDO::PARAM_STR,
+        'password'   => \PDO::PARAM_STR,
+        'is_deleted' => \PDO::PARAM_INT,
     );
 
     public function __construct()
@@ -124,6 +126,25 @@ class User extends Entity
         $hash = crypt($password, $salt);
 
         $this->cols['password'] = (string)$hash;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return (bool)$this->cols['is_deleted'];
+    }
+
+    /**
+     * @param bool $is_deleted
+     * @return \APP\Entity\Theme
+     */
+    public function setisDeleted($is_deleted)
+    {
+        $this->cols['is_deleted'] = $is_deleted ? 1 : 0;
 
         return $this;
     }

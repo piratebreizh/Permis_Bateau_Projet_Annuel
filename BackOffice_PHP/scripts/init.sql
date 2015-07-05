@@ -64,5 +64,6 @@ CREATE TABLE IF NOT EXISTS `USERS` (
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `firstname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

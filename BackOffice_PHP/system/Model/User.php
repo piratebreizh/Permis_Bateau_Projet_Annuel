@@ -38,4 +38,11 @@ class User extends Model
 
         return $this->findAllWithFilters($filters)->current();
     }
+
+    public function getAll()
+    {
+        $filters[] = new Filter('is_deleted', 0);
+
+        return $this->findAllWithFilters($filters);
+    }
 }
