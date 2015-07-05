@@ -207,7 +207,7 @@ public class DataBase {
         try
         {
             String MY_QUERY = "SELECT idStats,date,score,scoreTotal,nomThematique,nomSerie,Statistiques.idTheme " +
-                    "FROM Statistiques INNER JOIN Thematique ON Statistiques.idTheme=Thematique.idThematique " +
+                    "FROM Statistiques LEFT JOIN Thematique ON Statistiques.idTheme=Thematique.idThematique " +
                     "INNER JOIN Serie ON Statistiques.idSerie=Serie.idSerie ORDER BY Statistiques.idTheme ASC, idStats DESC";
             Cursor cursor = mDb.rawQuery(MY_QUERY, new String[]{ });
             if (cursor != null)

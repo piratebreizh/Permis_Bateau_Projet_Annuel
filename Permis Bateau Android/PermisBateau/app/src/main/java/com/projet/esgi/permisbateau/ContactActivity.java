@@ -40,4 +40,9 @@ public class ContactActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

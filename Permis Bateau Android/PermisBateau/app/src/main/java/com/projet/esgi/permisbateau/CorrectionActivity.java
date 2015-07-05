@@ -51,7 +51,6 @@ public class CorrectionActivity extends Activity {
 
 
         getQuestionsAndResponses();
-        //createButtons();
         storeStats();
         createList();
 
@@ -64,24 +63,6 @@ public class CorrectionActivity extends Activity {
 
             ItemCorrection iC = new ItemCorrection("Question n°" + i,listQuestions,listReponses);
             items.add(iC);
-
-            /*int id = getResources().getIdentifier("button"+i, "id", getPackageName());
-            Button b = (Button) findViewById(id);
-            final int currentButton=i - 1;
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("question",listQuestions.get(currentButton));
-                    bundle.putParcelable("response",listReponses.get(currentButton));
-                    Intent intent = new Intent(CorrectionActivity.this,CorrectionQuestionActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            });
-            b.setVisibility(View.VISIBLE);
-            listButtons.add(b);
-            */
 
             CorrectionAdapter adapter = new CorrectionAdapter(this,items);
 

@@ -62,4 +62,9 @@ public class MajActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }

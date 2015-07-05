@@ -82,8 +82,8 @@ public class QuestionActivity extends Activity {
 
         chargeQuestions();
 
-        //intit progressBar
-        if(parent.equals("Serie")){
+        //init progressBar
+        if(parent.equals("Blanc")){
             timer.setVisibility(ProgressBar.VISIBLE);
             timer.setMax(30);
         }
@@ -159,7 +159,7 @@ public class QuestionActivity extends Activity {
                 timer.setProgress(0);
             }
             //timer que si examen blanc
-            if(parent.equals("Serie"))launchTimer();
+            if(parent.equals("Blanc"))launchTimer();
 
             Question q = listQuestions.get(indexCurrentQuestion);
             if(q!=null) {
@@ -178,6 +178,10 @@ public class QuestionActivity extends Activity {
                 repB.setChecked(false);
                 repC.setChecked(false);
                 repD.setChecked(false);
+                txtRepC.setVisibility(View.VISIBLE);
+                repC.setVisibility(View.VISIBLE);
+                txtRepD.setVisibility(View.VISIBLE);
+                repD.setVisibility(View.VISIBLE);
                 indexCurrentQuestion++;
 
                 //si moins de réponse
@@ -207,7 +211,26 @@ public class QuestionActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        //Validation du retour à l'accueil
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Cette action annulera l'examen, êtes-vous sûr(e) de vouloir retourner à l'écran d'accueil ?").setTitle("Annuler l'examen");
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                returnBack();
+            }
+        });
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void returnBack(){
         if (countDownTimer!=null) countDownTimer.cancel();
         NavUtils.navigateUpFromSameTask(this);
     }
@@ -224,24 +247,7 @@ public class QuestionActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //Validation du retour à l'accueil
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Cette action annulera l'examen, êtes-vous sûr(e) de vouloir retourner à l'écran d'accueil ?").setTitle("Annuler l'examen");
-                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (countDownTimer!=null) countDownTimer.cancel();
-                        onBackPressed();
-                    }
-                });
-                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.setCancelable(false);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                onBackPressed();
                 return true;
             case R.id.action_contact:
                 //Validation du retour à l'accueil

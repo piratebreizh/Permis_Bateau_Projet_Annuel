@@ -37,9 +37,14 @@ public class StatistiquesActivity extends Activity {
             if (stats != null ) {
                 if  (stats.moveToFirst()) {
                     do {
-
-                        ItemStats iS = new ItemStats(stats.getString(stats.getColumnIndex("nomThematique")) + " - " +
-                                stats.getString(stats.getColumnIndex("nomSerie")),
+                        String titre;
+                        if(stats.getString(stats.getColumnIndex("nomThematique"))==null){
+                            titre = stats.getString(stats.getColumnIndex("nomSerie"));
+                        }else{
+                            titre = stats.getString(stats.getColumnIndex("nomThematique")) + " - " +
+                                    stats.getString(stats.getColumnIndex("nomSerie"));
+                        }
+                        ItemStats iS = new ItemStats(titre,
                                 stats.getString(stats.getColumnIndex("score")),
                                 stats.getString(stats.getColumnIndex("scoreTotal")),
                                 stats.getString(stats.getColumnIndex("date")),

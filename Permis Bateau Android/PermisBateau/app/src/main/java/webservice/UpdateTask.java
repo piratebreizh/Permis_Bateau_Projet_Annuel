@@ -109,6 +109,9 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
                     builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(mContext,AccueilActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
                         }
                     });
                     builder.setCancelable(false);

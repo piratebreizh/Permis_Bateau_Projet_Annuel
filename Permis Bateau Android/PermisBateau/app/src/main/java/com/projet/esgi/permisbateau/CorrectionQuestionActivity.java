@@ -80,7 +80,7 @@ public class CorrectionQuestionActivity extends Activity {
 
         //question
         enonce.setText(q.getEnoncer());
-        File filePath = getFileStreamPath(q.getPathimage());
+        File filePath = getFileStreamPath(q.getPathimage() + ".png");
         if(filePath.exists()){
             image.setImageDrawable(Drawable.createFromPath(filePath.toString()));
         }else{
@@ -108,7 +108,7 @@ public class CorrectionQuestionActivity extends Activity {
         }
 
         //correction des réponses
-        if(q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) {
+        /*if(q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) {
             txtRepA.setTextColor(Color.GREEN);
         }else{
             txtRepA.setTextColor(Color.RED);
@@ -127,19 +127,28 @@ public class CorrectionQuestionActivity extends Activity {
             txtRepD.setTextColor(Color.GREEN);
         }else{
             txtRepD.setTextColor(Color.RED);
+        }*/
+
+        if(q.getCorrect_A()==1) {
+            txtRepA.setTextColor(Color.parseColor("#006400"));
+        }else{
+            txtRepA.setTextColor(Color.RED);
         }
-    }
-
-    /**
-     * Renvoie vrai si la question à bien été répondu, faux sinon
-     * @param q
-     * @param r
-     * @return
-     */
-
-    public static boolean goodAnswer(Question q, Reponse r){
-        return (q.getCorrect_A()==((r.getRepA()) ? 1 : 0)) && (q.getCorrect_B()==((r.getRepB()) ? 1 : 0))
-                && (q.getCorrect_C()==((r.getRepC()) ? 1 : 0)) && (q.getCorrect_D()==((r.getRepD()) ? 1 : 0));
+        if(q.getCorrect_B()==1) {
+            txtRepB.setTextColor(Color.parseColor("#006400"));
+        }else{
+            txtRepB.setTextColor(Color.RED);
+        }
+        if(q.getCorrect_C()==1) {
+            txtRepC.setTextColor(Color.parseColor("#006400"));
+        }else{
+            txtRepC.setTextColor(Color.RED);
+        }
+        if(q.getCorrect_D()==1) {
+            txtRepD.setTextColor(Color.parseColor("#006400"));
+        }else{
+            txtRepD.setTextColor(Color.RED);
+        }
     }
 
     @Override

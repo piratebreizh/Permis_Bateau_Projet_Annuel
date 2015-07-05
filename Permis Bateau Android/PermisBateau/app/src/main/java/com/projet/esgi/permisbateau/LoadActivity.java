@@ -63,6 +63,7 @@ public class LoadActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        return;
     }
 
     /**
@@ -108,4 +109,6 @@ public class LoadActivity extends Activity {
         }
 
     }
+
+
 }
