@@ -2,7 +2,7 @@
 //  Serie.m
 //  Permis Bateau
 //
-//  Created by Alexandre Dubois on 26/04/2015.
+//  Created by Alexandre Dubois on 08/06/2015.
 //  Copyright (c) 2015 Alexandre Dubois. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 @implementation Serie
 
+@dynamic id;
 @dynamic nom;
 @dynamic numero;
 @dynamic theme;

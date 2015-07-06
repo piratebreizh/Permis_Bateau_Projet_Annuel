@@ -2,7 +2,7 @@
 //  Question.h
 //  Permis Bateau
 //
-//  Created by Alexandre Dubois on 26/04/2015.
+//  Created by Alexandre Dubois on 08/06/2015.
 //  Copyright (c) 2015 Alexandre Dubois. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface Question : NSManagedObject
 
 @property (nonatomic, retain) NSString * enoncer;
+@property (nonatomic, retain) NSNumber * id;
 @property (nonatomic, retain) NSString * image;
 @property (nonatomic, retain) NSNumber * numero;
 @property (nonatomic, retain) NSString * reponseA;

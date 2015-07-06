@@ -21,8 +21,12 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+
+@property (nonatomic, assign) BOOL connexionOK;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
 
 
 @end

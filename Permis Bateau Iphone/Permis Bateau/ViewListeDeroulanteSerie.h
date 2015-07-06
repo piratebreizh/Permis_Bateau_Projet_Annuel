@@ -15,6 +15,7 @@
 
 
 @interface ViewListeDeroulanteSerie : UITableViewController
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigation;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;

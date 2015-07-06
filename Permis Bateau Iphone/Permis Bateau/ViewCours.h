@@ -17,5 +17,8 @@
 
 @property (weak, nonatomic) Cours *coursSelectionne;
 
+@property (strong, nonatomic) NSString *nomAppel;
+
+
 @end
 

@@ -30,11 +30,20 @@
 {
     [super viewDidLoad];
     
+    
+    
+    // Add padding to the top of the table view
+    UIEdgeInsets inset = UIEdgeInsetsMake(5, 0, 0, 0);
+    self.tableView.contentInset = inset;
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:213/255.0f green:230/255.0f blue:245/255.0f alpha:1.0f]];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
+    
     id delegate = [[UIApplication sharedApplication] delegate];
      self.managedObjectContext = [delegate managedObjectContext];
      
      NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-     
+    
      NSEntityDescription *entity = [NSEntityDescription
      entityForName:@"Theme" inManagedObjectContext:self.managedObjectContext];
 
@@ -45,7 +54,14 @@
      [fetchRequest setSortDescriptors:@[sortDescriptor]];
      NSError *error;
      self.listeThemes = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-     
+    
+
+    // Assign our own backgroud for the view
+    /*self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"common_bg"]];
+    self.tableView.backgroundColor = [UIColor clearColor];*/
+    
+    
+    
      /*for(Theme *tempTheme in self.listeThemes){
          NSLog([NSString stringWithFormat:tempTheme.nom]);
      }*/
@@ -79,7 +95,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   static NSString *CellIdentifier = @"CellTheme";
+   static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
@@ -88,8 +104,23 @@
     
     // Configure the cell...
     Theme *info = [self.listeThemes objectAtIndex:indexPath.row];
-    cell.textLabel.text = info.nom;
+    //cell.textLabel.text = info.nom;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.numero];
+    NSLog(@"%@", info.id);
+    
+    UILabel *recipeNameLabel = (UILabel *)[cell viewWithTag:101];
+
+    
+    
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cell.backgroundColor = [UIColor clearColor];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
+    
+    recipeNameLabel.text = info.nom;
+    
     
     return cell;
 }
@@ -146,6 +177,24 @@
      */
 }
 
+
+- (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowCount = [self tableView:[self tableView] numberOfRowsInSection:0];
+    NSInteger rowIndex = indexPath.row;
+    UIImage *background = nil;
+    
+    if (rowIndex == 0) {
+        background = [UIImage imageNamed:@"cell_top.png"];
+    } else if (rowIndex == rowCount - 1) {
+        background = [UIImage imageNamed:@"cell_bottom.png"];
+    } else {
+        background = [UIImage imageNamed:@"cell_middle.png"];
+    }
+    
+    return background;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     ViewListeDeroulanteSerie *viewListeDeroulanteSerie = segue.destinationViewController;
@@ -155,7 +204,6 @@
     
     
     NSLog(@"Le thème : ' %@ ' a été sélectionné " ,viewListeDeroulanteSerie.theme);
-
 }
 
 @end

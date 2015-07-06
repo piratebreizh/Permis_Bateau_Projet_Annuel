@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>EDF79619-8CB3-468F-B562-7801EEB529D3</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Permis Bateau</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</key>
 		<string>https://github.com/piratebreizh/Permis_Bateau_Projet_Annuel</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Permis Bateau Iphone/Permis Bateau.xcodeproj/project.xcworkspace</string>
+	<string>Permis Bateau Iphone/Permis Bateau.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2912422E8EA5BDB9B0EEBA241BF95CC20F8271AF</key>

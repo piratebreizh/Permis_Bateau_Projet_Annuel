@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *barTimerQuestion;
 
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigation;
 
 //Theme récupéré de ViewListeDeroulanteExamenThematique lors du clique sur un des thème
 @property (strong, nonatomic) Theme *theme;
@@ -50,9 +51,10 @@
 @property (nonatomic, assign) float cas;
 @property (strong, nonatomic) NSTimer *casovacCas;
 
+@property (weak, nonatomic) IBOutlet UITextView *enoncerQuestion;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageQuestion;
-@property (weak, nonatomic) IBOutlet UILabel *enoncerQuestion;
+
 @property (weak, nonatomic) IBOutlet UILabel *texteReponseA;
 @property (weak, nonatomic) IBOutlet UILabel *texteReponseB;
 @property (weak, nonatomic) IBOutlet UILabel *texteReponseC;

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ViewController : UIViewController
+@interface ViewMAJ : UIViewController <UIAlertViewDelegate>
+
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
 @end
-

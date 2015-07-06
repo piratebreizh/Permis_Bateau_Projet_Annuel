@@ -1,5 +1,5 @@
 //
-//  ViewListeDeroulanteExamenThematique.m
+//  ViewListeDeroulanteSerie.m
 //  Permis Bateau
 //
 //  Created by Alexandre Dubois on 16/11/2014.
@@ -7,7 +7,6 @@
 //
 
 #import "ViewListeDeroulanteCours.h"
-#import "Theme.h"
 #import "ViewCours.h"
 
 @interface ViewListeDeroulanteCours()
@@ -32,6 +31,16 @@
 {
     [super viewDidLoad];
     
+    
+    
+    //DESIGN
+    // Add padding to the top of the table view
+    UIEdgeInsets inset = UIEdgeInsetsMake(5, 0, 0, 0);
+    self.tableView.contentInset = inset;
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:213/255.0f green:230/255.0f blue:245/255.0f alpha:1.0f]];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    
     id delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
     
@@ -47,10 +56,6 @@
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     NSError *error;
     self.listeCours = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    /*for(Theme *tempTheme in self.listeThemes){
-     NSLog([NSString stringWithFormat:tempTheme.nom]);
-     }*/
 }
 
 - (void)viewDidUnload
@@ -58,6 +63,23 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowCount = [self tableView:[self tableView] numberOfRowsInSection:0];
+    NSInteger rowIndex = indexPath.row;
+    UIImage *background = nil;
+    
+    if (rowIndex == 0) {
+        background = [UIImage imageNamed:@"cell_top.png"];
+    } else if (rowIndex == rowCount - 1) {
+        background = [UIImage imageNamed:@"cell_bottom.png"];
+    } else {
+        background = [UIImage imageNamed:@"cell_middle.png"];
+    }
+    
+    return background;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -81,7 +103,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"CellTheme";
+    static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
@@ -90,8 +112,20 @@
     
     // Configure the cell...
     Cours *info = [self.listeCours objectAtIndex:indexPath.row];
-    cell.textLabel.text =info.nomCours;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.theme.nom];
+    
+    UILabel *recipeNameLabel = (UILabel *)[cell viewWithTag:101];
+    
+    
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cell.backgroundColor = [UIColor clearColor];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
+    
+    recipeNameLabel.text = info.nomCours;
+    
+    
     
     return cell;
 }

@@ -9,7 +9,8 @@
 #import "ViewQuestionnaire.h"
 #import "Question.h"
 #import "Reponse.h"
-#import "ViewCorrection.h"
+#import "ViewListeCorrection.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ViewQuestionnaire ()
 
@@ -24,6 +25,26 @@ NSTimer *timer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] init];
+    
+    newBackButton.title =@"Arrêter examen";
+    self.navigation.backBarButtonItem = newBackButton;
+    
+    //self.navigation.hidesBackButton =YES;
+    //    [[self navigationItem] setBackBarButtonItem:newBackButton];
+    
+    self.boutonValiderQuestion.layer.cornerRadius = 8;
+    self.boutonValiderQuestion.layer.borderWidth = 1.0f;
+    self.boutonValiderQuestion.layer.borderColor = [[UIColor blackColor] CGColor];
+    [self.boutonValiderQuestion setBackgroundColor:[UIColor colorWithRed:25/255.0f green:255/255.0f blue:67/255.0f alpha:0.5f]];
+    self.boutonCorrection.layer.cornerRadius = 8;
+    self.boutonCorrection.layer.borderWidth = 1.0f;
+    self.boutonCorrection.layer.borderColor = [[UIColor blackColor] CGColor];
+    [self.boutonCorrection setBackgroundColor:[UIColor colorWithRed:25/255.0f green:255/255.0f blue:67/255.0f alpha:0.5f]];
+
+    
 
     
     self.barTimerQuestion.progress = 0.0;
@@ -71,11 +92,11 @@ NSTimer *timer;
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"numero" ascending:YES];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY serie.numero = %@",self.serie.numero];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"ANY serie.id = %@",self.serie.id];
     
+    [fetchRequest setPredicate:predicate];
     [fetchRequest setEntity:entity];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    [fetchRequest setPredicate:predicate];
     
     NSError *error;
     self.questionnaire.listeQuestion = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -86,8 +107,14 @@ NSTimer *timer;
             NSLog([NSString stringWithFormat:tempQues.enoncer]);
     }*/
 
-    [self questionSuivante];
-    [self initialisationScreenForQuestion];
+    if(self.questionnaire.listeQuestion.count != 0){
+        [self questionSuivante];
+        [self initialisationScreenForQuestion];
+    }else{
+        [self.enoncerQuestion setText:@"Erreur de chargement de la question cliquez sur retour"];
+        self.boutonValiderQuestion.hidden = YES;
+        self.boutonCorrection.hidden = YES;
+    }
 }
 
 
@@ -95,77 +122,92 @@ NSTimer *timer;
     
     questionEnCour = self.questionnaire.listeQuestion[numeroQuestionEnCour-1];
     
+    NSString *nomQuestion = questionEnCour.image;
+
+    //UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", @"/Users/alexandredubois/workspace_C/Objective-C/Permis_Bateau_Projet_Annuel/Permis Bateau Iphone/Permis Bateau/Images.xcassets", @"1", @".jpeg"]];
+    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];  
+    UIImage *imageQuestion = [self loadImage:nomQuestion ofType:@"png" inDirectory:documentsDirectoryPath];
+    
+    if(imageQuestion==nil){
+        nomQuestion = [nomQuestion stringByAppendingString:@".png"];
+        imageQuestion = [UIImage imageNamed:nomQuestion];
+    }
+
     
     if(questionEnCour.image != nil){
-        self.imageQuestion.image =[UIImage imageNamed:questionEnCour.image];
+        self.imageQuestion.image = imageQuestion;
     }
     
     if(questionEnCour.enoncer != nil){
-       [self.enoncerQuestion setText:questionEnCour.enoncer];
-        
-        // Une solution pas trop mal mais c'est pas exactement ça
-//       [self.enoncerQuestion setAdjustsFontSizeToFitWidth:YES];
-      
-        
-    
-//        self.enoncerQuestion.text = [addresslist valueForKey:@"public"];
-        NSString *message = questionEnCour.enoncer;
-        CGSize maximumLabelSize = CGSizeMake(280,1000);
-        
-        // use font information from the UILabel to calculate the size
-        CGSize expectedLabelSize = [message sizeWithFont:self.enoncerQuestion.font constrainedToSize:maximumLabelSize lineBreakMode:NSLineBreakByWordWrapping];
-        
-        // create a frame that is filled with the UILabel frame data
-        CGRect newFrame = self.enoncerQuestion.frame;
-        
-        // resizing the frame to calculated size
-        newFrame.size.height = expectedLabelSize.height;
-        
-        // put calculated frame into UILabel frame
-        self.enoncerQuestion.frame = newFrame;
-    }else{
+        [self.enoncerQuestion setText:questionEnCour.enoncer];
+            [self.enoncerQuestion setFont: [UIFont fontWithName:@"HelveticaNeue" size:16.0]];
+        }else{
         [self.enoncerQuestion setHidden:NO];
     }
 
-    
-    
-    if(questionEnCour.reponseA != nil && questionEnCour.reponseCorrectA != nil){
+
+    if(questionEnCour.reponseA != nil){
         [self.texteReponseA setText:questionEnCour.reponseA];
         self.boutonASelect = false;
-        [self.boutonReponseA setTitle:@"F" forState:UIControlStateNormal];
+        self.boutonReponseA.layer.cornerRadius = 8;
+        self.boutonReponseA.layer.borderWidth = 1.0f;
+        self.boutonReponseA.layer.borderColor = [[UIColor blackColor] CGColor];
+        [self.boutonReponseA setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseA setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
+        [self.texteReponseA setHidden:NO];
+        [self.boutonReponseA setHidden:NO];
     }else{
         [self.texteReponseA setHidden:YES];
         [self.boutonReponseA setHidden:YES];
+        self.boutonASelect = false;
     }
 
-    if(questionEnCour.reponseB != nil && questionEnCour.reponseCorrectB != nil){
+    if(questionEnCour.reponseB != nil){
         [self.texteReponseB setText:questionEnCour.reponseB];
-         self.boutonBSelect = false;
-        [self.boutonReponseB setTitle:@"F" forState:UIControlStateNormal];
-
+        self.boutonBSelect = false;
+        self.boutonReponseB.layer.cornerRadius = 8;
+        self.boutonReponseB.layer.borderWidth = 1.0f;
+        self.boutonReponseB.layer.borderColor = [[UIColor blackColor] CGColor];
+        [self.boutonReponseB setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseB setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
+        [self.texteReponseB setHidden:NO];
+        [self.boutonReponseB setHidden:NO];
     }else{
         [self.texteReponseB setHidden:YES];
         [self.boutonReponseB setHidden:YES];
+        self.boutonBSelect = false;
     }
 
-    if(questionEnCour.reponseC != nil && questionEnCour.reponseCorrectC != nil){
+    if(questionEnCour.reponseC != nil){
         [self.texteReponseC setText:questionEnCour.reponseC];
         self.boutonCSelect = false;
-        [self.boutonReponseC setTitle:@"F" forState:UIControlStateNormal];
-
+        self.boutonReponseC.layer.cornerRadius = 8;
+        self.boutonReponseC.layer.borderWidth = 1.0f;
+        self.boutonReponseC.layer.borderColor = [[UIColor blackColor] CGColor];
+        [self.boutonReponseC setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseC setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
+        [self.texteReponseC setHidden:NO];
+        [self.boutonReponseC setHidden:NO];
     }else{
         [self.texteReponseC setHidden:YES];
         [self.boutonReponseC setHidden:YES];
+        self.boutonCSelect = false;
     }
 
-    if(questionEnCour.reponseD != nil && questionEnCour.reponseCorrectD != nil){
+    if(questionEnCour.reponseD != nil){
         [self.texteReponseD setText:questionEnCour.reponseD];
          self.boutonDSelect = false;
-        [self.boutonReponseD setTitle:@"F" forState:UIControlStateNormal];
-
+        self.boutonReponseD.layer.cornerRadius = 8;
+        self.boutonReponseD.layer.borderWidth = 1.0f;
+        self.boutonReponseD.layer.borderColor = [[UIColor blackColor] CGColor];
+        [self.boutonReponseD setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseD setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
+        [self.texteReponseD setHidden:NO];
+        [self.boutonReponseD setHidden:NO];
     }else{
         [self.texteReponseD setHidden:YES];
         [self.boutonReponseD setHidden:YES];
+        self.boutonDSelect = false;
     }
 
 }
@@ -307,7 +349,8 @@ NSTimer *timer;
 
 - (void) incrementationNombreQuestion {
     numeroQuestionEnCour++;
-    [self.labelNombreQuestion setText:[NSString stringWithFormat:@"%d/%lu", numeroQuestionEnCour,(unsigned long)self.questionnaire.listeQuestion.count]];
+//    [self.labelNombreQuestion setText:[NSString stringWithFormat:@"%d/%lu", numeroQuestionEnCour,(unsigned long)self.questionnaire.listeQuestion.count]];
+    self.navigation.title = [NSString stringWithFormat:@"%d/%lu", numeroQuestionEnCour,(unsigned long)self.questionnaire.listeQuestion.count];
 }
 
 
@@ -320,48 +363,58 @@ NSTimer *timer;
 - (IBAction)pushBoutonReponseA:(id)sender {
     if(self.boutonASelect){
         self.boutonASelect = false;
-        [self.boutonReponseA setTitle:@"F" forState:UIControlStateNormal];
+        [self.boutonReponseA setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseA setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
     }else{
         self.boutonASelect = true;
-        [self.boutonReponseA setTitle:@"V" forState:UIControlStateNormal];
+        [self.boutonReponseA setBackgroundColor:[UIColor colorWithRed:15/255.0f green:163/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseA setTextColor:[UIColor colorWithRed:100/255.0f green:163/255.0f blue:255/255.0f alpha:1.0f]];
     }
 }
 
 - (IBAction)pushBoutonReponseB:(id)sender {
     if(self.boutonBSelect){
         self.boutonBSelect = false;
-        [self.boutonReponseB setTitle:@"F" forState:UIControlStateNormal];
+        [self.boutonReponseB setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseB setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
     }else{
         self.boutonBSelect = true;
-        [self.boutonReponseB setTitle:@"V" forState:UIControlStateNormal];
+        [self.boutonReponseB setBackgroundColor:[UIColor colorWithRed:15/255.0f green:163/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseB setTextColor:[UIColor colorWithRed:100/255.0f green:163/255.0f blue:255/255.0f alpha:1.0f]];
     }
 }
 
 - (IBAction)pushBoutonReponseC:(id)sender {
     if(self.boutonCSelect){
         self.boutonCSelect = false;
-        [self.boutonReponseC setTitle:@"F" forState:UIControlStateNormal];
+        [self.boutonReponseC setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseC setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
     }else{
         self.boutonCSelect = true;
-        [self.boutonReponseC setTitle:@"V" forState:UIControlStateNormal];
+        [self.boutonReponseC setBackgroundColor:[UIColor colorWithRed:15/255.0f green:163/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseC setTextColor:[UIColor colorWithRed:100/255.0f green:163/255.0f blue:255/255.0f alpha:1.0f]];
     }
 }
 
 - (IBAction)pushBoutonReponseD:(id)sender {
     if(self.boutonDSelect){
         self.boutonDSelect = false;
-        [self.boutonReponseD setTitle:@"F" forState:UIControlStateNormal];
+        [self.boutonReponseD setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseD setTextColor:[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]];
     }else{
         self.boutonDSelect = true;
-        [self.boutonReponseD setTitle:@"V" forState:UIControlStateNormal];
+        [self.boutonReponseD setBackgroundColor:[UIColor colorWithRed:15/255.0f green:163/255.0f blue:255/255.0f alpha:0.5f]];
+        [self.texteReponseD setTextColor:[UIColor colorWithRed:100/255.0f green:163/255.0f blue:255/255.0f alpha:1.0f]];
     }
 }
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
         [self enregistrerReponseQuestion];
-        ViewCorrection *viewCorrection = (ViewCorrection *)[segue destinationViewController];
-        viewCorrection.questionnaire = self.questionnaire;
+        ViewListeCorrection *viewListeCorrection = (ViewListeCorrection *)[segue destinationViewController];
+        viewListeCorrection.questionnaire = self.questionnaire;
+        viewListeCorrection.serieEnCours = self.serie;
+        viewListeCorrection.examenThematique = self.examenThematique;
 }
 
 
@@ -370,9 +423,14 @@ NSTimer *timer;
     if(!self.examenThematique){
         if ([self.casovacCas isValid]) {
             [self.casovacCas invalidate];
-            
         }
         self.casovacCas = nil;
     }
+}
+
+-(UIImage *) loadImage:(NSString *)fileName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", directoryPath, fileName, extension]];
+    
+    return result;
 }
 @end

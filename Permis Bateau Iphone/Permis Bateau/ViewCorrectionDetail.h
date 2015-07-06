@@ -17,21 +17,20 @@
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) Reponse *reponse;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelBorderBonneReponseA;
-@property (weak, nonatomic) IBOutlet UILabel *labelBorderBonneReponseB;
-@property (weak, nonatomic) IBOutlet UILabel *labelBorderBonneReponseC;
-@property (weak, nonatomic) IBOutlet UILabel *labelBorderBonneReponseD;
+@property (weak, nonatomic) IBOutlet UIButton *boutonA;
+@property (weak, nonatomic) IBOutlet UIButton *boutonB;
+@property (weak, nonatomic) IBOutlet UIButton *boutonC;
+@property (weak, nonatomic) IBOutlet UIButton *boutonD;
 
+
+@property (weak, nonatomic) IBOutlet UITextView *labelReponseA;
+@property (weak, nonatomic) IBOutlet UITextView *labelReponseB;
+@property (weak, nonatomic) IBOutlet UITextView *labelReponseC;
+@property (weak, nonatomic) IBOutlet UITextView *labelReponseD;
+
+
+
+@property (weak, nonatomic) IBOutlet UITextView *labelEnoncer;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UILabel *labelEnoncer;
-@property (weak, nonatomic) IBOutlet UILabel *labelReponseA;
-@property (weak, nonatomic) IBOutlet UILabel *labelReponseB;
-@property (weak, nonatomic) IBOutlet UILabel *labelReponseC;
-@property (weak, nonatomic) IBOutlet UILabel *labelReponseD;
-@property (weak, nonatomic) IBOutlet UIButton *boutonReponseA;
-@property (weak, nonatomic) IBOutlet UIButton *boutonReponseB;
-@property (weak, nonatomic) IBOutlet UIButton *boutonReponseC;
-@property (weak, nonatomic) IBOutlet UIButton *boutonReponseD;
-
 
 @end
