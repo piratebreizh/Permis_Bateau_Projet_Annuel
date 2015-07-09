@@ -2,4 +2,23 @@
     <h2><a href="/user/lister">Gestion des utilisateurs</a></h2>
 
     <h2><a href="/theme/lister">Gestion du contenu des applications mobiles</a></h2>
+    <?php foreach ($this->examensBlancs as $examenBlanc) {
+        /** @var \APP\Entity\Examen $examenBlanc */
+        ?>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">      <?php echo $examenBlanc->getNom(); ?>
+                        <span class="badge" style="float: right;" data-toggle="tooltip" title="Nombre de questions">
+                        <?php echo $examenBlanc->getQuestions()->count(); ?>
+                            /<?php echo $examenBlanc->getNbQuestionsMax(); ?>
+                    </span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="examen/afficher?id=<?php echo $examenBlanc->getIdExamen(); ?>">Compléter cet examen</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>

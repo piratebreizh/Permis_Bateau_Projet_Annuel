@@ -2,19 +2,19 @@
 
 namespace APP\Module\Index;
 
+use APP\Model\Examen as ExamenModel;
 use \APP\Module\Index\View as ViewPath;
-use FSF\Entity\User;
 
 class Controller extends \FSF\Controller
 {
     public function home()
     {
-        /** @var User $user */
-        $user = $this->getSession()->get('user');
+        $examenModel = new ExamenModel();
+        $examensBlancs = $examenModel->getExamensBlancs();
 
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'home.phtml')
-            ->setParam("user", $user);
+            ->setParam("examensBlancs", $examensBlancs);
 
         return $this->getView()
             ->setParam('currentView', $currentView);
