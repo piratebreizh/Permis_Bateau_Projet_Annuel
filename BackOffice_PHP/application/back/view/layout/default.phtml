@@ -21,47 +21,56 @@
     <title>Cap Horn - Permis Bateau</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Permis Bateau</a>
-        </div>
-        <?php if (!is_null($this->getSession()->getUser())) { ?>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/theme/lister">Gestion du contenu</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span>
-                            <?php echo $this->getSession()->getUser()->getLabel(); ?>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/authentication/logout">Se déconnecter</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-</nav>
 
-<div class="container">
-    <div>
-        <?php
-        /** @var \FSF\View $this */
-        echo $this->currentView->render();
-        ?>
+<div id="wrap">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Permis Bateau</a>
+            </div>
+            <?php if (!is_null($this->getSession()->getUser())) { ?>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/theme/lister">Gestion du contenu</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <?php echo $this->getSession()->getUser()->getLabel(); ?>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/authentication/logout">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            <?php } ?>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            <?php
+            /** @var \FSF\View $this */
+            echo $this->currentView->render();
+            ?>
+        </div>
+    </div>
+</div> <!--  End Wrap -->
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit"></p>
     </div>
 </div>
 </body>

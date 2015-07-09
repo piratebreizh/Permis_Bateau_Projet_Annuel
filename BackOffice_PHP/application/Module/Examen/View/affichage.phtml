@@ -19,18 +19,21 @@ $nb_questions_max = $examen->getNbQuestionsMax();
     <?php } ?>
     <li class="active"><?php echo $examen->getNom(); ?></li>
 </ol>
-<h2>
-    <?php echo $examen->getNom(); ?>
-    <!-- Publication -->
-    <?php if ($examen->isPublished()) { ?>
-        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
-              data-toggle="tooltip" data-placement="right" title="Publié"></span>
-    <?php } else { ?>
-        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
-              data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
-              data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
-    <?php } ?>
-</h2>
+
+<div class="page-header">
+    <h2>
+        <?php echo $examen->getNom(); ?>
+        <!-- Publication -->
+        <?php if ($examen->isPublished()) { ?>
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+                  data-toggle="tooltip" data-placement="right" title="Publié"></span>
+        <?php } else { ?>
+            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                  data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
+                  data-examen="<?php echo $examen->getIdExamen(); ?>"></span>
+        <?php } ?>
+    </h2>
+</div>
 
 <div class="col-sm-8">
 

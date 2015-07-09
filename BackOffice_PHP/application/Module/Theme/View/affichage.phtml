@@ -13,18 +13,20 @@ $cours = $this->cours;
     <li class="active"><?php echo $theme->getNom(); ?></li>
 </ol>
 
-<h2>
-    <?php echo $theme->getNom(); ?>
-    <!-- Publication -->
-    <?php if ($theme->isPublished()) { ?>
-        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
-              data-toggle="tooltip" data-placement="right" title="Publié"></span>
-    <?php } else { ?>
-        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
-              data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
-              data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
-    <?php } ?>
-</h2>
+<div class="page-header">
+    <h2>
+        <?php echo $theme->getNom(); ?>
+        <!-- Publication -->
+        <?php if ($theme->isPublished()) { ?>
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+                  data-toggle="tooltip" data-placement="right" title="Publié"></span>
+        <?php } else { ?>
+            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                  data-toggle="tooltip" data-placement="right" title="Cliquer pour publier"
+                  data-theme="<?php echo $theme->getIdTheme(); ?>"></span>
+        <?php } ?>
+    </h2>
+</div>
 <h3>Examens</h3>
 
 <div class="col-sm-4">
