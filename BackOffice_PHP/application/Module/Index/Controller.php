@@ -10,11 +10,14 @@ class Controller extends \FSF\Controller
     public function home()
     {
         $examenModel = new ExamenModel();
-        $examensBlancs = $examenModel->getExamensBlancs();
+        $examensIncomplets = $examenModel->getExamensIncomplets();
+        $examensCompletsAValider = $examenModel->getExamensCompletsAValider();
 
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'home.phtml')
-            ->setParam("examensBlancs", $examensBlancs);
+            ->setParam("examensIncomplets", $examensIncomplets)
+            ->setParam("examensCompletsAValider", $examensCompletsAValider)
+            ;
 
         return $this->getView()
             ->setParam('currentView', $currentView);

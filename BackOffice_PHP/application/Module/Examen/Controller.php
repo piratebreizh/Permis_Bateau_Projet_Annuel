@@ -79,6 +79,16 @@ class Controller extends \FSF\Controller
 
         $examen->setIsPublished(true);
         $examen->save();
+
+        if(!$this->getRequest()->isAjax()){
+            header('Location: /');
+        }else{
+            $returned_json = array(
+                "is_deleted" => true
+            );
+
+            return json_encode($returned_json);
+        }
     }
 
     function supprimer()

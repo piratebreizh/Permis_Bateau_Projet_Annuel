@@ -2,6 +2,7 @@
 
 namespace APP\Model;
 
+use FSF\EntityIterator;
 use FSF\Filter;
 use FSF\Helper\Date;
 
@@ -33,6 +34,14 @@ class Examen extends \FSF\Model
     }
 
     /**
+     * @return Question
+     */
+    public function getQuestionModel()
+    {
+        return new Question();
+    }
+
+    /**
      * @param int $id_theme
      * @return \FSF\EntityIterator
      */
@@ -54,6 +63,38 @@ class Examen extends \FSF\Model
 
         return $this->findAllWithFilters($filters);
     }
+
+    public function getExamensIncomplets()
+    {
+        $filters[] = new Filter("is_deleted", 0);
+
+        $array = array();
+        $examens = $this->findAllWithFilters($filters);
+        foreach($examens as $examen){
+            /** @var \APP\Entity\Examen $examen */
+            if($examen->getQuestions()->count() < $examen->getNbQuestionsMax())
+                $array[] = $examen;
+        }
+
+        return new \ArrayIterator($array);
+    }
+
+    public function getExamensCompletsAValider()
+    {
+        $filters[] = new Filter("is_published", 0);
+        $filters[] = new Filter("is_deleted", 0);
+
+        $array = array();
+        $examens = $this->findAllWithFilters($filters);
+        foreach($examens as $examen){
+            /** @var \APP\Entity\Examen $examen */
+            if($examen->getQuestions()->count() == $examen->getNbQuestionsMax())
+                $array[] = $examen;
+        }
+
+        return new \ArrayIterator($array);
+    }
+
 
     /**
      * Get examens updated after the given date

@@ -1,24 +1,37 @@
-<div>
-    <h2><a href="/user/lister">Gestion des utilisateurs</a></h2>
-
-    <h2><a href="/theme/lister">Gestion du contenu des applications mobiles</a></h2>
-    <?php foreach ($this->examensBlancs as $examenBlanc) {
-        /** @var \APP\Entity\Examen $examenBlanc */
-        ?>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <h3 class="panel-title">      <?php echo $examenBlanc->getNom(); ?>
-                        <span class="badge" style="float: right;" data-toggle="tooltip" title="Nombre de questions">
-                        <?php echo $examenBlanc->getQuestions()->count(); ?>
-                            /<?php echo $examenBlanc->getNbQuestionsMax(); ?>
+<h2>Examens à compléter</h2>
+<?php foreach ($this->examensIncomplets as $examen) {
+    /** @var \APP\Entity\Examen $examen */
+    ?>
+    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-9">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">      <?php echo $examen->getNom(); ?>
+                    <span class="badge" style="float: right;" data-toggle="tooltip" title="Nombre de questions">
+                        <?php echo $examen->getQuestions()->count(); ?>
+                        /<?php echo $examen->getNbQuestionsMax(); ?>
                     </span>
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <a href="examen/afficher?id=<?php echo $examenBlanc->getIdExamen(); ?>">Compléter cet examen</a>
-                </div>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <a href="examen/afficher?id=<?php echo $examen->getIdExamen(); ?>">Compléter cet examen</a>
             </div>
         </div>
-    <?php } ?>
-</div>
+    </div>
+<?php } ?>
+<div class="clearfix"></div>
+<h2>Examens prêt à être publier</h2>
+<?php foreach ($this->examensCompletsAValider as $examen) {
+    /** @var \APP\Entity\Examen $examen */
+    ?>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">      <?php echo $examen->getNom(); ?>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <a href="examen/publier?id_examen=<?php echo $examen->getIdExamen(); ?>">Publier cet examen</a>
+            </div>
+        </div>
+    </div>
+<?php } ?>
