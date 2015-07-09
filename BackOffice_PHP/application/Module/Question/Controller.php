@@ -20,10 +20,18 @@ class Controller extends \FSF\Controller
         $modelImage = new \APP\Model\Image();
         $image = $modelImage->get($question->getIdImage());
 
+        $examenModel = new \APP\Model\Examen();
+        $examen = $examenModel->get($question->getIdExamen());
+
+        $themeModel = new \APP\Model\Theme();
+        $theme = $themeModel->get($examen->getIdTheme());
+
         $currentView = new View();
-        $currentView->setViewPath(ViewPath::getPath() . 'affichage.phtml');
-        $currentView->setParam("question", $question);
-        $currentView->setParam("image", $image);
+        $currentView->setViewPath(ViewPath::getPath().'affichage.phtml')
+            ->setParam("question", $question)
+            ->setParam("image", $image)
+            ->setParam("examen", $examen)
+            ->setParam("theme", $theme);
 
         return $this->getView()
             ->setParam('currentView', $currentView);
@@ -154,11 +162,11 @@ class Controller extends \FSF\Controller
         $theme = $themeModel->get($examen->getIdTheme());
 
         $currentView = new View();
-        $currentView->setViewPath(ViewPath::getPath() . 'creation.phtml');
-        $currentView->setParam("question", $question);
-        $currentView->setParam("id_examen", $question->getIdExamen());
-        $currentView->setParam("examen", $examen);
-        $currentView->setParam("theme", $theme);
+        $currentView->setViewPath(ViewPath::getPath().'creation.phtml')
+            ->setParam("question", $question)
+            ->setParam("id_examen", $question->getIdExamen())
+            ->setParam("examen", $examen)
+            ->setParam("theme", $theme);
 
 
         return $this->getView()

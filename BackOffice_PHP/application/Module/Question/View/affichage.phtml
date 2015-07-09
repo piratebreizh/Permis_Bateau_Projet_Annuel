@@ -1,39 +1,65 @@
 <?php
-function getSpan($is_correst){
-    if($is_correst){
+function getSpan($is_correst)
+{
+    if ($is_correst) {
         return '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
-    }else{
+    } else {
         return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
     }
 }
+
 /** @var \APP\Entity\Image $image */
 $image = $this->image;
 if (!is_null($image)) {
-    $image_url = "/public/datas/images/" . \APP\Module\Image\Generator::BO . '/' . $image->getNomImagePNG();
+    $image_url = "/public/datas/images/".\APP\Module\Image\Generator::BO.'/'.$image->getNomImagePNG();
 }
-
 /** @var \APP\Entity\Question $question */
 $question = $this->question;
-if (!is_null($question)) {
-    if (!is_null($image) && $image->imageFileExist()) { ?>
-        <img src="<?php echo $image_url; ?>"/>
-    <?php } ?>
-    <h3><?php echo $question->getEnonceQuestion(); ?></h3>
-    <?php echo getSpan($question->isCorrectA()); ?>
-    <?php echo $question->getEnonceA(); ?>
-    <br/>
-    <?php echo getSpan($question->isCorrectB()); ?>
-    <?php echo $question->getEnonceB(); ?>
-    <br/>
-    <?php if ($question->getEnonceC() != "") { ?>
-        <?php echo getSpan($question->isCorrectC()); ?>
-        <?php echo $question->getEnonceC(); ?>
-        <br/>
-        <?php echo getSpan($question->isCorrectD()); ?>
-        <?php echo $question->getEnonceD(); ?>
-        <br/>
-    <?php } ?>
+/** @var \APP\Entity\Examen $examen */
+$examen = $this->examen;
+/** @var \APP\Entity\Theme $theme */
+$theme = $this->theme;
+?>
 
-<?php } else { ?>
-    Pas de question correspondant à cet ID
-<?php } ?>
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/theme/lister">Gestion du contenu</a></li>
+    <?php if (!is_null($theme)) { ?>
+        <li><a href="/theme/afficher?id=<?php echo $examen->getIdTheme(); ?>"><?php echo $theme->getNom(); ?></a></li>
+    <?php } else { ?>
+        <li><a href="/theme/listerExamensBlanc">Examens blancs</a></li>
+    <?php } ?>
+    <li><a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>"><?php echo $examen->getNom(); ?></a></li>
+    <li class="active">Question n°<?php echo $question->getNumeroQuestion(); ?></li>
+</ol>
+
+<div class="col-md-6">
+    <?php if (!is_null($image) && $image->imageFileExist()) { ?>
+        <img style="margin: 0 auto;" src="<?php echo $image_url; ?>"/>
+    <?php } ?>
+    <h4><?php echo $question->getEnonceQuestion(); ?></h4>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <?php echo getSpan($question->isCorrectA()); ?>
+            <?php echo $question->getEnonceA(); ?>
+        </li>
+        <li class="list-group-item">
+            <?php echo getSpan($question->isCorrectB()); ?>
+            <?php echo $question->getEnonceB(); ?>
+        </li>
+        <?php if ($question->getEnonceC() != "") { ?>
+            <li class="list-group-item">
+                <?php echo getSpan($question->isCorrectC()); ?>
+                <?php echo $question->getEnonceC(); ?>
+            </li>
+        <?php } ?>
+        <?php if ($question->getEnonceD() != "") { ?>
+            <li class="list-group-item">
+                <?php echo getSpan($question->isCorrectD()); ?>
+                <?php echo $question->getEnonceD(); ?>
+            </li>
+        <?php } ?>
+    </ul>
+    <a class="btn btn-success" href="/question/modifier?id=<?php echo $question->getId(); ?>">Modifier</a>
+</div>

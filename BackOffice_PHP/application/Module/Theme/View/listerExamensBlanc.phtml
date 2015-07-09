@@ -21,7 +21,9 @@ $examens_blancs = $this->examens_blancs;
 <?php foreach ($examens_blancs as $examen) { ?>
     <tr class="tr_examen" data-id="<?php echo $examen->getIdExamen(); ?>">
         <td class="examen_link">
-            <?php echo $examen->getNom(); ?>
+            <span class="nom_examen">
+                <?php echo $examen->getNom(); ?>
+            </span>
 
             <!-- Publication -->
                 <span class="is_published" style="float: right;">
