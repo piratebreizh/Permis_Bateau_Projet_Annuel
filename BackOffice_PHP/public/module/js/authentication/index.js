@@ -10,6 +10,8 @@ $(document).ready(function () {
 });
 
 function login() {
+
+    var $btn = $('#btn-login').button('loading');
     $.ajax({
         url: '/authentication/login',
         data: {
@@ -25,6 +27,7 @@ function login() {
                 $("#login-alert").html(response.msgError)
                     .parent().fadeIn()
                     .find("button.close").on("click", function(){$(this).parent().fadeOut()});
+                $btn.button('reset');
             }
         }
     });

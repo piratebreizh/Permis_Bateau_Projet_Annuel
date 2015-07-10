@@ -12,6 +12,40 @@ body {
     /* Pad bottom by footer height */
     padding: 0 0 50px;
 }
+.navbar-custom{
+    background-color: #03A9F4;
+    border-color: #009688;
+}
+.navbar-custom a{
+    color: #fff;
+}
+.navbar-custom .nav>li>a:focus, .navbar-custom .nav>li>a:hover{
+    background-color: #29B6F6;
+}
+.navbar-custom .navbar-toggle {
+    /*border-color: #ddd;*/
+    border-radius: 0;
+}
+.navbar-custom .navbar-toggle .icon-bar{
+    background-color: #204D74;
+}
+.navbar-custom .navbar-toggle:focus, .navbar-custom .navbar-toggle:hover {
+    background-color: #29B6F6;
+}
+.navbar-custom .nav .open>a, .navbar-custom .nav .open>a:focus, .navbar-custom .nav .open>a:hover {
+    background-color: #29B6F6;
+    border-color: #337ab7;
+    border-top-color: rgb(51, 122, 183);
+    border-right-color: rgb(51, 122, 183);
+    border-bottom-color: rgb(51, 122, 183);
+    border-left-color: rgb(51, 122, 183);
+}
+.navbar-custom .dropdown-menu{
+    background-color: #03A9F4;
+}
+.navbar-custom .dropdown-menu>li>a:hover{
+    background-color: #29B6F6;
+}
 
 #footer {
     margin-top: 20px;
