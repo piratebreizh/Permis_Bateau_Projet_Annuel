@@ -12,7 +12,7 @@ $(document).ready(function(){
 });
 
 function validateForm(){
-    if(isNbResponsesCorrect() && isCheckboxCorrect()) {
+    if(isNbResponsesCorrect() && isCheckboxCorrect() && isFileSizeCorrect()) {
         $('#form_question_creation').validator().submit();
     }
 }
@@ -82,23 +82,45 @@ function isFourResponses() {
 }
 
 function handleFileSelect(evt) {
-    var file = evt.target.files[0];
+    if(isFileSizeCorrect()) {
+        var file = evt.target.files[0];
 
-    // Only process image files
-    if (!file.type.match('image.*')) {
-        return;
+        // Only process image files
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = (function (theFile) {
+            return function (e) {
+                // Render thumbnail.
+                var span = document.createElement('span');
+                span.innerHTML = ['<img style="height: 75px;" src="', e.target.result, '"/>'].join('');
+                $('#div_image').html(span);
+            };
+        })(file);
+
+        // Read in the image file as a data URL
+        reader.readAsDataURL(file);
     }
+}
 
-    var reader = new FileReader();
-    reader.onload = (function (theFile) {
-        return function (e) {
-            // Render thumbnail.
-            var span = document.createElement('span');
-            span.innerHTML = ['<img style="height: 75px;" src="', e.target.result, '"/>'].join('');
-            $('#div_image').html(span);
-        };
-    })(file);
 
-    // Read in the image file as a data URL
-    reader.readAsDataURL(file);
+function isFileSizeCorrect() {
+    var file =$('#image')[0].files[0];
+    if(file) {
+        var fsize = $('#image')[0].files[0].size;
+
+        if (fsize > 1048576) //if file size more than 1 mb (1048576)
+        {
+            $('#error_file_size').show();
+            $('#div_image').html("");
+            return false;
+        } else {
+            $('#error_file_size').hide();
+            return true;
+        }
+    }else{
+        return true;
+    }
 }

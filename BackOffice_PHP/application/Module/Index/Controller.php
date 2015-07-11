@@ -11,15 +11,17 @@ class Controller extends \FSF\Controller
     {
         $examenModel = new ExamenModel();
         $examensIncomplets = $examenModel->getExamensIncomplets();
-        $examensCompletsAValider = $examenModel->getExamensCompletsAValider();
+        $examensCompletsAPublier = $examenModel->getExamensCompletsAValider();
 
         $currentView = new View();
         $currentView->setViewPath(ViewPath::getPath() . 'home.phtml')
             ->setParam("examensIncomplets", $examensIncomplets)
-            ->setParam("examensCompletsAValider", $examensCompletsAValider)
+            ->setParam("examensCompletsAPublier", $examensCompletsAPublier)
             ;
 
         return $this->getView()
+            ->setParam('js', array('index/home'))
+            ->setParam('css', array('index/home'))
             ->setParam('currentView', $currentView);
     }
 }

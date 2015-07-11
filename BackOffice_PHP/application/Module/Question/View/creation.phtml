@@ -16,9 +16,9 @@ $nb_questions_max = $examen->getNbQuestionsMax();
 <ol class="breadcrumb">
     <li><a href="/">Accueil</a></li>
     <li><a href="/theme/lister">Gestion du contenu</a></li>
-    <?php if(!is_null($theme)){ ?>
+    <?php if (!is_null($theme)) { ?>
         <li><a href="/theme/afficher?id=<?php echo $examen->getIdTheme(); ?>"><?php echo $theme->getNom(); ?></a></li>
-    <?php }else{ ?>
+    <?php } else { ?>
         <li><a href="/theme/listerExamensBlanc">Examens blancs</a></li>
     <?php } ?>
     <li><a href="/examen/afficher?id=<?php echo $examen->getIdExamen(); ?>"><?php echo $examen->getNom(); ?></a></li>
@@ -30,7 +30,8 @@ $nb_questions_max = $examen->getNbQuestionsMax();
 <div class="col-sm-7">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $examen->getQuestions()->count(); ?>"
-             aria-valuemin="0" aria-valuemax="<?php echo $nb_questions_max;?>" style="width: <?php echo $examen->getQuestions()->count()/$nb_questions_max*100; ?>%;min-width: 15em;">
+             aria-valuemin="0" aria-valuemax="<?php echo $nb_questions_max; ?>"
+             style="width: <?php echo $examen->getQuestions()->count() / $nb_questions_max * 100; ?>%;min-width: 15em;">
             Nombre de questions : <?php echo $examen->getQuestions()->count().'/'.$nb_questions_max; ?>
         </div>
     </div>
@@ -60,10 +61,12 @@ $nb_questions_max = $examen->getNbQuestionsMax();
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_A" id="is_correct_A" type="checkbox" data-checkbox="true"
-                       <?php if($question->isCorrectA()) echo "checked"; ?>/>
+                    <?php if ($question->isCorrectA()) {
+                        echo "checked";
+                    } ?>/>
             </span>
             <input class="form-control" name="enonce_A" id="enonce_A" placeholder="Réponse A" maxlength="50"
-                value="<?php echo $question->getEnonceA()?>"/>
+                   value="<?php echo $question->getEnonceA() ?>"/>
         </div>
     </div>
     <!-- Réponse B -->
@@ -73,10 +76,12 @@ $nb_questions_max = $examen->getNbQuestionsMax();
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_B" id="is_correct_B" type="checkbox" data-checkbox="true"
-                    <?php if($question->isCorrectB()) echo "checked"; ?>/>
+                    <?php if ($question->isCorrectB()) {
+                        echo "checked";
+                    } ?>/>
             </span>
             <input class="form-control" name="enonce_B" id="enonce_B" placeholder="Réponse B" maxlength="50"
-                   value="<?php echo $question->getEnonceB()?>"/>
+                   value="<?php echo $question->getEnonceB() ?>"/>
         </div>
     </div>
     <!-- Réponse C -->
@@ -86,10 +91,12 @@ $nb_questions_max = $examen->getNbQuestionsMax();
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_C" id="is_correct_C" type="checkbox" data-checkbox="true"
-                    <?php if($question->isCorrectC()) echo "checked"; ?>/>
+                    <?php if ($question->isCorrectC()) {
+                        echo "checked";
+                    } ?>/>
             </span>
             <input class="form-control" name="enonce_C" id="enonce_C" placeholder="Réponse C" maxlength="50"
-                   value="<?php echo $question->getEnonceC()?>"/>
+                   value="<?php echo $question->getEnonceC() ?>"/>
         </div>
     </div>
     <!-- Réponse D -->
@@ -99,10 +106,12 @@ $nb_questions_max = $examen->getNbQuestionsMax();
         <div class="input-group col-sm-5">
             <span class="input-group-addon">
                 <input name="is_correct_D" id="is_correct_D" type="checkbox" data-checkbox="true"
-                    <?php if($question->isCorrectD()) echo "checked"; ?>/>
+                    <?php if ($question->isCorrectD()) {
+                        echo "checked";
+                    } ?>/>
             </span>
             <input class="form-control" name="enonce_D" id="enonce_D" placeholder="Réponse D" maxlength="50"
-                   value="<?php echo $question->getEnonceD()?>"/>
+                   value="<?php echo $question->getEnonceD() ?>"/>
         </div>
     </div>
     <!-- Image -->
@@ -120,23 +129,26 @@ $nb_questions_max = $examen->getNbQuestionsMax();
                 } ?>
             </div>
             <input class="form-control" name="image" id="image" type="file"/>
+
+            <div class="has-error">
+                <div class="help-block with-errors" id="error_file_size" style=" display: none;">
+                    Veuillez sélectionner un fichier ayant une taille inférieure à 1 Mo.
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="has-error">
-        <div class="col-sm-7 help-block with-errors" id="error_checkbox" style="display: none;">
-            <ul class="list-unstyled">
-                <li>Veuillez sélectionner au moins une réponse correcte parmi celles renseignées</li>
-            </ul>
+        <div class="has-error">
+            <div class="col-sm-7 help-block with-errors" id="error_checkbox" style="display: none;">
+                Veuillez sélectionner au moins une réponse correcte parmi celles renseignées
+            </div>
+            <div class="col-sm-7 help-block with-errors" id="error_nb_responses" style="display: none;">
+                Veuillez renseigner de 2 à 4 réponses
+            </div>
         </div>
-        <div class="col-sm-7 help-block with-errors" id="error_nb_responses" style="display: none;">
-            <ul class="list-unstyled">
-                <li>Veuillez renseigner de 2 à 4 réponses</li>
-            </ul>
+        <div class="clearfix"></div>
+        <div style="margin: 10px;">
+            <input type="hidden" id="add_an_other" name="add_an_other" value="0"/>
+            <button type="button" id="btn_submit_form" class="btn btn-success">Sauvegarder</button>
+            <button type="button" id="btn_submit_form_and_add" class="btn btn-success">Sauvegarder et Ajout</button>
+            <a href="/examen/afficher?id=<?php echo $this->id_examen; ?>" class="btn btn-warning">Annuler</a>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <input type="hidden" id="add_an_other" name="add_an_other" value="0"/>
-    <button type="button" id="btn_submit_form" class="btn btn-success">Sauvegarder</button>
-    <button type="button" id="btn_submit_form_and_add" class="btn btn-success">Sauvegarder et Ajout</button>
-    <a href="/examen/afficher?id=<?php echo $this->id_examen; ?>" class="btn btn-warning">Annuler</a>
 </form>

@@ -1,37 +1,91 @@
-<h2>Examens à compléter</h2>
-<?php foreach ($this->examensIncomplets as $examen) {
-    /** @var \APP\Entity\Examen $examen */
-    ?>
-    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-9">
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">      <?php echo $examen->getNom(); ?>
-                    <span class="badge" style="float: right;" data-toggle="tooltip" title="Nombre de questions">
-                        <?php echo $examen->getQuestions()->count(); ?>
-                        /<?php echo $examen->getNbQuestionsMax(); ?>
-                    </span>
-                </h3>
+<div class="jumbotron">
+    <div class="container">
+        <h2>Bienvenue</h2>
+
+        <p>
+            Ce site permet de gérer le contenu accessible au travers
+            des applications mobiles iOS et Android préparant à
+            la partie théorique du permis côtier
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-1 hidden-xs">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-9">
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>Thèmes</h3>
+                </div>
+                <a href="/theme/lister" class="small-box-footer">
+                    Accès à la liste
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                </a>
             </div>
-            <div class="panel-body">
-                <a href="examen/afficher?id=<?php echo $examen->getIdExamen(); ?>">Compléter cet examen</a>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-9">
+            <div class="small-box bg-bluegrey">
+                <div class="inner">
+                    <h3>Utilisateurs</h3>
+                </div>
+                <a href="/user/lister" class="small-box-footer">
+                    Accès à la liste
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                </a>
             </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<?php if ($this->examensIncomplets->count() > 0) { ?>
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">A compléter</h3>
+        </div>
+        <div class="panel-body">
+            <?php foreach ($this->examensIncomplets as $examen) {
+                /** @var \APP\Entity\Examen $examen */
+                ?>
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-9">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3><?php echo $examen->getNom(); ?></h3>
+
+                            <p><?php echo $examen->getQuestions()->count(); ?>
+                                / <?php echo $examen->getNbQuestionsMax(); ?> questions</p>
+                        </div>
+                        <a href="examen/afficher?id=<?php echo $examen->getIdExamen(); ?>" class="small-box-footer">
+                            Compléter cet examen
+                            <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 <?php } ?>
 <div class="clearfix"></div>
-<h2>Examens prêt à être publier</h2>
-<?php foreach ($this->examensCompletsAValider as $examen) {
-    /** @var \APP\Entity\Examen $examen */
-    ?>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">      <?php echo $examen->getNom(); ?>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <a href="examen/publier?id_examen=<?php echo $examen->getIdExamen(); ?>">Publier cet examen</a>
-            </div>
+<?php if ($this->examensCompletsAPublier->count() > 0) { ?>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Prêt à être publié</h3>
+        </div>
+        <div class="panel-body">
+            <?php foreach ($this->examensCompletsAPublier as $examen) {
+                /** @var \APP\Entity\Examen $examen */
+                ?>
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-9">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3><?php echo $examen->getNom(); ?></h3>
+                        </div>
+                        <a href="examen/publier?id_examen=<?php echo $examen->getIdExamen(); ?>"
+                           class="small-box-footer">
+                            Publier cet examen
+                            <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 <?php } ?>

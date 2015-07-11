@@ -16,6 +16,9 @@ class Controller extends \FSF\Controller
         $examenModel = new \APP\Model\Examen();
         $examen = $examenModel->get($id_examen);
 
+        if(is_null($examen))
+            throw new \FSF\Exception\NotFound;
+
         $themeModel = new \APP\Model\Theme();
         $theme = $themeModel->get($examen->getIdTheme());
 

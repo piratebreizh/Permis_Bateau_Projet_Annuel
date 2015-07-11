@@ -2,6 +2,7 @@
 
 namespace FSF;
 
+use FSF\Routing\Route\Error;
 use FSF\Routing\Router;
 
 class Framework
@@ -101,13 +102,18 @@ class Framework
         $route = $this->router->getRoute($this->request);
 
         if ($route == null)
-            $this->getRouteError();
+            $route = $this->getRouteNotFound();
 
         $route->run();
     }
 
-    public function getRouteError()
+    public function getRouteNotFound()
     {
-        throw new \FSF\Error\NotFoundError();
+        $errorRoute = new Error();
+        $errorRoute
+            ->setRequest($this->request)
+            ->setAction(Error::ERROR_404);
+
+        return $errorRoute;
     }
 }

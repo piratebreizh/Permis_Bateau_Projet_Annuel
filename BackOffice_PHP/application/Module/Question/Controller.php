@@ -17,6 +17,9 @@ class Controller extends \FSF\Controller
         /** @var \APP\Entity\Question $question */
         $question = $model->get($id);
 
+        if(is_null($question))
+            throw new \FSF\Exception\NotFound;
+
         $modelImage = new \APP\Model\Image();
         $image = $modelImage->get($question->getIdImage());
 
@@ -154,6 +157,9 @@ class Controller extends \FSF\Controller
         $model = new QuestionModel();
         /** @var \APP\Entity\Question $question */
         $question = $model->get($id_question);
+
+        if(is_null($question))
+            throw new \FSF\Exception\NotFound;
 
         $examenModel = new \APP\Model\Examen();
         $examen = $examenModel->get($question->getIdExamen());

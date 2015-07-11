@@ -2,6 +2,8 @@
 
 namespace FSF\Response\Header;
 
+use FSF\Response\Header;
+
 class Status extends Header
 {
     const TYPE = 'Status';

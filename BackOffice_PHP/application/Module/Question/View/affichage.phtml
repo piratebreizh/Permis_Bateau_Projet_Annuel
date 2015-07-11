@@ -35,7 +35,7 @@ $theme = $this->theme;
 
 <div class="col-md-6">
     <?php if (!is_null($image) && $image->imageFileExist()) { ?>
-        <img style="margin: 0 auto;" src="<?php echo $image_url; ?>"/>
+        <img class="img-responsive" src="<?php echo $image_url; ?>"/>
     <?php } ?>
     <h4><?php echo $question->getEnonceQuestion(); ?></h4>
 
