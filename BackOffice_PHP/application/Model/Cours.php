@@ -58,11 +58,14 @@ class Cours extends Model
         return $this->findAllWithFilters($filters);
     }
     /**
-     * Get cours deleted
+     * Get cours deleted that been created before the given date
+     * @param string $date
      * @return \FSF\EntityIterator
      */
-    public function getDeletedCours()
+    public function getDeletedCours($date)
     {
+        $filters[] = new Filter("date_creation", Date::frToUk($date), "date_creation", Filter::OPERATOR_SMALLER_OR_EQUAL);
+        $filters[] = new Filter("date_modification", Date::frToUk($date), "date_modification", Filter::OPERATOR_GREATER_OR_EQUAL);
         $filters[] = new Filter("is_deleted", 1);
 
         return $this->findAllWithFilters($filters);

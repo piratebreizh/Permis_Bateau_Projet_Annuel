@@ -148,7 +148,9 @@ $nb_questions_max = $examen->getNbQuestionsMax();
         <div style="margin: 10px;">
             <input type="hidden" id="add_an_other" name="add_an_other" value="0"/>
             <button type="button" id="btn_submit_form" class="btn btn-success">Sauvegarder</button>
-            <button type="button" id="btn_submit_form_and_add" class="btn btn-success">Sauvegarder et Ajout</button>
+            <?php if($examen->getQuestions()->count()+1 < $nb_questions_max){ ?>
+                <button type="button" id="btn_submit_form_and_add" class="btn btn-success">Sauvegarder et Ajout</button>
+            <?php } ?>
             <a href="/examen/afficher?id=<?php echo $this->id_examen; ?>" class="btn btn-warning">Annuler</a>
         </div>
 </form>

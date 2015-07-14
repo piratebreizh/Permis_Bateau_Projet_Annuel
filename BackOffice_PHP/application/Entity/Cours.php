@@ -7,21 +7,23 @@ use FSF\Entity;
 class Cours extends Entity
 {
     protected $cols = array(
-        'id_cours'      => null,
-        'nom'           => null,
-        'nom_pdf'       => null,
-        'id_theme'      => null,
-        'date_creation' => null,
-        'is_deleted'    => false,
+        'id_cours'          => null,
+        'nom'               => null,
+        'nom_pdf'           => null,
+        'id_theme'          => null,
+        'date_creation'     => null,
+        'date_modification' => null,
+        'is_deleted'        => false,
     );
 
     protected $types = array(
-        'id_cours'      => \PDO::PARAM_INT,
-        'nom'           => \PDO::PARAM_STR,
-        'nom_pdf'       => \PDO::PARAM_STR,
-        'id_theme'      => \PDO::PARAM_INT,
-        'date_creation' => \PDO::PARAM_STR,
-        'is_deleted'    => \PDO::PARAM_INT,
+        'id_cours'          => \PDO::PARAM_INT,
+        'nom'               => \PDO::PARAM_STR,
+        'nom_pdf'           => \PDO::PARAM_STR,
+        'id_theme'          => \PDO::PARAM_INT,
+        'date_creation'     => \PDO::PARAM_STR,
+        'date_modification' => \PDO::PARAM_STR,
+        'is_deleted'        => \PDO::PARAM_INT,
     );
 
     public function __construct()
@@ -138,4 +140,13 @@ class Cours extends Entity
     }
 
 
+    /**
+     * @return int
+     */
+    public function save()
+    {
+        $this->cols['date_modification'] = date('Y-m-d H:i:s');
+
+        return parent::save();
+    }
 }

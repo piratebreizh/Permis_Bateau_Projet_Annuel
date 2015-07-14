@@ -96,7 +96,7 @@ class Controller extends \FSF\Controller
                 /** @var \APP\Entity\Cours $cours_nouveau */
                 $json_array['cours_nouveaux'][] = $cours_nouveau->toArray();
             }
-            $cours_supprimes = $cours_model->getDeletedCours();
+            $cours_supprimes = $cours_model->getDeletedCours($date);
             foreach ($cours_supprimes as $cours_suppr) {
                 /** @var \APP\Entity\Cours $cours_suppr */
                 $json_array['cours_supprimes'][] = $cours_suppr->getIdCours();

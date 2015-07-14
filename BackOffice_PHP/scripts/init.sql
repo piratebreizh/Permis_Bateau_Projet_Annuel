@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS COURS (
   nom_pdf varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   id_theme int(11) NOT NULL,
   date_creation datetime NOT NULL,
+  date_modification datetime NOT NULL,
   is_deleted tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id_cours)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
