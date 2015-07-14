@@ -2,8 +2,6 @@ package com.projet.esgi.permisbateau;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.widget.ListView;
 
 import com.projet.esgi.myapplication.R;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import adapter.AccueilAdapter;
@@ -47,12 +44,17 @@ public class AccueilActivity extends Activity {
         Bitmap bmp_stats = BitmapFactory.decodeResource(getResources(), R.drawable.d_historique);
         ItemAccueil item_stats = new ItemAccueil(bmp_stats,"Historiques","Suivez votre évolution");
 
+        //contact
+        Bitmap bmp_con = BitmapFactory.decodeResource(getResources(), R.drawable.d_maj);
+        ItemAccueil item_con = new ItemAccueil(bmp_con,"Passez votre permis","Effectuez la partie pratique");
+
         //mise à jour
         Bitmap bmp_maj = BitmapFactory.decodeResource(getResources(), R.drawable.d_maj);
         ItemAccueil item_maj = new ItemAccueil(bmp_maj,"Mettre à jour","Mise à jour manuelle des données");
 
         items.add(item_exth);
         items.add(item_exblanc);
+        items.add(item_con);
         items.add(item_stats);
         items.add(item_cours);
         items.add(item_maj);

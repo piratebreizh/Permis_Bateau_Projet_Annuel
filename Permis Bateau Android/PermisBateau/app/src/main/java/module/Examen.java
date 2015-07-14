@@ -2,14 +2,9 @@ package module;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import database.DataBase;
 

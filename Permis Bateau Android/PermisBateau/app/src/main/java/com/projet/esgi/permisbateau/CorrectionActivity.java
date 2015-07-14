@@ -4,19 +4,11 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
 
@@ -25,9 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import adapter.AccueilAdapter;
 import adapter.CorrectionAdapter;
-import adapter.ItemAccueil;
 import adapter.ItemCorrection;
 import database.DataBase;
 import module.Question;
@@ -119,6 +109,8 @@ public class CorrectionActivity extends Activity {
 
             db.insert("Statistiques", null, values);
             values.clear();
+
+            db.close();
         }catch (Exception e){
             e.printStackTrace();
         }

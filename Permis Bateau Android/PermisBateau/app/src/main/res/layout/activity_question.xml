@@ -118,7 +118,6 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:orientation="horizontal">
-
         <ProgressBar
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="wrap_content"
@@ -137,5 +136,4 @@
             android:text="Question suivante"
             android:id="@+id/nextQuestion" />
     </LinearLayout>
-
 </LinearLayout>

@@ -1,24 +1,17 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.projet.esgi.myapplication.R;
-import com.projet.esgi.permisbateau.MajActivity;
-import com.projet.esgi.permisbateau.SerieActivity;
-import com.projet.esgi.permisbateau.ThematiqueActivity;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**

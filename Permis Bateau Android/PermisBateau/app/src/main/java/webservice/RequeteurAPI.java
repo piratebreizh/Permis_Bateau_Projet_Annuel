@@ -9,16 +9,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.app.DownloadManager;
-import android.app.DownloadManager.Query;
-import android.app.DownloadManager.Request;
 import android.os.Environment;
 
 import com.projet.esgi.myapplication.R;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,11 +105,10 @@ public class RequeteurAPI {
         HttpURLConnection connection = null;
         InputStream iStream = null;
 
-        if (date=="") return "";
+        if (date.equals("")) return "";
 
         String requete;
         String paramDate = this.buildParamDate(date);
-        paramDate="date=02072015120501";
         requete = String.format("%s?%s", URL_WEBSERVICE_MAJ, paramDate);
 
         connection = (HttpURLConnection) new URL(requete).openConnection();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.projet.esgi.myapplication.R;
-import com.projet.esgi.permisbateau.CorrectionActivity;
 import com.projet.esgi.permisbateau.CorrectionQuestionActivity;
-import com.projet.esgi.permisbateau.CoursActivity;
-import com.projet.esgi.permisbateau.MajActivity;
-import com.projet.esgi.permisbateau.SerieActivity;
-import com.projet.esgi.permisbateau.ThematiqueActivity;
 
 import java.util.ArrayList;
 

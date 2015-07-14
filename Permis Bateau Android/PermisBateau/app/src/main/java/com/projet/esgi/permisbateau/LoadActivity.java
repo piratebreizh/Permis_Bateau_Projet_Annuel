@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -71,31 +69,31 @@ public class LoadActivity extends Activity {
      * Fait également la première mise à jour avec le JSON local
      */
     public void checkUpdates() throws Exception{
-        //test la connexion
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        if(!isConnected) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        SharedPreferences pref = getSharedPreferences("date", MODE_PRIVATE);
+        String lastdate = pref.getString("DATE_VERSION_LOCALE", null);
+        //première utilisation de l'application
+        if(lastdate==null){
+            //copie les questions stockées en local
+            UpdateTask update = new UpdateTask(getApplicationContext());
+            update.execute("","local");
+        }
+        else{
+            //test la connexion
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(!isConnected) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    Intent intent = new Intent(getApplicationContext(),AccueilActivity.class);
-                    startActivity(intent);
-                }
-            }, 2000);
+                        Intent intent = new Intent(getApplicationContext(),AccueilActivity.class);
+                        startActivity(intent);
+                    }
+                }, 2000);
 
-        }else{
-            //si il y a une connexion
-            SharedPreferences pref = getSharedPreferences("date", MODE_PRIVATE);
-            String lastdate = pref.getString("DATE_VERSION_LOCALE", null);
-            //première utilisation de l'application
-            if(lastdate==null){
-                //copie les questions stockées en local
-                UpdateTask update = new UpdateTask(getApplicationContext());
-                update.execute("","local");
-            }
-            else{
+            }else{
+                //si il y a une connexion
                 //lance la maj
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -106,6 +104,8 @@ public class LoadActivity extends Activity {
                     }
                 }, 2000);
             }
+
+
         }
 
     }

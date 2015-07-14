@@ -2,21 +2,17 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import com.projet.esgi.myapplication.R;
-import com.projet.esgi.permisbateau.AccueilActivity;
+import com.projet.esgi.permisbateau.ContactActivity;
 import com.projet.esgi.permisbateau.CoursActivity;
 import com.projet.esgi.permisbateau.MajActivity;
 import com.projet.esgi.permisbateau.SerieActivity;
@@ -76,7 +72,7 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(),StatistiquesActivity.class);
+                        Intent intent = new Intent(getContext(),ContactActivity.class);
                         getContext().startActivity(intent);
                     }
                 });
@@ -86,13 +82,23 @@ public class AccueilAdapter extends ArrayAdapter<ItemAccueil> {
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(getContext(),StatistiquesActivity.class);
+                        getContext().startActivity(intent);
+                    }
+                });
+                img.setImageBitmap(item.getImage());
+                break;
+            case 4:
+                text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                     Intent intent = new Intent(getContext(),CoursActivity.class);
                     getContext().startActivity(intent);
                     }
                 });
                 img.setImageBitmap(item.getImage());
                 break;
-            case 4:
+            case 5:
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

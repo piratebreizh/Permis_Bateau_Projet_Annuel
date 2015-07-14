@@ -1,7 +1,6 @@
 package adapter;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 /**
  * Created by Ludwig on 21/06/2015.

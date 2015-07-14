@@ -1,23 +1,25 @@
 package webservice;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.projet.esgi.permisbateau.AccueilActivity;
-import com.projet.esgi.permisbateau.LoadActivity;
-import com.projet.esgi.permisbateau.MajActivity;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import database.DataBase;
 
@@ -25,6 +27,8 @@ import database.DataBase;
  * Created by Ludwig on 08/06/2015.
  * Récupération des données
  */
+
+
 public class UpdateTask extends AsyncTask<String,Void,Void> {
 
     private DataBase db;
@@ -102,7 +106,7 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //mise à jour des données
-                            UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
+                            UpdateOnlineTask uot = new UpdateOnlineTask(mContext,stateNetwork);
                             uot.execute(data);
                         }
                     });
@@ -120,12 +124,60 @@ public class UpdateTask extends AsyncTask<String,Void,Void> {
                 }
 
                 if(stateNetwork.equals("local")){
-                    UpdateOnlineTask uot = new UpdateOnlineTask(mContext);
+                    loadLocalDatas();
+                    UpdateOnlineTask uot = new UpdateOnlineTask(mContext,stateNetwork);
                     uot.execute(data);
                 }
 
             }
         }
+    }
 
+    /**
+     * Charge les données locales
+     */
+    private void loadLocalDatas(){
+        Bitmap bmp;
+        try  {
+            ZipInputStream zin = new ZipInputStream(mContext.getResources().openRawResource(
+                    mContext.getResources().getIdentifier("localimages", "raw", mContext.getPackageName())));
+            ZipEntry ze = null;
+            while ((ze = zin.getNextEntry()) != null) {
+                //copie des images
+                if(ze.getName().split("\\.")[1].equals("png")) {
+                    FileOutputStream fout = mContext.openFileOutput(ze.getName(), Context.MODE_PRIVATE);
+                    bmp = BitmapFactory.decodeStream(zin);
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, fout);
+
+                    zin.closeEntry();
+                    fout.close();
+                }
+                //copie des cours
+                if(ze.getName().split("\\.")[1].equals("pdf")) {
+                    //On crée le dossier de destination si besoin
+                    File folder = new File(Environment.getExternalStorageDirectory().toString(), "permisbateaucours");
+                    if (!folder.exists())
+                        folder.mkdir();
+                    int size;
+                    byte[] buffer = new byte[2048];
+
+                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + "/permisbateaucours/" + ze.getName());
+                    BufferedOutputStream bos = new BufferedOutputStream(fos, buffer.length);
+
+                    while ((size = zin.read(buffer, 0, buffer.length)) != -1) {
+                        bos.write(buffer, 0, size);
+                    }
+                    bos.flush();
+                    bos.close();
+
+                    zin.closeEntry();
+                    fos.close();
+                }
+            }
+            zin.close();
+        } catch(Exception e) {
+            Log.e("Decompress", "unzip", e);
+        }
     }
 }
+

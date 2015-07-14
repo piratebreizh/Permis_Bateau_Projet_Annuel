@@ -3,7 +3,6 @@ package com.projet.esgi.permisbateau;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import java.sql.SQLException;
 
 import database.DataBase;
 import module.Examen;
-import module.Question;
 
 
 public class SerieActivity extends Activity {

@@ -2,8 +2,6 @@ package webservice;
 
 import java.util.ArrayList;
 
-import module.Question;
-
 /**
  * Created by Ludwig on 08/06/2015.
  */

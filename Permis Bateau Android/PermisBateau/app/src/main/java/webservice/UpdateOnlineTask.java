@@ -20,10 +20,12 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
 
     private DataBase db;
     private Context mContext;
+    private String stateNetwork;
 
-    public UpdateOnlineTask(Context context) {
+    public UpdateOnlineTask(Context context, String _stateNetwork) {
         mContext = context;
         db = new DataBase(context);
+        stateNetwork = _stateNetwork;
     }
 
     @Override
@@ -115,9 +117,11 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
                 db.insert("Question", null, values);
                 values.clear();
 
-                //stockage image
-                RequeteurAPI requeteurAPI = new RequeteurAPI();
-                requeteurAPI.stockImage(q.getPathimage(), c);
+                if(stateNetwork.equals("online")) {
+                    //stockage image
+                    RequeteurAPI requeteurAPI = new RequeteurAPI();
+                    requeteurAPI.stockImage(q.getPathimage(), c);
+                }
             }
 
             //cours
@@ -128,9 +132,11 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
                 db.insert("Cours", null, values);
                 values.clear();
 
-                //stockage cours
-                RequeteurAPI requeteurAPI = new RequeteurAPI();
-                requeteurAPI.stockCours(Integer.toString(co.getIdCours()),c);
+                if(stateNetwork.equals("online")) {
+                    //stockage cours
+                    RequeteurAPI requeteurAPI = new RequeteurAPI();
+                    requeteurAPI.stockCours(Integer.toString(co.getIdCours()), c);
+                }
             }
 
             db.close();

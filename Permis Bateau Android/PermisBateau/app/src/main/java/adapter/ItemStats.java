@@ -1,7 +1,5 @@
 package adapter;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by Ludwig on 21/06/2015.
  */

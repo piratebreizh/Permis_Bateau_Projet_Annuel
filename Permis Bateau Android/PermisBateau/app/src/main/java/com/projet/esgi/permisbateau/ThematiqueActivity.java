@@ -3,7 +3,6 @@ package com.projet.esgi.permisbateau;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +14,7 @@ import android.widget.ListView;
 import com.projet.esgi.myapplication.R;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import database.DataBase;
-import module.Question;
 
 public class ThematiqueActivity extends Activity {
 
