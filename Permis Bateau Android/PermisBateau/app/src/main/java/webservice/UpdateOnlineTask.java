@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.projet.esgi.permisbateau.AccueilActivity;
+
+import java.io.File;
 
 import database.DataBase;
 
@@ -76,6 +79,7 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
             //cours
             for (CoursData co : data.getDelCours()) {
                 db.execSql("DELETE FROM Cours WHERE idCours=" + co.getIdCours());
+                delCours(co.getIdCours());
             }
 
             //INSERTION//
@@ -153,6 +157,11 @@ public class UpdateOnlineTask extends AsyncTask<DataUpdate,Void,Void> {
         }else{
             Log.e("Suppression image","Erreur lors de la suppression");
         }
+    }
+
+    public static void delCours(int idCours){
+        File file = new File(Environment.getExternalStorageDirectory() + "/permisbateaucours/" + Integer.toString(idCours) + ".pdf");
+        file.delete();
     }
 
     @Override

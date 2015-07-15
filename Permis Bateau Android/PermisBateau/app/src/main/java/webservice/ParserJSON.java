@@ -63,7 +63,7 @@ public class ParserJSON {
             //cours_supprimes
             JSONArray arrayCours_supprimees = jsonObject.getJSONArray("cours_supprimes");
             for (int i = 0; i < arrayCours_supprimees.length(); ++i) {
-                data.addCours(new CoursData(arrayCours_supprimees.getInt(i)));
+                data.deleteCours(new CoursData(arrayCours_supprimees.getInt(i)));
             }
 
             //date de maj

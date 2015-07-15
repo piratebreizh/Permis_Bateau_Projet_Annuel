@@ -62,6 +62,10 @@ public class DataUpdate {
         delSeries.add(s);
     }
 
+    public void deleteCours(CoursData c){
+        delCours.add(c);
+    }
+
     public ArrayList<QuestionData> getQuestions(){
         return questions;
     }
@@ -99,6 +103,7 @@ public class DataUpdate {
     }
 
     public void setDateUpdate(String dateUpdate) {
+        dateUpdate = dateUpdate .substring(0, dateUpdate.length()-1);
         this.dateUpdate = dateUpdate;
     }
 
@@ -109,4 +114,6 @@ public class DataUpdate {
     public void setIsEmpty(String isEmpty) {
         this.isEmpty = isEmpty;
     }
+
+
 }

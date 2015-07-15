@@ -45,7 +45,7 @@ public class AccueilActivity extends Activity {
         ItemAccueil item_stats = new ItemAccueil(bmp_stats,"Historiques","Suivez votre évolution");
 
         //contact
-        Bitmap bmp_con = BitmapFactory.decodeResource(getResources(), R.drawable.d_maj);
+        Bitmap bmp_con = BitmapFactory.decodeResource(getResources(), R.drawable.d_contact);
         ItemAccueil item_con = new ItemAccueil(bmp_con,"Passez votre permis","Effectuez la partie pratique");
 
         //mise à jour
