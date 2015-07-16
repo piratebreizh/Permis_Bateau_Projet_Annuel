@@ -18,7 +18,6 @@
 
 
 @implementation ViewCorrectionDetail
-//@synthesize managedObjectContext;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,8 +34,7 @@
 
 -(void) viewWillDisappear:(BOOL)animated {
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        // Navigation button was pressed. Do some stuff
-        //[self.navigationController popViewControllerAnimated:NO];
+
     }
     [super viewWillDisappear:animated];
 }

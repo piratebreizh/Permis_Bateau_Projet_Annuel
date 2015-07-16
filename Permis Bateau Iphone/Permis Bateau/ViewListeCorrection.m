@@ -68,8 +68,6 @@
                                             otherButtonTitles:nil, nil, nil];
     [message show];
     }
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-
 
     [self.boutonMenu setBackgroundColor:[UIColor whiteColor]];
     self.boutonMenu.layer.cornerRadius = 8;
@@ -215,51 +213,10 @@
     recipeNameLabel.text = [NSString stringWithFormat:@"Question n°%@", [questionTemp.numero stringValue]];
     
     
-    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
-        [self declenchementPopUpWebService];   
-    }
+
     
     return cell;
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
@@ -298,6 +255,10 @@
 
 - (void)enregistrerTestPourStatistique{
     
+    
+        [self declenchementPopUpWebService];
+    
+    
     id delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
     
@@ -311,7 +272,7 @@
     
     historique.serie = self.serieEnCours;
     
-    if(_nombreBonneReponse>34){
+    if(_nombreBonneReponse>24){
         historique.blancReussit = [NSNumber numberWithBool:YES];
     }else{
         historique.blancReussit = [NSNumber numberWithBool:NO];

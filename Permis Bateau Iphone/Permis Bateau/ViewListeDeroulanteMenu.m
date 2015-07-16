@@ -48,8 +48,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 
 }
 
@@ -135,63 +133,15 @@
         recipeDetailLabel.text = @"Révisez vos leçons";
         recipeImageView.image = [UIImage imageNamed:@"cours.png"];
     }
-    // Configure the cell...
-
-    //    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.numero];
     
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
     switch (indexPath.row) {
         case 0: [self performSegueWithIdentifier:@"thematique" sender:self];
             break;
@@ -209,16 +159,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  /*  ViewQuestionnaire *viewQuestionnaire = segue.destinationViewController;
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    //    viewQuestionnaire.theme = [self.listeSeries objectAtIndex:indexPath.item];
-    viewQuestionnaire.serie = [self.listeSeries objectAtIndex:indexPath.item];
-    if(self.examenThematique){
-        viewQuestionnaire.examenThematique = true;
-    }else{
-        viewQuestionnaire.exa
-   menThematique = false;
-    }*/
     if([segue.identifier isEqualToString:@"CoursDetails"])
     {
         ViewCours *viewCours = (ViewCours *)[segue destinationViewController];
@@ -229,18 +169,6 @@
     }
     
 
-}
-
-
--(void) viewWillDisappear:(BOOL)animated {
-   /* if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        // Navigation button was pressed. Do some stuff
-        //[self.navigationController popViewControllerAnimated:NO];
-        if(self.examenThematique==NO){
-            [[self navigationController] setNavigationBarHidden:YES animated:YES];
-        }
-    }
-    [super viewWillDisappear:animated];*/
 }
 
 @end

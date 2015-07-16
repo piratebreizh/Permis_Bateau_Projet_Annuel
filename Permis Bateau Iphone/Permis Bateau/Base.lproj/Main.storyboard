@@ -141,7 +141,7 @@
             <objects>
                 <tableViewController id="nne-d4-PCX" customClass="ViewListeDeroulanteMenu" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="zXM-aL-Vgp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -305,11 +305,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" ambiguous="YES" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ly5-Lu-FTq">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" ambiguous="YES" misplaced="YES" text="Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ly5-Lu-FTq">
                                             <rect key="frame" x="92" y="7" width="186" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="7WS-J3-SCs">
-                                                    <variation key="widthClass=compact" constant="50"/>
+                                                    <variation key="widthClass=compact" constant="65"/>
                                                 </constraint>
                                                 <constraint firstAttribute="width" constant="186" id="X3F-NG-Njl"/>
                                             </constraints>
@@ -318,6 +318,9 @@
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <variation key="widthClass=compact" misplaced="YES">
                                                 <rect key="frame" x="8" y="8" width="186" height="21"/>
+                                                <mask key="constraints">
+                                                    <exclude reference="X3F-NG-Njl"/>
+                                                </mask>
                                             </variation>
                                         </label>
                                     </subviews>
@@ -334,6 +337,9 @@
                                         <constraint firstAttribute="centerY" secondItem="ly5-Lu-FTq" secondAttribute="centerY" constant="23.5" id="vSt-SG-vLb">
                                             <variation key="widthClass=compact" constant="0.0"/>
                                         </constraint>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ly5-Lu-FTq" secondAttribute="trailing" constant="118" id="vdX-WN-lOz">
+                                            <variation key="widthClass=compact" constant="20"/>
+                                        </constraint>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -341,6 +347,7 @@
                                             <exclude reference="XKn-2I-Yh1"/>
                                             <exclude reference="rH2-Og-JjU"/>
                                             <exclude reference="vSt-SG-vLb"/>
+                                            <exclude reference="vdX-WN-lOz"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -349,6 +356,7 @@
                                             <exclude reference="XKn-2I-Yh1"/>
                                             <exclude reference="rH2-Og-JjU"/>
                                             <include reference="vSt-SG-vLb"/>
+                                            <include reference="vdX-WN-lOz"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -408,6 +416,9 @@
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <variation key="widthClass=compact" misplaced="YES">
                                                 <rect key="frame" x="8" y="8" width="186" height="21"/>
+                                                <mask key="constraints">
+                                                    <exclude reference="3ly-re-0oY"/>
+                                                </mask>
                                             </variation>
                                         </label>
                                     </subviews>
@@ -424,6 +435,9 @@
                                         <constraint firstItem="Wex-yc-Pxz" firstAttribute="top" secondItem="S6H-CK-C94" secondAttribute="topMargin" id="gS3-Nj-Gyb">
                                             <variation key="widthClass=compact" constant="8"/>
                                         </constraint>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Wex-yc-Pxz" secondAttribute="trailing" constant="118" id="tDZ-mI-2bS">
+                                            <variation key="widthClass=compact" constant="20"/>
+                                        </constraint>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -431,6 +445,7 @@
                                             <exclude reference="CM0-jh-JqO"/>
                                             <exclude reference="ZcX-s5-tRN"/>
                                             <exclude reference="gS3-Nj-Gyb"/>
+                                            <exclude reference="tDZ-mI-2bS"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -439,6 +454,7 @@
                                             <include reference="CM0-jh-JqO"/>
                                             <include reference="ZcX-s5-tRN"/>
                                             <exclude reference="gS3-Nj-Gyb"/>
+                                            <include reference="tDZ-mI-2bS"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -2582,9 +2598,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="M2J-PN-HEi"/>
+        <segue reference="G3c-nt-LRr"/>
         <segue reference="ugj-bk-WXW"/>
-        <segue reference="I9V-qR-dsr"/>
+        <segue reference="M2J-PN-HEi"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>

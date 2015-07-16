@@ -21,7 +21,6 @@ Question *questionEnCour;
 NSTimer *timer;
 
 @implementation ViewQuestionnaire
-//@synthesize managedObjectContext;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,9 +30,6 @@ NSTimer *timer;
     
     newBackButton.title =@"Arrêter examen";
     self.navigation.backBarButtonItem = newBackButton;
-    
-    //self.navigation.hidesBackButton =YES;
-    //    [[self navigationItem] setBackBarButtonItem:newBackButton];
     
     self.boutonValiderQuestion.layer.cornerRadius = 8;
     self.boutonValiderQuestion.layer.borderWidth = 1.0f;
@@ -50,18 +46,7 @@ NSTimer *timer;
     self.barTimerQuestion.progress = 0.0;
     numeroQuestionEnCour = 0;
     if(self.serie != nil){
-       // if(self.examenThematique){
             [self executionExamenThematique];
-        //}else{
-            
-       // }
-        
-        /*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Question" inManagedObjectContext:context];
-         [fetchRequest setEntity:entity];
-         NSError *error;
-         questionnaire.listeQuestion = [context executeFetchRequest:fetchRequest error:&error];*/
-        
     }
 }
 /**
@@ -101,11 +86,6 @@ NSTimer *timer;
     NSError *error;
     self.questionnaire.listeQuestion = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     self.questionnaire.listeReponse = [NSMutableArray array];
-    
-    /*for(Question *tempQues in self.questionnaire.listeQuestion){
-        if(tempQues.enoncer != nil)
-            NSLog([NSString stringWithFormat:tempQues.enoncer]);
-    }*/
 
     if(self.questionnaire.listeQuestion.count != 0){
         [self questionSuivante];
@@ -124,13 +104,13 @@ NSTimer *timer;
     
     NSString *nomQuestion = questionEnCour.image;
 
-    //UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", @"/Users/alexandredubois/workspace_C/Objective-C/Permis_Bateau_Projet_Annuel/Permis Bateau Iphone/Permis Bateau/Images.xcassets", @"1", @".jpeg"]];
-    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];  
-    UIImage *imageQuestion = [self loadImage:nomQuestion ofType:@"png" inDirectory:documentsDirectoryPath];
+    nomQuestion = [nomQuestion stringByAppendingString:@".png"];
+    UIImage * imageQuestion = [UIImage imageNamed:nomQuestion];
     
     if(imageQuestion==nil){
-        nomQuestion = [nomQuestion stringByAppendingString:@".png"];
-        imageQuestion = [UIImage imageNamed:nomQuestion];
+        NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        imageQuestion = [self loadImage:nomQuestion ofType:@"png" inDirectory:documentsDirectoryPath];
+
     }
 
     
@@ -216,9 +196,7 @@ NSTimer *timer;
     if(!self.examenThematique){
         if ([self.casovacCas isValid]) {
             [self.casovacCas invalidate];
-            
         }
-        //self.casovacCas = nil;
     }
     [self enregistrerReponseQuestion];
     [self questionSuivante];
@@ -249,9 +227,6 @@ NSTimer *timer;
             self.boutonValiderQuestion.hidden = YES;
             self.boutonCorrection.hidden = NO;
         }
-        self.barTimerQuestion.progress = 0.0;
-        //[self startProgressTapped];
-        //[self performSelectorOnMainThread:@selector(makeMyProgressBarMoving) withObject:nil waitUntilDone:NO];
         [self casovacTimer];
         [self initialisationScreenForQuestion];
     }
@@ -268,37 +243,30 @@ NSTimer *timer;
                                                       repeats: YES];
 }
 
-/*-(void)enregistreReponse{
-    if (self.cas <= 30) {
-        [self.barTimerQuestion setProgress:self.barTimerQuestion.progress + 0.033];
-        NSLog(@"%f",self.barTimerQuestion.progress);
-    } else {
-        NSLog(@"Temps limite depassé question suivante !");
-        [self.casovacCas invalidate];
-    }
-    self.cas = self.cas +1;
-}*/
 
 -(void)casovacAction{
     if (self.cas <= 30) {
         [self.barTimerQuestion setProgress:self.barTimerQuestion.progress + 0.033];
         NSLog(@"%f",self.barTimerQuestion.progress);
     } else {
-        //[self.casovacCas invalidate];
         if(numeroQuestionEnCour>=self.questionnaire.listeQuestion.count){
-                 NSLog(@"Temps limite depassé Fin questionnaire !");
-//            [self.casovacCas invalidate];
-            //self.casovacCas = nil;
-            /*if ([self.casovacCas isValid]) {
+        NSLog(@"Temps limite depassé Fin questionnaire !");
+            if ([self.casovacCas isValid]) {
                 [self.casovacCas invalidate];
-
             }
             self.casovacCas = nil;
-            */
+            self.barTimerQuestion.progress = 0;
             [self enregistrerReponseQuestion];
+            self.cas = 0;
 
         }else{
             NSLog(@"Temps limite depassé question suivante !");
+            if(!self.examenThematique){
+                if ([self.casovacCas isValid]) {
+                    [self.casovacCas invalidate];
+                }
+            }
+            self.casovacCas = nil;
             [self enregistrerReponseQuestionTempsDepasse];
             [self questionSuivante];
             [self initialisationScreenForQuestion];
@@ -349,7 +317,6 @@ NSTimer *timer;
 
 - (void) incrementationNombreQuestion {
     numeroQuestionEnCour++;
-//    [self.labelNombreQuestion setText:[NSString stringWithFormat:@"%d/%lu", numeroQuestionEnCour,(unsigned long)self.questionnaire.listeQuestion.count]];
     self.navigation.title = [NSString stringWithFormat:@"%d/%lu", numeroQuestionEnCour,(unsigned long)self.questionnaire.listeQuestion.count];
 }
 
@@ -421,9 +388,7 @@ NSTimer *timer;
 - (IBAction)pushBoutonCorrection:(id)sender {
     
     if(!self.examenThematique){
-        if ([self.casovacCas isValid]) {
-            [self.casovacCas invalidate];
-        }
+        [self.casovacCas invalidate];
         self.casovacCas = nil;
     }
 }

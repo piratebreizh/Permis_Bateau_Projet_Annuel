@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelMAJ;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicateurChargement;
 
-- (IBAction)finMAJ:(id)sender;
 @property NSMutableArray *listeImagesDownload;
 @property NSMutableArray *listeImageDelete;
 
@@ -485,7 +484,9 @@
             
             // Modification des Questions
             NSArray * listeQuestionModifier = [pDict objectForKey:@"questions_modifiees"];
-            
+            if([listeQuestion count] >0){
+                self.listeImagesDownload = [[NSMutableArray alloc] init];
+            }
             for (NSDictionary *questionTemp in listeQuestionModifier ){
                 modifDate=YES;
                 NSNumber * idQuestion  = [questionTemp objectForKey:@"id_question"];
@@ -557,6 +558,9 @@
                             }
                             questionModifier.image = idImage;
                             questionModifier.serie = serieQuestion;
+                        }
+                        if(self.listeImagesDownload !=nil){
+                            [self.listeImagesDownload addObject:questionModifier.image];
                         }
                     }
                 }

@@ -37,9 +37,12 @@
         self.navigationItem.title = self.coursSelectionne.nomCours;
         if(self.coursSelectionne != nil){
             if(self.coursSelectionne.id != nil){
-                NSString *resourceDocPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                path = [resourceDocPath
+                path = [[NSBundle mainBundle] pathForResource:[self.coursSelectionne.id stringValue] ofType:@"pdf"];
+                if(path == nil){
+                    NSString *resourceDocPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                    path = [resourceDocPath
                         stringByAppendingPathComponent:[NSString stringWithFormat: @"%@.pdf",[self.coursSelectionne.id stringValue]]];
+                }
             }
         }
     }else if(!([self.nomAppel rangeOfString:@"information"].location == NSNotFound)){
@@ -49,9 +52,6 @@
         path = [[NSBundle mainBundle] pathForResource:@"Passezvotrepermis" ofType:@"pdf"];
         self.navigationItem.title = @"Permis côtier";
     }
-
-//            NSString *path = [[NSBundle mainBundle] pathForResource:[self.coursSelectionne.id stringValue] ofType:@"pdf"];
-
             if(path){
                 NSURL *myUrl = [NSURL fileURLWithPath:path];
                 if(myUrl){
