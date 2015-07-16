@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Permis Bateau</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <!--Menu-->
@@ -27,10 +26,10 @@
     <string name="title_activity_statistiques">Historique</string>
 
     <!-- thematique -->
-    <string name="title_activity_thematique">Thematiques</string>
+    <string name="title_activity_thematique">Thématiques</string>
 
     <!-- série -->
-    <string name="title_activity_serie">Series</string>
+    <string name="title_activity_serie">Séries</string>
 
     <!-- cours -->
     <string name="title_activity_cours">Cours</string>

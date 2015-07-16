@@ -42,7 +42,7 @@ public class AccueilActivity extends Activity {
 
         //stats
         Bitmap bmp_stats = BitmapFactory.decodeResource(getResources(), R.drawable.d_historique);
-        ItemAccueil item_stats = new ItemAccueil(bmp_stats,"Historiques","Suivez votre évolution");
+        ItemAccueil item_stats = new ItemAccueil(bmp_stats,"Historique","Suivez votre évolution");
 
         //contact
         Bitmap bmp_con = BitmapFactory.decodeResource(getResources(), R.drawable.d_contact);
