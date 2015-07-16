@@ -46,7 +46,8 @@ android:orientation="vertical">
         android:layout_weight="0"
         android:id="@+id/rep1"
         android:textOff="A"
-        android:textOn="A" />
+        android:textOn="A"
+        android:enabled="false"/>
 </LinearLayout>
 
 <!--Question 2 + bouton reponse-->
@@ -67,7 +68,8 @@ android:orientation="vertical">
         android:layout_weight="0"
         android:id="@+id/rep2"
         android:textOff="B"
-        android:textOn="B" />
+        android:textOn="B"
+        android:enabled="false"/>
 </LinearLayout>
 
 <!--Question 3 + bouton reponse-->
@@ -88,7 +90,8 @@ android:orientation="vertical">
         android:id="@+id/rep3"
         android:textOff="C"
         android:textOn="C"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:enabled="false"/>
 </LinearLayout>
 
 <!--Question 4 + bouton reponse-->
@@ -109,7 +112,8 @@ android:orientation="vertical">
         android:id="@+id/rep4"
         android:textOff="D"
         android:textOn="D"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:enabled="false"/>
 </LinearLayout>
 
 <!--Barre de progression temps de question + Bouton Question suivante-->
