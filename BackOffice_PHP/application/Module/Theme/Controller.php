@@ -90,6 +90,12 @@ class Controller extends \FSF\Controller
 
         $theme->setIsPublished(true);
         $theme->save();
+
+        $returned_json = array(
+            "is_published" => true
+        );
+
+        return json_encode($returned_json);
     }
 
     function supprimer()
